@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Tenant {
+  id        String     @id @default(uuid())
+  name              String
+  qpayproApiKey     String?
+  qpayproApiSecret  String?
+  recurrenteSecretKey String?
+  recurrenteTerminalId String?
+  logoUrl           String?
+  receiptTemplate   String   @default("CLASSIC") // CLASSIC, TICKET
+  plan              String   @default("PRO") // PRO, PREMIUM
+  isActive          Boolean  @default(true)
+  createdAt         DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  users     User[]
+  customers Customer[]
+  products  Product[]
+  sales     Sale[]
+  saleItems SaleItem[]
+}
+
+model User {
+  id        String   @id @default(uuid())
+  tenantId  String?
+  tenant    Tenant?   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  email     String   @unique
+  password  String
+  name      String?
+  role      String   @default("SELLER") // SUPERADMIN, ADMIN, SELLER
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  sales     Sale[]
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  name      String
+  email     String?
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  sales     Sale[]
+}
+
+model Product {
+  id          String     @id @default(uuid())
+  tenantId    String
+  tenant      Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  price       Float
+  stock       Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  saleItems   SaleItem[]
+}
+
+model Sale {
+  id                   String     @id @default(uuid())
+  tenantId             String
+  tenant               Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  userId               String
+  user                 User       @relation(fields: [userId], references: [id])
+  customerId           String?
+  customer             Customer?  @relation(fields: [customerId], references: [id])
+  total                Float
+  status               String     @default("PENDING") // PENDING, COMPLETED, FAILED
+  paymentMethod        String?    // Tarjeta, Transferencia, Efectivo, Link de pago
+  felStatus            String?    // CERTIFICADA, PENDIENTE, ERROR
+  qpayproTransactionId String?
+  paymentLink          String?
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+  items                SaleItem[]
+}
+
+model SaleItem {
+  id        String   @id @default(uuid())
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  saleId    String
+  sale      Sale     @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PlanConfig {
+  id        String   @id @default(uuid())
+  name      String   @unique // PRO, PREMIUM
+  features  String   // JSON stringified array of accessible modules
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  action    String
+  actorId   String
+  targetId  String?
+  details   String?  // JSON string
+  createdAt DateTime @default(now())
+}
