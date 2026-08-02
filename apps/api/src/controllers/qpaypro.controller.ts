@@ -12,7 +12,7 @@ export const handleRelay = async (req: Request, res: Response): Promise<void> =>
     if (x_response_status === '1' && saleId) {
       
       const sale = await prisma.sale.findUnique({
-        where: { id: saleId }
+        where: { id: saleId as string }
       });
 
       if (sale && sale.status === 'PENDING') {

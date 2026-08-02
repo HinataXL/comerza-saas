@@ -39,7 +39,7 @@ export const createTerminalSessionCommand = async (
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      const errorData = await response.json().catch(() => ({})) as any;
       console.error('Recurrente API Error:', errorData);
       throw new Error(`Recurrente API Error: ${errorData.message || 'Error al crear comando de terminal'}`);
     }

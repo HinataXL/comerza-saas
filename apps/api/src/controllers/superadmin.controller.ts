@@ -174,14 +174,14 @@ export const toggleTenantStatus = async (req: AuthRequest, res: Response): Promi
 
     const { id } = req.params;
 
-    const tenant = await prisma.tenant.findUnique({ where: { id } });
+    const tenant = await prisma.tenant.findUnique({ where: { id: id as string } });
     if (!tenant) {
       res.status(404).json({ message: 'Tenant not found' });
       return;
     }
 
     const updatedTenant = await prisma.tenant.update({
-      where: { id },
+      where: { id: id as string },
       data: { isActive: !tenant.isActive },
       select: { id: true, isActive: true, name: true }
     });
@@ -189,8 +189,8 @@ export const toggleTenantStatus = async (req: AuthRequest, res: Response): Promi
     await prisma.auditLog.create({
       data: {
         action: updatedTenant.isActive ? 'TENANT_ACTIVATED' : 'TENANT_SUSPENDED',
-        actorId: req.user.id,
-        targetId: id,
+        actorId: req.user.id as string,
+        targetId: id as string,
         details: JSON.stringify({ name: updatedTenant.name })
       }
     });
@@ -198,7 +198,7 @@ export const toggleTenantStatus = async (req: AuthRequest, res: Response): Promi
     if (!updatedTenant.isActive) {
       try {
         const adminUser = await prisma.user.findFirst({
-          where: { tenantId: id, role: 'ADMIN' }
+          where: { tenantId: id as string as string, role: 'ADMIN' }
         });
         
         if (adminUser) {
@@ -228,7 +228,7 @@ export const impersonateTenant = async (req: AuthRequest, res: Response): Promis
 
     const { id } = req.params;
 
-    const tenant = await prisma.tenant.findUnique({ where: { id } });
+    const tenant = await prisma.tenant.findUnique({ where: { id: id as string } });
     if (!tenant || !tenant.isActive) {
       res.status(404).json({ message: 'Comercio no encontrado o está suspendido.' });
       return;
@@ -236,7 +236,7 @@ export const impersonateTenant = async (req: AuthRequest, res: Response): Promis
 
     // Buscar el primer usuario ADMIN de este comercio
     const adminUser = await prisma.user.findFirst({
-      where: { tenantId: id, role: 'ADMIN' },
+      where: { tenantId: id as string as string, role: 'ADMIN' },
       orderBy: { createdAt: 'asc' }
     });
 
@@ -251,7 +251,7 @@ export const impersonateTenant = async (req: AuthRequest, res: Response): Promis
       id: adminUser.id,
       role: adminUser.role,
       tenantId: adminUser.tenantId,
-      impersonatedBy: req.user.id
+      impersonatedBy: req.user.id as string
     });
 
     res.cookie('token', token, {
@@ -264,8 +264,8 @@ export const impersonateTenant = async (req: AuthRequest, res: Response): Promis
     await prisma.auditLog.create({
       data: {
         action: 'IMPERSONATION_STARTED',
-        actorId: req.user.id,
-        targetId: id,
+        actorId: req.user.id as string,
+        targetId: id as string,
         details: JSON.stringify({ tenantName: tenant.name, impersonatedUserId: adminUser.id })
       }
     });
@@ -292,14 +292,14 @@ export const changeTenantPlan = async (req: AuthRequest, res: Response): Promise
       return;
     }
 
-    const tenant = await prisma.tenant.findUnique({ where: { id } });
+    const tenant = await prisma.tenant.findUnique({ where: { id: id as string } });
     if (!tenant) {
       res.status(404).json({ message: 'Tenant not found' });
       return;
     }
 
     const updatedTenant = await prisma.tenant.update({
-      where: { id },
+      where: { id: id as string },
       data: { plan },
       select: { id: true, plan: true, name: true }
     });
@@ -307,8 +307,8 @@ export const changeTenantPlan = async (req: AuthRequest, res: Response): Promise
     await prisma.auditLog.create({
       data: {
         action: 'PLAN_CHANGED',
-        actorId: req.user.id,
-        targetId: id,
+        actorId: req.user.id as string,
+        targetId: id as string,
         details: JSON.stringify({ newPlan: plan, tenantName: updatedTenant.name })
       }
     });
@@ -372,15 +372,15 @@ export const updatePlan = async (req: AuthRequest, res: Response): Promise<void>
     }
 
     const updated = await prisma.planConfig.update({
-      where: { name },
+      where: { name: name as string },
       data: { features: JSON.stringify(features) }
     });
 
     await prisma.auditLog.create({
       data: {
         action: 'PLAN_CONFIG_UPDATED',
-        actorId: req.user.id,
-        targetId: name,
+        actorId: req.user.id as string,
+        targetId: name as string,
         details: JSON.stringify({ features })
       }
     });
@@ -591,19 +591,19 @@ export const deleteTenant = async (req: AuthRequest, res: Response): Promise<voi
 
     const { id } = req.params;
 
-    const tenant = await prisma.tenant.findUnique({ where: { id } });
+    const tenant = await prisma.tenant.findUnique({ where: { id: id as string } });
     if (!tenant) {
       res.status(404).json({ message: 'Tenant not found' });
       return;
     }
 
-    await prisma.tenant.delete({ where: { id } });
+    await prisma.tenant.delete({ where: { id: id as string } });
 
     await prisma.auditLog.create({
       data: {
         action: 'TENANT_DELETED',
-        actorId: req.user.id,
-        targetId: id,
+        actorId: req.user.id as string,
+        targetId: id as string,
         details: JSON.stringify({ name: tenant.name })
       }
     });
@@ -625,24 +625,24 @@ export const deleteUser = async (req: AuthRequest, res: Response): Promise<void>
     const { id } = req.params;
 
     // Prevenir auto-eliminación
-    if (id === req.user.id) {
+    if (id === req.user.id as string) {
       res.status(400).json({ message: 'No puedes eliminarte a ti mismo' });
       return;
     }
 
-    const user = await prisma.user.findUnique({ where: { id } });
+    const user = await prisma.user.findUnique({ where: { id: id as string } });
     if (!user) {
       res.status(404).json({ message: 'User not found' });
       return;
     }
 
-    await prisma.user.delete({ where: { id } });
+    await prisma.user.delete({ where: { id: id as string } });
 
     await prisma.auditLog.create({
       data: {
         action: 'USER_DELETED',
-        actorId: req.user.id,
-        targetId: id,
+        actorId: req.user.id as string,
+        targetId: id as string,
         details: JSON.stringify({ email: user.email, role: user.role })
       }
     });

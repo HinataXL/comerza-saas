@@ -305,7 +305,7 @@ export const updateSaleStatus = async (req: AuthRequest, res: Response): Promise
     }
 
     const sale = await prisma.sale.findFirst({
-      where: { id, tenantId }
+      where: { id: id as string, tenantId: tenantId as string }
     });
 
     if (!sale) {
@@ -314,7 +314,7 @@ export const updateSaleStatus = async (req: AuthRequest, res: Response): Promise
     }
 
     const updatedSale = await prisma.sale.update({
-      where: { id },
+      where: { id: id as string },
       data: { status }
     });
 
@@ -336,7 +336,7 @@ export const getSaleById = async (req: AuthRequest, res: Response): Promise<void
     }
 
     const sale = await prisma.sale.findFirst({
-      where: { id, tenantId },
+      where: { id: id as string, tenantId: tenantId as string },
       include: {
         customer: true,
         tenant: true,

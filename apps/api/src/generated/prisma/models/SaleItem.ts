@@ -590,6 +590,7 @@ export type SaleItemCreateOrConnectWithoutTenantInput = {
 
 export type SaleItemCreateManyTenantInputEnvelope = {
   data: Prisma.SaleItemCreateManyTenantInput | Prisma.SaleItemCreateManyTenantInput[]
+  skipDuplicates?: boolean
 }
 
 export type SaleItemUpsertWithWhereUniqueWithoutTenantInput = {
@@ -649,6 +650,7 @@ export type SaleItemCreateOrConnectWithoutProductInput = {
 
 export type SaleItemCreateManyProductInputEnvelope = {
   data: Prisma.SaleItemCreateManyProductInput | Prisma.SaleItemCreateManyProductInput[]
+  skipDuplicates?: boolean
 }
 
 export type SaleItemUpsertWithWhereUniqueWithoutProductInput = {
@@ -694,6 +696,7 @@ export type SaleItemCreateOrConnectWithoutSaleInput = {
 
 export type SaleItemCreateManySaleInputEnvelope = {
   data: Prisma.SaleItemCreateManySaleInput | Prisma.SaleItemCreateManySaleInput[]
+  skipDuplicates?: boolean
 }
 
 export type SaleItemUpsertWithWhereUniqueWithoutSaleInput = {
@@ -1588,6 +1591,7 @@ export type SaleItemCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * The data used to create many SaleItems.
    */
   data: Prisma.SaleItemCreateManyInput | Prisma.SaleItemCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1606,6 +1610,7 @@ export type SaleItemCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * The data used to create many SaleItems.
    */
   data: Prisma.SaleItemCreateManyInput | Prisma.SaleItemCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

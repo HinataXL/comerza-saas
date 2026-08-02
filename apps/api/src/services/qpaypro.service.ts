@@ -85,7 +85,7 @@ export const createPaymentLink = async (credentials: QPayProCredentials, payload
       throw new Error(`Error de QPayPro (${res.status}): ${errorText}`);
     }
 
-    const responseBody = await res.json();
+    const responseBody = await res.json() as any;
     
     // QPayPro puede devolver "status" o "estado" para indicar error
     if (responseBody.status === 'error' || responseBody.estado === 'error') {
@@ -103,7 +103,7 @@ export const createPaymentLink = async (credentials: QPayProCredentials, payload
     // Generamos el link final con el token que nos pediste
     return `https://payments.qpaypro.com/checkout/store?token=${token}`;
     
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error generando link de pago:', error);
     
     // Lanzamos el error real en lugar de usar un token simulado para que puedas ver por qué falla

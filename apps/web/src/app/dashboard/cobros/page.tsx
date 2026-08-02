@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Zap, Link as LinkIcon, Check, CheckCircle, MessageCircle, Clock, Copy, AlertCircle } from 'lucide-react';
 import './cobros.css';
@@ -17,7 +17,7 @@ interface Sale {
   };
 }
 
-export default function CobrosPage() {
+function CobrosContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const paymentStatus = searchParams.get('payment');
@@ -336,5 +336,13 @@ export default function CobrosPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CobrosPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-gray-500">Cargando cobros...</div>}>
+      <CobrosContent />
+    </Suspense>
   );
 }

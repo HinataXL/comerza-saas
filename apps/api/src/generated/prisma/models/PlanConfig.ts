@@ -988,6 +988,7 @@ export type PlanConfigCreateManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * The data used to create many PlanConfigs.
    */
   data: Prisma.PlanConfigCreateManyInput | Prisma.PlanConfigCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1006,6 +1007,7 @@ export type PlanConfigCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exte
    * The data used to create many PlanConfigs.
    */
   data: Prisma.PlanConfigCreateManyInput | Prisma.PlanConfigCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
