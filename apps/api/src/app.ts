@@ -14,6 +14,8 @@ import tenantRoutes from './routes/tenant.routes';
 import qpayproRoutes from './routes/qpaypro.routes';
 import superadminRoutes from './routes/superadmin.routes';
 import webhooksRoutes from './routes/webhooks.routes';
+import reportsRoutes from './routes/reports.routes';
+import uploadRoutes from './routes/upload.routes';
 
 const app = express();
 
@@ -37,5 +39,7 @@ app.use('/api/tenant', tenantRoutes);
 app.use('/api/qpaypro', qpayproRoutes);
 app.use('/api/superadmin', superadminRoutes);
 app.use('/api/webhooks', webhooksRoutes);
+app.use('/api/reports', reportsRoutes);
+app.use('/api/upload', uploadRoutes);
 
 export default app;

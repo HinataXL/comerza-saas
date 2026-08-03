@@ -2,6 +2,7 @@
 import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Zap, Link as LinkIcon, Check, CheckCircle, MessageCircle, Clock, Copy, AlertCircle } from 'lucide-react';
+import { useDialog } from '@/components/providers/DialogProvider';
 import './cobros.css';
 
 interface Sale {
@@ -19,6 +20,7 @@ interface Sale {
 
 function CobrosContent() {
   const router = useRouter();
+  const { showAlert, showConfirm } = useDialog();
   const searchParams = useSearchParams();
   const paymentStatus = searchParams.get('payment');
   
@@ -99,34 +101,34 @@ function CobrosContent() {
         fetchPendingSales(); // Refresh pending list
       }
     } catch (error: any) {
-      alert(error.message);
+      showAlert('Error', error.message, 'error');
     } finally {
       setIsGenerating(false);
     }
   };
 
-  const handleMarkAsPaid = async (id: string) => {
-    if (!confirm('¿Estás seguro de marcar este cobro como PAGADO?')) return;
-    
-    setIsUpdating(id);
-    try {
-      const res = await fetch(`/api/sales/${id}/status`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ status: 'COMPLETED' })
-      });
+  const handleMarkAsPaid = (id: string) => {
+    showConfirm('Confirmar Pago', '¿Estás seguro de marcar este cobro como PAGADO?', async () => {
+      setIsUpdating(id);
+      try {
+        const res = await fetch(`/api/sales/${id}/status`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ status: 'COMPLETED' })
+        });
 
-      if (res.ok) {
-        setPendingSales(prev => prev.filter(s => s.id !== id));
-      } else {
-        alert('Error al actualizar el estado');
+        if (res.ok) {
+          setPendingSales(prev => prev.filter(s => s.id !== id));
+        } else {
+          showAlert('Error', 'Error al actualizar el estado', 'error');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setIsUpdating(null);
       }
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      setIsUpdating(null);
-    }
+    });
   };
 
   const copyToClipboard = () => {

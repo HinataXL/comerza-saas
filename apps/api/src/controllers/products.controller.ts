@@ -51,7 +51,7 @@ export const getProductById = async (req: AuthRequest, res: Response): Promise<v
 export const createProduct = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const tenantId = req.user?.tenantId;
-    const { name, description, price, stock } = req.body;
+    const { name, description, price, stock, imageUrl } = req.body;
 
     if (!tenantId) {
       res.status(401).json({ message: 'Unauthorized: No tenant specified' });
@@ -70,6 +70,7 @@ export const createProduct = async (req: AuthRequest, res: Response): Promise<vo
         description,
         price: Number(price),
         stock: Number(stock || 0),
+        imageUrl: imageUrl || null,
       },
     });
 
@@ -84,7 +85,7 @@ export const updateProduct = async (req: AuthRequest, res: Response): Promise<vo
   try {
     const tenantId = req.user?.tenantId;
     const id = req.params.id as string;
-    const { name, description, price, stock } = req.body;
+    const { name, description, price, stock, imageUrl } = req.body;
 
     if (!tenantId) {
       res.status(401).json({ message: 'Unauthorized: No tenant specified' });
@@ -108,6 +109,7 @@ export const updateProduct = async (req: AuthRequest, res: Response): Promise<vo
         description: description !== undefined ? description : existing.description,
         price: price !== undefined ? Number(price) : existing.price,
         stock: stock !== undefined ? Number(stock) : existing.stock,
+        imageUrl: imageUrl !== undefined ? imageUrl : existing.imageUrl,
       },
     });
 

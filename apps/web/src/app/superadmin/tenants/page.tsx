@@ -2,10 +2,12 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Store, Plus, Search, MoreVertical, X, Copy, CheckCircle, Power, PowerOff, Eye, Trash2 } from 'lucide-react';
+import { useDialog } from '@/components/providers/DialogProvider';
 import '../../../components/dashboard/dashboard.css'; // Reutilizar estilos de tabla
 
 export default function SuperAdminTenants() {
   const router = useRouter();
+  const { showAlert, showConfirm } = useDialog();
   const [tenants, setTenants] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,31 +68,31 @@ export default function SuperAdminTenants() {
         window.location.href = '/dashboard';
       } else {
         const data = await res.json();
-        alert(data.message || 'Error al iniciar Modo Dios');
+        showAlert('Error', data.message || 'Error al iniciar Modo Dios', 'error');
       }
     } catch (err) {
       console.error('Error al iniciar Modo Dios', err);
-      alert('Error de red al intentar Modo Dios');
+      showAlert('Error', 'Error de red al intentar Modo Dios', 'error');
     }
   };
 
-  const togglePlan = async (tenantId: string, currentPlan: string) => {
+  const togglePlan = (tenantId: string, currentPlan: string) => {
     const newPlan = currentPlan === 'PRO' ? 'PREMIUM' : 'PRO';
-    if (!confirm(`¿Estás seguro de cambiar este comercio al plan ${newPlan}?`)) return;
-
-    try {
-      const res = await fetch(`/api/superadmin/tenants/${tenantId}/plan`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: newPlan }),
-        credentials: 'include'
-      });
-      if (res.ok) {
-        setTenants(tenants.map(t => t.id === tenantId ? { ...t, plan: newPlan } : t));
+    showConfirm('Cambiar Plan', `¿Estás seguro de cambiar este comercio al plan ${newPlan}?`, async () => {
+      try {
+        const res = await fetch(`/api/superadmin/tenants/${tenantId}/plan`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ plan: newPlan }),
+          credentials: 'include'
+        });
+        if (res.ok) {
+          setTenants(tenants.map(t => t.id === tenantId ? { ...t, plan: newPlan } : t));
+        }
+      } catch (err) {
+        console.error('Error toggling plan', err);
       }
-    } catch (err) {
-      console.error('Error toggling plan', err);
-    }
+    });
   };
 
   const confirmDeleteTenant = (tenant: any) => {
@@ -111,11 +113,11 @@ export default function SuperAdminTenants() {
         setIsDeleteModalOpen(false);
       } else {
         const data = await res.json();
-        alert(data.message || 'Error al eliminar el comercio');
+        showAlert('Error', data.message || 'Error al eliminar el comercio', 'error');
       }
     } catch (err) {
       console.error('Error deleting tenant', err);
-      alert('Error de red al intentar eliminar el comercio');
+      showAlert('Error', 'Error de red al intentar eliminar el comercio', 'error');
     } finally {
       setIsDeleting(false);
       setTenantToDelete(null);

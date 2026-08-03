@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Layers, ShieldCheck, Loader2 } from 'lucide-react';
+import { useDialog } from '@/components/providers/DialogProvider';
 
 interface PlanConfig {
   id: string;
@@ -14,6 +15,7 @@ const ALL_MODULES = [
 ];
 
 export default function SuperAdminPlanes() {
+  const { showAlert } = useDialog();
   const [plans, setPlans] = useState<PlanConfig[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [savingPlan, setSavingPlan] = useState<string | null>(null);
@@ -63,13 +65,13 @@ export default function SuperAdminPlanes() {
         credentials: 'include'
       });
       if (res.ok) {
-        alert(`Configuración del plan ${planName} guardada correctamente.`);
+        showAlert('Éxito', `Configuración del plan ${planName} guardada correctamente.`, 'success');
       } else {
-        alert('Error al guardar configuración');
+        showAlert('Error', 'Error al guardar configuración', 'error');
       }
     } catch (err) {
       console.error(err);
-      alert('Error de red');
+      showAlert('Error', 'Error de red', 'error');
     } finally {
       setSavingPlan(null);
     }

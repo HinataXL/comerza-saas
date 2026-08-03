@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { generateToken, verifyToken } from '../utils/jwt';
 import { prisma } from '../lib/prisma';
 import { AuthRequest } from '../middlewares/auth.middleware';
+import { sendPasswordResetEmail } from '../services/email.service';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -167,5 +168,33 @@ export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error retrieving user profile' });
+  }
+};
+
+export const forgotPassword = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email } = req.body;
+
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      res.status(200).json({ message: 'Si el correo existe, se ha enviado una contraseña temporal.' });
+      return;
+    }
+
+    const temporaryPassword = Math.random().toString(36).slice(-8);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(temporaryPassword, salt);
+
+    await prisma.user.update({
+      where: { email },
+      data: { password: hashedPassword },
+    });
+
+    await sendPasswordResetEmail({ toEmail: email, newPassword: temporaryPassword });
+
+    res.status(200).json({ message: 'Si el correo existe, se ha enviado una contraseña temporal.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error trying to reset password' });
   }
 };

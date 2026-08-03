@@ -180,3 +180,60 @@ export const sendSuspensionEmail = async (params: { toEmail: string, companyName
   }
 };
 
+export const sendPasswordResetEmail = async (params: { toEmail: string, newPassword: string }) => {
+  const { toEmail, newPassword } = params;
+  const resendApiKey = process.env.RESEND_API_KEY || '';
+  
+  if (!resendApiKey) {
+    console.warn('RESEND_API_KEY no configurada. El email no se enviará.');
+    return;
+  }
+
+  const resend = new Resend(resendApiKey);
+
+  const htmlTemplate = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+      <div style="background-color: #0f172a; padding: 24px; text-align: center;">
+        <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Recuperación de Contraseña</h1>
+      </div>
+      <div style="padding: 32px; background-color: #ffffff; color: #334155;">
+        <p style="font-size: 16px;">Hola,</p>
+        <p style="font-size: 16px; line-height: 1.5;">Has solicitado restablecer tu contraseña en Comerza.</p>
+        
+        <div style="background-color: #f8fafc; padding: 16px; border-radius: 8px; margin: 24px 0; border: 1px solid #e2e8f0;">
+          <h3 style="margin-top: 0; color: #0f172a;">Tus nuevas credenciales:</h3>
+          <p style="margin: 8px 0;"><strong>Correo:</strong> ${toEmail}</p>
+          <p style="margin: 8px 0;"><strong>Contraseña temporal:</strong> <span style="font-family: monospace; background: #e2e8f0; padding: 4px 8px; border-radius: 4px;">${newPassword}</span></p>
+        </div>
+        
+        <p style="font-size: 14px; color: #64748b;">
+          Te recomendamos iniciar sesión y cambiar esta contraseña desde los ajustes de tu cuenta por motivos de seguridad.
+        </p>
+        
+        <div style="text-align: center; margin-top: 32px;">
+          <a href="https://comerza.me/" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
+            Ingresar al Sistema
+          </a>
+        </div>
+      </div>
+      <div style="background-color: #f1f5f9; padding: 16px; text-align: center; color: #94a3b8; font-size: 12px;">
+        <p style="margin: 0;">Este es un correo automático, por favor no respondas a esta dirección.</p>
+        <p style="margin: 4px 0 0 0;">&copy; ${new Date().getFullYear()} Comerza POS. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  `;
+
+  try {
+    const data = await resend.emails.send({
+      from: 'Comerza <hola@comerza.me>',
+      to: [toEmail],
+      subject: 'Restablecimiento de contraseña - Comerza',
+      html: htmlTemplate,
+    });
+    return data;
+  } catch (error) {
+    console.error('Error al enviar el correo de recuperación:', error);
+    throw error;
+  }
+};
+

@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Users, Shield, User, Plus, X, Trash2 } from 'lucide-react';
+import { useDialog } from '@/components/providers/DialogProvider';
 
 interface PlatformUser {
   id: string;
@@ -13,6 +14,7 @@ interface PlatformUser {
 }
 
 export default function SuperAdminUsersPage() {
+  const { showAlert } = useDialog();
   const [users, setUsers] = useState<PlatformUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -99,11 +101,11 @@ export default function SuperAdminUsersPage() {
         setIsDeleteModalOpen(false);
       } else {
         const data = await res.json();
-        alert(data.message || 'Error al eliminar el usuario');
+        showAlert('Error', data.message || 'Error al eliminar el usuario', 'error');
       }
     } catch (err) {
       console.error('Error deleting user', err);
-      alert('Error de red al intentar eliminar el usuario');
+      showAlert('Error', 'Error de red al intentar eliminar el usuario', 'error');
     } finally {
       setIsDeleting(false);
       setUserToDelete(null);

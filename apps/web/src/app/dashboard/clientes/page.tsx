@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Plus, Users, X, Edit, Trash2, Search } from 'lucide-react';
+import { useDialog } from '@/components/providers/DialogProvider';
 
 interface Customer {
   id: string;
@@ -12,6 +13,7 @@ interface Customer {
 
 export default function CustomersPage() {
   const router = useRouter();
+  const { showAlert, showConfirm } = useDialog();
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -84,27 +86,28 @@ export default function CustomersPage() {
       handleCloseModal();
       fetchCustomers();
     } catch (err: any) {
-      alert(err.message);
+      showAlert('Error', err.message, 'error');
     } finally {
       setIsProcessing(false);
     }
   };
 
-  const handleDeleteCustomer = async (id: string) => {
-    if (!confirm('¿Estás seguro de eliminar este cliente? No se podrá eliminar si tiene ventas asociadas.')) return;
-    try {
-      const res = await fetch(`/api/customers/${id}`, {
-        method: 'DELETE',
-        credentials: 'include'
-      });
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || 'Error al eliminar cliente');
+  const handleDeleteCustomer = (id: string) => {
+    showConfirm('Eliminar Cliente', '¿Estás seguro de eliminar este cliente? No se podrá eliminar si tiene ventas asociadas.', async () => {
+      try {
+        const res = await fetch(`/api/customers/${id}`, {
+          method: 'DELETE',
+          credentials: 'include'
+        });
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.message || 'Error al eliminar cliente');
+        }
+        fetchCustomers();
+      } catch (err: any) {
+        showAlert('Error', err.message, 'error');
       }
-      fetchCustomers();
-    } catch (err: any) {
-      alert(err.message);
-    }
+    });
   };
 
   if (isLoading) return <div className="flex-center" style={{ height: '50vh' }}><p className="text-secondary">Cargando clientes...</p></div>;

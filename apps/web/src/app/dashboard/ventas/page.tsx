@@ -2,6 +2,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { ShoppingCart, Search, Trash2, Plus, Minus, CreditCard, User, Link as LinkIcon, SmartphoneNfc, CheckCircle2 } from 'lucide-react';
+import { useDialog } from '@/components/providers/DialogProvider';
 import styles from './page.module.css';
 
 interface Product {
@@ -9,6 +10,7 @@ interface Product {
   name: string;
   price: number;
   stock: number;
+  imageUrl?: string;
 }
 
 interface Customer {
@@ -23,6 +25,7 @@ interface CartItem {
 
 export default function PosPage() {
   const router = useRouter();
+  const { showAlert } = useDialog();
   const [products, setProducts] = useState<Product[]>([]);
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -135,7 +138,7 @@ export default function PosPage() {
               clearInterval(interval);
             } else if (data.status === 'FAILED') {
               setIsNfcWaiting(false);
-              alert('El cobro NFC fue rechazado o falló.');
+              showAlert('Error de NFC', 'El cobro NFC fue rechazado o falló.', 'error');
               clearInterval(interval);
             }
           }
@@ -150,7 +153,7 @@ export default function PosPage() {
   const handleCheckout = async () => {
     if (activeMode === 'cart' && cart.length === 0) return;
     if (activeMode === 'quick' && (!quickAmount || parseFloat(quickAmount) <= 0 || !quickDescription)) {
-      alert('Debes ingresar un monto válido y una descripción para el cobro rápido.');
+      showAlert('Datos Inválidos', 'Debes ingresar un monto válido y una descripción para el cobro rápido.', 'warning');
       return;
     }
     
@@ -210,7 +213,7 @@ export default function PosPage() {
         return;
       }
 
-      alert('¡Venta completada con éxito!');
+      showAlert('Venta Completada', '¡Venta completada con éxito!', 'success');
       setCart([]);
       setQuickAmount('');
       setQuickDescription('');
@@ -218,7 +221,7 @@ export default function PosPage() {
       setPaymentMethod('Efectivo');
       fetchData(); // Refresh stock
     } catch (err: any) {
-      alert(err.message);
+      showAlert('Error en la venta', err.message, 'error');
     } finally {
       setIsProcessing(false);
     }
@@ -275,6 +278,13 @@ export default function PosPage() {
               className={`${styles.productCard} ${product.stock <= 0 ? styles.disabled : ''}`}
               onClick={() => handleAddToCart(product)}
             >
+              <div style={{ height: '120px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.75rem', borderRadius: '8px', overflow: 'hidden' }}>
+                {product.imageUrl ? (
+                  <img src={product.imageUrl} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  <img src="/logo.png" alt="Comerza" style={{ width: '40%', height: 'auto', opacity: 0.3, objectFit: 'contain' }} />
+                )}
+              </div>
               <div>
                 <div className={styles.productName}>{product.name}</div>
                 <div className={styles.productPrice}>Q{product.price.toFixed(2)}</div>
@@ -345,10 +355,19 @@ export default function PosPage() {
             ) : (
               cart.map(item => (
                 <div key={item.product.id} className={styles.cartItem}>
-                  <div className={styles.cartItemInfo}>
-                    <div className={styles.cartItemTitle}>{item.product.name}</div>
-                    <div className={styles.cartItemPrice}>
-                      Q{item.product.price.toFixed(2)} x {item.quantity}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: 1, minWidth: 0 }}>
+                    <div style={{ width: '42px', height: '42px', backgroundColor: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {item.product.imageUrl ? (
+                        <img src={item.product.imageUrl} alt={item.product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <img src="/logo.png" alt="Comerza" style={{ width: '60%', height: 'auto', opacity: 0.3, objectFit: 'contain' }} />
+                      )}
+                    </div>
+                    <div className={styles.cartItemInfo}>
+                      <div className={styles.cartItemTitle}>{item.product.name}</div>
+                      <div className={styles.cartItemPrice}>
+                        Q{item.product.price.toFixed(2)} x {item.quantity}
+                      </div>
                     </div>
                   </div>
                   <div className={styles.cartItemControls}>
@@ -431,7 +450,7 @@ export default function PosPage() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
               <button className="btn btn-outline" onClick={() => {
                 navigator.clipboard.writeText(generatedLink);
-                alert('¡Link copiado al portapapeles!');
+                showAlert('Copiado', '¡Link copiado al portapapeles!', 'success');
               }}>
                 Copiar Link
               </button>
