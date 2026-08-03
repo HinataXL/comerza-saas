@@ -140,7 +140,7 @@ const uploadLogo = async (req, res) => {
         const ext = path_1.default.extname(req.file.originalname);
         const fileName = `logos/${tenantId}-${Date.now()}${ext}`;
         // Subir la imagen a S3 directamente desde la memoria
-        const logoUrl = await (0, s3_service_1.uploadImageToS3)(req.file.buffer, fileName, req.file.mimetype);
+        const logoUrl = await (0, s3_service_1.uploadFileToS3)(req.file.buffer, fileName, req.file.mimetype);
         const tenant = await prisma_1.prisma.tenant.update({
             where: { id: tenantId },
             data: { logoUrl },

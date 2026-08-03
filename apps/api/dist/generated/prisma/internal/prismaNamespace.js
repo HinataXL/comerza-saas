@@ -161,6 +161,7 @@ exports.ProductScalarFieldEnum = {
     description: 'description',
     price: 'price',
     stock: 'stock',
+    imageUrl: 'imageUrl',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };

@@ -47,7 +47,7 @@ exports.getProductById = getProductById;
 const createProduct = async (req, res) => {
     try {
         const tenantId = req.user?.tenantId;
-        const { name, description, price, stock } = req.body;
+        const { name, description, price, stock, imageUrl } = req.body;
         if (!tenantId) {
             res.status(401).json({ message: 'Unauthorized: No tenant specified' });
             return;
@@ -63,6 +63,7 @@ const createProduct = async (req, res) => {
                 description,
                 price: Number(price),
                 stock: Number(stock || 0),
+                imageUrl: imageUrl || null,
             },
         });
         res.status(201).json(product);
@@ -77,7 +78,7 @@ const updateProduct = async (req, res) => {
     try {
         const tenantId = req.user?.tenantId;
         const id = req.params.id;
-        const { name, description, price, stock } = req.body;
+        const { name, description, price, stock, imageUrl } = req.body;
         if (!tenantId) {
             res.status(401).json({ message: 'Unauthorized: No tenant specified' });
             return;
@@ -97,6 +98,7 @@ const updateProduct = async (req, res) => {
                 description: description !== undefined ? description : existing.description,
                 price: price !== undefined ? Number(price) : existing.price,
                 stock: stock !== undefined ? Number(stock) : existing.stock,
+                imageUrl: imageUrl !== undefined ? imageUrl : existing.imageUrl,
             },
         });
         res.json(updatedProduct);

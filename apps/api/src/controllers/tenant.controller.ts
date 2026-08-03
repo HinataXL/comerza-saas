@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { prisma } from '../lib/prisma';
 import { AuthRequest } from '../middlewares/auth.middleware';
-import { uploadImageToS3 } from '../services/s3.service';
+import { uploadFileToS3 } from '../services/s3.service';
 import path from 'path';
 export const getTenantIntegrations = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
@@ -147,7 +147,7 @@ export const uploadLogo = async (req: AuthRequest, res: Response): Promise<void>
     const fileName = `logos/${tenantId}-${Date.now()}${ext}`;
     
     // Subir la imagen a S3 directamente desde la memoria
-    const logoUrl = await uploadImageToS3(req.file.buffer, fileName, req.file.mimetype);
+    const logoUrl = await uploadFileToS3(req.file.buffer, fileName, req.file.mimetype);
 
     const tenant = await prisma.tenant.update({
       where: { id: tenantId },

@@ -3,10 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMe = exports.logout = exports.login = exports.register = void 0;
+exports.forgotPassword = exports.getMe = exports.logout = exports.login = exports.register = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jwt_1 = require("../utils/jwt");
 const prisma_1 = require("../lib/prisma");
+const email_service_1 = require("../services/email.service");
 const register = async (req, res) => {
     try {
         const { email, password, name, companyName } = req.body;
@@ -154,3 +155,27 @@ const getMe = async (req, res) => {
     }
 };
 exports.getMe = getMe;
+const forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await prisma_1.prisma.user.findUnique({ where: { email } });
+        if (!user) {
+            res.status(200).json({ message: 'Si el correo existe, se ha enviado una contraseña temporal.' });
+            return;
+        }
+        const temporaryPassword = Math.random().toString(36).slice(-8);
+        const salt = await bcrypt_1.default.genSalt(10);
+        const hashedPassword = await bcrypt_1.default.hash(temporaryPassword, salt);
+        await prisma_1.prisma.user.update({
+            where: { email },
+            data: { password: hashedPassword },
+        });
+        await (0, email_service_1.sendPasswordResetEmail)({ toEmail: email, newPassword: temporaryPassword });
+        res.status(200).json({ message: 'Si el correo existe, se ha enviado una contraseña temporal.' });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error trying to reset password' });
+    }
+};
+exports.forgotPassword = forgotPassword;

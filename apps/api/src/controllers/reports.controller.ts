@@ -60,7 +60,13 @@ export const getSalesReport = async (req: AuthRequest, res: Response): Promise<v
 
     // 3. Top Products (based on the same date filter)
     const saleIds = transactions.map(tx => tx.id);
-    let topProducts = [];
+    type TopProduct = {
+      id: string;
+      name: string;
+      quantity: number;
+      revenue: number;
+    };
+    let topProducts: TopProduct[] = [];
     
     if (saleIds.length > 0) {
       const saleItems = await prisma.saleItem.groupBy({
