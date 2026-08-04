@@ -110,6 +110,8 @@ const logout = (req, res) => {
     res.status(200).json({ message: 'Logged out successfully' });
 };
 exports.logout = logout;
+// Cache para las configuraciones de los planes (no cambian frecuentemente)
+const planCache = new Map();
 const getMe = async (req, res) => {
     try {
         if (!req.user) {
@@ -126,11 +128,21 @@ const getMe = async (req, res) => {
         }
         let features = [];
         if (user.tenant?.plan) {
-            const planConfig = await prisma_1.prisma.planConfig.findUnique({
-                where: { name: user.tenant.plan }
-            });
-            if (planConfig && planConfig.features) {
-                features = JSON.parse(planConfig.features);
+            const planName = user.tenant.plan;
+            const now = Date.now();
+            const cachedPlan = planCache.get(planName);
+            if (cachedPlan && cachedPlan.expiresAt > now) {
+                features = cachedPlan.features;
+            }
+            else {
+                const planConfig = await prisma_1.prisma.planConfig.findUnique({
+                    where: { name: planName }
+                });
+                if (planConfig && planConfig.features) {
+                    features = JSON.parse(planConfig.features);
+                    // Caché por 5 minutos
+                    planCache.set(planName, { features, expiresAt: now + 300000 });
+                }
             }
         }
         res.status(200).json({

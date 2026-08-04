@@ -26,7 +26,7 @@ export default function RecibosPage() {
     try {
       const res = await fetch('/api/sales', { credentials: 'include' });
       if (res.status === 401) {
-        router.push('/');
+        router.push('/login');
         return;
       }
       if (res.ok) {

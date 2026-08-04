@@ -61,7 +61,7 @@ export default function PosPage() {
       ]);
       
       if (prodRes.status === 401 || custRes.status === 401) {
-        router.push('/');
+        router.push('/login');
         return;
       }
 

@@ -28,7 +28,7 @@ export default function CustomersPage() {
     try {
       const res = await fetch('/api/customers', { credentials: 'include' });
       if (res.status === 401) {
-        router.push('/');
+        router.push('/login');
         return;
       }
       if (res.ok) setCustomers(await res.json());

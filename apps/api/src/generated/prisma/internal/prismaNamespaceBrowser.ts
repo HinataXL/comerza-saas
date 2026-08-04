@@ -58,7 +58,8 @@ export const ModelName = {
   Sale: 'Sale',
   SaleItem: 'SaleItem',
   PlanConfig: 'PlanConfig',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  Notification: 'Notification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -82,8 +83,10 @@ export const TenantScalarFieldEnum = {
   name: 'name',
   qpayproApiKey: 'qpayproApiKey',
   qpayproApiSecret: 'qpayproApiSecret',
+  isQpayproActive: 'isQpayproActive',
   recurrenteSecretKey: 'recurrenteSecretKey',
   recurrenteTerminalId: 'recurrenteTerminalId',
+  isRecurrenteActive: 'isRecurrenteActive',
   logoUrl: 'logoUrl',
   receiptTemplate: 'receiptTemplate',
   plan: 'plan',
@@ -190,6 +193,20 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  title: 'title',
+  message: 'message',
+  type: 'type',
+  isRead: 'isRead',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
 export const SortOrder = {

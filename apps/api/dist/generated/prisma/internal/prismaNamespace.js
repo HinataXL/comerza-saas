@@ -48,7 +48,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.defineExtension = exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.AuditLogScalarFieldEnum = exports.PlanConfigScalarFieldEnum = exports.SaleItemScalarFieldEnum = exports.SaleScalarFieldEnum = exports.ProductScalarFieldEnum = exports.CustomerScalarFieldEnum = exports.UserScalarFieldEnum = exports.TenantScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.prismaVersion = exports.getExtensionContext = exports.Decimal = exports.Sql = exports.raw = exports.join = exports.empty = exports.sql = exports.PrismaClientValidationError = exports.PrismaClientInitializationError = exports.PrismaClientRustPanicError = exports.PrismaClientUnknownRequestError = exports.PrismaClientKnownRequestError = void 0;
+exports.defineExtension = exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.NotificationScalarFieldEnum = exports.AuditLogScalarFieldEnum = exports.PlanConfigScalarFieldEnum = exports.SaleItemScalarFieldEnum = exports.SaleScalarFieldEnum = exports.ProductScalarFieldEnum = exports.CustomerScalarFieldEnum = exports.UserScalarFieldEnum = exports.TenantScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.prismaVersion = exports.getExtensionContext = exports.Decimal = exports.Sql = exports.raw = exports.join = exports.empty = exports.sql = exports.PrismaClientValidationError = exports.PrismaClientInitializationError = exports.PrismaClientRustPanicError = exports.PrismaClientUnknownRequestError = exports.PrismaClientKnownRequestError = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/client"));
 /**
  * Prisma Errors
@@ -110,7 +110,8 @@ exports.ModelName = {
     Sale: 'Sale',
     SaleItem: 'SaleItem',
     PlanConfig: 'PlanConfig',
-    AuditLog: 'AuditLog'
+    AuditLog: 'AuditLog',
+    Notification: 'Notification'
 };
 /**
  * Enums
@@ -126,8 +127,10 @@ exports.TenantScalarFieldEnum = {
     name: 'name',
     qpayproApiKey: 'qpayproApiKey',
     qpayproApiSecret: 'qpayproApiSecret',
+    isQpayproActive: 'isQpayproActive',
     recurrenteSecretKey: 'recurrenteSecretKey',
     recurrenteTerminalId: 'recurrenteTerminalId',
+    isRecurrenteActive: 'isRecurrenteActive',
     logoUrl: 'logoUrl',
     receiptTemplate: 'receiptTemplate',
     plan: 'plan',
@@ -203,6 +206,16 @@ exports.AuditLogScalarFieldEnum = {
     targetId: 'targetId',
     details: 'details',
     createdAt: 'createdAt'
+};
+exports.NotificationScalarFieldEnum = {
+    id: 'id',
+    tenantId: 'tenantId',
+    title: 'title',
+    message: 'message',
+    type: 'type',
+    isRead: 'isRead',
+    createdAt: 'createdAt',
+    expiresAt: 'expiresAt'
 };
 exports.SortOrder = {
     asc: 'asc',

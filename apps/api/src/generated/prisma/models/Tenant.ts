@@ -29,8 +29,10 @@ export type TenantMinAggregateOutputType = {
   name: string | null
   qpayproApiKey: string | null
   qpayproApiSecret: string | null
+  isQpayproActive: boolean | null
   recurrenteSecretKey: string | null
   recurrenteTerminalId: string | null
+  isRecurrenteActive: boolean | null
   logoUrl: string | null
   receiptTemplate: string | null
   plan: string | null
@@ -44,8 +46,10 @@ export type TenantMaxAggregateOutputType = {
   name: string | null
   qpayproApiKey: string | null
   qpayproApiSecret: string | null
+  isQpayproActive: boolean | null
   recurrenteSecretKey: string | null
   recurrenteTerminalId: string | null
+  isRecurrenteActive: boolean | null
   logoUrl: string | null
   receiptTemplate: string | null
   plan: string | null
@@ -59,8 +63,10 @@ export type TenantCountAggregateOutputType = {
   name: number
   qpayproApiKey: number
   qpayproApiSecret: number
+  isQpayproActive: number
   recurrenteSecretKey: number
   recurrenteTerminalId: number
+  isRecurrenteActive: number
   logoUrl: number
   receiptTemplate: number
   plan: number
@@ -76,8 +82,10 @@ export type TenantMinAggregateInputType = {
   name?: true
   qpayproApiKey?: true
   qpayproApiSecret?: true
+  isQpayproActive?: true
   recurrenteSecretKey?: true
   recurrenteTerminalId?: true
+  isRecurrenteActive?: true
   logoUrl?: true
   receiptTemplate?: true
   plan?: true
@@ -91,8 +99,10 @@ export type TenantMaxAggregateInputType = {
   name?: true
   qpayproApiKey?: true
   qpayproApiSecret?: true
+  isQpayproActive?: true
   recurrenteSecretKey?: true
   recurrenteTerminalId?: true
+  isRecurrenteActive?: true
   logoUrl?: true
   receiptTemplate?: true
   plan?: true
@@ -106,8 +116,10 @@ export type TenantCountAggregateInputType = {
   name?: true
   qpayproApiKey?: true
   qpayproApiSecret?: true
+  isQpayproActive?: true
   recurrenteSecretKey?: true
   recurrenteTerminalId?: true
+  isRecurrenteActive?: true
   logoUrl?: true
   receiptTemplate?: true
   plan?: true
@@ -194,8 +206,10 @@ export type TenantGroupByOutputType = {
   name: string
   qpayproApiKey: string | null
   qpayproApiSecret: string | null
+  isQpayproActive: boolean
   recurrenteSecretKey: string | null
   recurrenteTerminalId: string | null
+  isRecurrenteActive: boolean
   logoUrl: string | null
   receiptTemplate: string
   plan: string
@@ -230,8 +244,10 @@ export type TenantWhereInput = {
   name?: Prisma.StringFilter<"Tenant"> | string
   qpayproApiKey?: Prisma.StringNullableFilter<"Tenant"> | string | null
   qpayproApiSecret?: Prisma.StringNullableFilter<"Tenant"> | string | null
+  isQpayproActive?: Prisma.BoolFilter<"Tenant"> | boolean
   recurrenteSecretKey?: Prisma.StringNullableFilter<"Tenant"> | string | null
   recurrenteTerminalId?: Prisma.StringNullableFilter<"Tenant"> | string | null
+  isRecurrenteActive?: Prisma.BoolFilter<"Tenant"> | boolean
   logoUrl?: Prisma.StringNullableFilter<"Tenant"> | string | null
   receiptTemplate?: Prisma.StringFilter<"Tenant"> | string
   plan?: Prisma.StringFilter<"Tenant"> | string
@@ -243,6 +259,7 @@ export type TenantWhereInput = {
   products?: Prisma.ProductListRelationFilter
   sales?: Prisma.SaleListRelationFilter
   saleItems?: Prisma.SaleItemListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }
 
 export type TenantOrderByWithRelationInput = {
@@ -250,8 +267,10 @@ export type TenantOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   qpayproApiKey?: Prisma.SortOrderInput | Prisma.SortOrder
   qpayproApiSecret?: Prisma.SortOrderInput | Prisma.SortOrder
+  isQpayproActive?: Prisma.SortOrder
   recurrenteSecretKey?: Prisma.SortOrderInput | Prisma.SortOrder
   recurrenteTerminalId?: Prisma.SortOrderInput | Prisma.SortOrder
+  isRecurrenteActive?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   receiptTemplate?: Prisma.SortOrder
   plan?: Prisma.SortOrder
@@ -263,6 +282,7 @@ export type TenantOrderByWithRelationInput = {
   products?: Prisma.ProductOrderByRelationAggregateInput
   sales?: Prisma.SaleOrderByRelationAggregateInput
   saleItems?: Prisma.SaleItemOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
 }
 
 export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -273,8 +293,10 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Tenant"> | string
   qpayproApiKey?: Prisma.StringNullableFilter<"Tenant"> | string | null
   qpayproApiSecret?: Prisma.StringNullableFilter<"Tenant"> | string | null
+  isQpayproActive?: Prisma.BoolFilter<"Tenant"> | boolean
   recurrenteSecretKey?: Prisma.StringNullableFilter<"Tenant"> | string | null
   recurrenteTerminalId?: Prisma.StringNullableFilter<"Tenant"> | string | null
+  isRecurrenteActive?: Prisma.BoolFilter<"Tenant"> | boolean
   logoUrl?: Prisma.StringNullableFilter<"Tenant"> | string | null
   receiptTemplate?: Prisma.StringFilter<"Tenant"> | string
   plan?: Prisma.StringFilter<"Tenant"> | string
@@ -286,6 +308,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   products?: Prisma.ProductListRelationFilter
   sales?: Prisma.SaleListRelationFilter
   saleItems?: Prisma.SaleItemListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }, "id">
 
 export type TenantOrderByWithAggregationInput = {
@@ -293,8 +316,10 @@ export type TenantOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   qpayproApiKey?: Prisma.SortOrderInput | Prisma.SortOrder
   qpayproApiSecret?: Prisma.SortOrderInput | Prisma.SortOrder
+  isQpayproActive?: Prisma.SortOrder
   recurrenteSecretKey?: Prisma.SortOrderInput | Prisma.SortOrder
   recurrenteTerminalId?: Prisma.SortOrderInput | Prisma.SortOrder
+  isRecurrenteActive?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   receiptTemplate?: Prisma.SortOrder
   plan?: Prisma.SortOrder
@@ -314,8 +339,10 @@ export type TenantScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   qpayproApiKey?: Prisma.StringNullableWithAggregatesFilter<"Tenant"> | string | null
   qpayproApiSecret?: Prisma.StringNullableWithAggregatesFilter<"Tenant"> | string | null
+  isQpayproActive?: Prisma.BoolWithAggregatesFilter<"Tenant"> | boolean
   recurrenteSecretKey?: Prisma.StringNullableWithAggregatesFilter<"Tenant"> | string | null
   recurrenteTerminalId?: Prisma.StringNullableWithAggregatesFilter<"Tenant"> | string | null
+  isRecurrenteActive?: Prisma.BoolWithAggregatesFilter<"Tenant"> | boolean
   logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Tenant"> | string | null
   receiptTemplate?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   plan?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
@@ -329,8 +356,10 @@ export type TenantCreateInput = {
   name: string
   qpayproApiKey?: string | null
   qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
   recurrenteSecretKey?: string | null
   recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
@@ -342,6 +371,7 @@ export type TenantCreateInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   sales?: Prisma.SaleCreateNestedManyWithoutTenantInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutTenantInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateInput = {
@@ -349,8 +379,10 @@ export type TenantUncheckedCreateInput = {
   name: string
   qpayproApiKey?: string | null
   qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
   recurrenteSecretKey?: string | null
   recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
@@ -362,6 +394,7 @@ export type TenantUncheckedCreateInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutTenantInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutTenantInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUpdateInput = {
@@ -369,8 +402,10 @@ export type TenantUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
@@ -382,6 +417,7 @@ export type TenantUpdateInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   sales?: Prisma.SaleUpdateManyWithoutTenantNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutTenantNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateInput = {
@@ -389,8 +425,10 @@ export type TenantUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
@@ -402,6 +440,7 @@ export type TenantUncheckedUpdateInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   sales?: Prisma.SaleUncheckedUpdateManyWithoutTenantNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutTenantNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateManyInput = {
@@ -409,8 +448,10 @@ export type TenantCreateManyInput = {
   name: string
   qpayproApiKey?: string | null
   qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
   recurrenteSecretKey?: string | null
   recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
@@ -424,8 +465,10 @@ export type TenantUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
@@ -439,8 +482,10 @@ export type TenantUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
@@ -454,8 +499,10 @@ export type TenantCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   qpayproApiKey?: Prisma.SortOrder
   qpayproApiSecret?: Prisma.SortOrder
+  isQpayproActive?: Prisma.SortOrder
   recurrenteSecretKey?: Prisma.SortOrder
   recurrenteTerminalId?: Prisma.SortOrder
+  isRecurrenteActive?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   receiptTemplate?: Prisma.SortOrder
   plan?: Prisma.SortOrder
@@ -469,8 +516,10 @@ export type TenantMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   qpayproApiKey?: Prisma.SortOrder
   qpayproApiSecret?: Prisma.SortOrder
+  isQpayproActive?: Prisma.SortOrder
   recurrenteSecretKey?: Prisma.SortOrder
   recurrenteTerminalId?: Prisma.SortOrder
+  isRecurrenteActive?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   receiptTemplate?: Prisma.SortOrder
   plan?: Prisma.SortOrder
@@ -484,8 +533,10 @@ export type TenantMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   qpayproApiKey?: Prisma.SortOrder
   qpayproApiSecret?: Prisma.SortOrder
+  isQpayproActive?: Prisma.SortOrder
   recurrenteSecretKey?: Prisma.SortOrder
   recurrenteTerminalId?: Prisma.SortOrder
+  isRecurrenteActive?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   receiptTemplate?: Prisma.SortOrder
   plan?: Prisma.SortOrder
@@ -592,13 +643,29 @@ export type TenantUpdateOneRequiredWithoutSaleItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutSaleItemsInput, Prisma.TenantUpdateWithoutSaleItemsInput>, Prisma.TenantUncheckedUpdateWithoutSaleItemsInput>
 }
 
+export type TenantCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutNotificationsInput, Prisma.TenantUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutNotificationsInput, Prisma.TenantUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.TenantUpsertWithoutNotificationsInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutNotificationsInput, Prisma.TenantUpdateWithoutNotificationsInput>, Prisma.TenantUncheckedUpdateWithoutNotificationsInput>
+}
+
 export type TenantCreateWithoutUsersInput = {
   id?: string
   name: string
   qpayproApiKey?: string | null
   qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
   recurrenteSecretKey?: string | null
   recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
@@ -609,6 +676,7 @@ export type TenantCreateWithoutUsersInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   sales?: Prisma.SaleCreateNestedManyWithoutTenantInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutTenantInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutUsersInput = {
@@ -616,8 +684,10 @@ export type TenantUncheckedCreateWithoutUsersInput = {
   name: string
   qpayproApiKey?: string | null
   qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
   recurrenteSecretKey?: string | null
   recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
@@ -628,6 +698,7 @@ export type TenantUncheckedCreateWithoutUsersInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutTenantInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutTenantInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutUsersInput = {
@@ -651,8 +722,10 @@ export type TenantUpdateWithoutUsersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
@@ -663,6 +736,7 @@ export type TenantUpdateWithoutUsersInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   sales?: Prisma.SaleUpdateManyWithoutTenantNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutTenantNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutUsersInput = {
@@ -670,8 +744,10 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
@@ -682,6 +758,7 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   sales?: Prisma.SaleUncheckedUpdateManyWithoutTenantNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutTenantNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutCustomersInput = {
@@ -689,8 +766,10 @@ export type TenantCreateWithoutCustomersInput = {
   name: string
   qpayproApiKey?: string | null
   qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
   recurrenteSecretKey?: string | null
   recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
@@ -701,6 +780,7 @@ export type TenantCreateWithoutCustomersInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   sales?: Prisma.SaleCreateNestedManyWithoutTenantInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutTenantInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCustomersInput = {
@@ -708,8 +788,10 @@ export type TenantUncheckedCreateWithoutCustomersInput = {
   name: string
   qpayproApiKey?: string | null
   qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
   recurrenteSecretKey?: string | null
   recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
@@ -720,6 +802,7 @@ export type TenantUncheckedCreateWithoutCustomersInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutTenantInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutTenantInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCustomersInput = {
@@ -743,8 +826,10 @@ export type TenantUpdateWithoutCustomersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
@@ -755,6 +840,7 @@ export type TenantUpdateWithoutCustomersInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   sales?: Prisma.SaleUpdateManyWithoutTenantNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutTenantNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCustomersInput = {
@@ -762,8 +848,10 @@ export type TenantUncheckedUpdateWithoutCustomersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
@@ -774,6 +862,7 @@ export type TenantUncheckedUpdateWithoutCustomersInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   sales?: Prisma.SaleUncheckedUpdateManyWithoutTenantNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutTenantNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutProductsInput = {
@@ -781,8 +870,10 @@ export type TenantCreateWithoutProductsInput = {
   name: string
   qpayproApiKey?: string | null
   qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
   recurrenteSecretKey?: string | null
   recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
@@ -793,6 +884,7 @@ export type TenantCreateWithoutProductsInput = {
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   sales?: Prisma.SaleCreateNestedManyWithoutTenantInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutTenantInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutProductsInput = {
@@ -800,8 +892,10 @@ export type TenantUncheckedCreateWithoutProductsInput = {
   name: string
   qpayproApiKey?: string | null
   qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
   recurrenteSecretKey?: string | null
   recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
@@ -812,6 +906,7 @@ export type TenantUncheckedCreateWithoutProductsInput = {
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutTenantInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutTenantInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutProductsInput = {
@@ -835,8 +930,10 @@ export type TenantUpdateWithoutProductsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
@@ -847,6 +944,7 @@ export type TenantUpdateWithoutProductsInput = {
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   sales?: Prisma.SaleUpdateManyWithoutTenantNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutTenantNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutProductsInput = {
@@ -854,8 +952,10 @@ export type TenantUncheckedUpdateWithoutProductsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
@@ -866,6 +966,7 @@ export type TenantUncheckedUpdateWithoutProductsInput = {
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   sales?: Prisma.SaleUncheckedUpdateManyWithoutTenantNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutTenantNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutSalesInput = {
@@ -873,8 +974,10 @@ export type TenantCreateWithoutSalesInput = {
   name: string
   qpayproApiKey?: string | null
   qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
   recurrenteSecretKey?: string | null
   recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
@@ -885,6 +988,7 @@ export type TenantCreateWithoutSalesInput = {
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutTenantInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutSalesInput = {
@@ -892,8 +996,10 @@ export type TenantUncheckedCreateWithoutSalesInput = {
   name: string
   qpayproApiKey?: string | null
   qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
   recurrenteSecretKey?: string | null
   recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
@@ -904,6 +1010,7 @@ export type TenantUncheckedCreateWithoutSalesInput = {
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutTenantInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutSalesInput = {
@@ -927,8 +1034,10 @@ export type TenantUpdateWithoutSalesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
@@ -939,6 +1048,7 @@ export type TenantUpdateWithoutSalesInput = {
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutTenantNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutSalesInput = {
@@ -946,8 +1056,10 @@ export type TenantUncheckedUpdateWithoutSalesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
@@ -958,6 +1070,7 @@ export type TenantUncheckedUpdateWithoutSalesInput = {
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutTenantNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutSaleItemsInput = {
@@ -965,8 +1078,10 @@ export type TenantCreateWithoutSaleItemsInput = {
   name: string
   qpayproApiKey?: string | null
   qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
   recurrenteSecretKey?: string | null
   recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
@@ -977,6 +1092,7 @@ export type TenantCreateWithoutSaleItemsInput = {
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   sales?: Prisma.SaleCreateNestedManyWithoutTenantInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutSaleItemsInput = {
@@ -984,8 +1100,10 @@ export type TenantUncheckedCreateWithoutSaleItemsInput = {
   name: string
   qpayproApiKey?: string | null
   qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
   recurrenteSecretKey?: string | null
   recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
@@ -996,6 +1114,7 @@ export type TenantUncheckedCreateWithoutSaleItemsInput = {
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutTenantInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutSaleItemsInput = {
@@ -1019,8 +1138,10 @@ export type TenantUpdateWithoutSaleItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1031,6 +1152,7 @@ export type TenantUpdateWithoutSaleItemsInput = {
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   sales?: Prisma.SaleUpdateManyWithoutTenantNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutSaleItemsInput = {
@@ -1038,8 +1160,10 @@ export type TenantUncheckedUpdateWithoutSaleItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1050,6 +1174,111 @@ export type TenantUncheckedUpdateWithoutSaleItemsInput = {
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   sales?: Prisma.SaleUncheckedUpdateManyWithoutTenantNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutNotificationsInput = {
+  id?: string
+  name: string
+  qpayproApiKey?: string | null
+  qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
+  recurrenteSecretKey?: string | null
+  recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
+  logoUrl?: string | null
+  receiptTemplate?: string
+  plan?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductCreateNestedManyWithoutTenantInput
+  sales?: Prisma.SaleCreateNestedManyWithoutTenantInput
+  saleItems?: Prisma.SaleItemCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  name: string
+  qpayproApiKey?: string | null
+  qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
+  recurrenteSecretKey?: string | null
+  recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
+  logoUrl?: string | null
+  receiptTemplate?: string
+  plan?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutTenantInput
+  saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutNotificationsInput, Prisma.TenantUncheckedCreateWithoutNotificationsInput>
+}
+
+export type TenantUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutNotificationsInput, Prisma.TenantUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutNotificationsInput, Prisma.TenantUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutNotificationsInput, Prisma.TenantUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type TenantUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutTenantNestedInput
+  saleItems?: Prisma.SaleItemUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutTenantNestedInput
+  saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 
@@ -1063,6 +1292,7 @@ export type TenantCountOutputType = {
   products: number
   sales: number
   saleItems: number
+  notifications: number
 }
 
 export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1071,6 +1301,7 @@ export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   products?: boolean | TenantCountOutputTypeCountProductsArgs
   sales?: boolean | TenantCountOutputTypeCountSalesArgs
   saleItems?: boolean | TenantCountOutputTypeCountSaleItemsArgs
+  notifications?: boolean | TenantCountOutputTypeCountNotificationsArgs
 }
 
 /**
@@ -1118,14 +1349,23 @@ export type TenantCountOutputTypeCountSaleItemsArgs<ExtArgs extends runtime.Type
   where?: Prisma.SaleItemWhereInput
 }
 
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
 
 export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   qpayproApiKey?: boolean
   qpayproApiSecret?: boolean
+  isQpayproActive?: boolean
   recurrenteSecretKey?: boolean
   recurrenteTerminalId?: boolean
+  isRecurrenteActive?: boolean
   logoUrl?: boolean
   receiptTemplate?: boolean
   plan?: boolean
@@ -1137,6 +1377,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   products?: boolean | Prisma.Tenant$productsArgs<ExtArgs>
   sales?: boolean | Prisma.Tenant$salesArgs<ExtArgs>
   saleItems?: boolean | Prisma.Tenant$saleItemsArgs<ExtArgs>
+  notifications?: boolean | Prisma.Tenant$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tenant"]>
 
@@ -1145,8 +1386,10 @@ export type TenantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   name?: boolean
   qpayproApiKey?: boolean
   qpayproApiSecret?: boolean
+  isQpayproActive?: boolean
   recurrenteSecretKey?: boolean
   recurrenteTerminalId?: boolean
+  isRecurrenteActive?: boolean
   logoUrl?: boolean
   receiptTemplate?: boolean
   plan?: boolean
@@ -1160,8 +1403,10 @@ export type TenantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   name?: boolean
   qpayproApiKey?: boolean
   qpayproApiSecret?: boolean
+  isQpayproActive?: boolean
   recurrenteSecretKey?: boolean
   recurrenteTerminalId?: boolean
+  isRecurrenteActive?: boolean
   logoUrl?: boolean
   receiptTemplate?: boolean
   plan?: boolean
@@ -1175,8 +1420,10 @@ export type TenantSelectScalar = {
   name?: boolean
   qpayproApiKey?: boolean
   qpayproApiSecret?: boolean
+  isQpayproActive?: boolean
   recurrenteSecretKey?: boolean
   recurrenteTerminalId?: boolean
+  isRecurrenteActive?: boolean
   logoUrl?: boolean
   receiptTemplate?: boolean
   plan?: boolean
@@ -1185,13 +1432,14 @@ export type TenantSelectScalar = {
   updatedAt?: boolean
 }
 
-export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "qpayproApiKey" | "qpayproApiSecret" | "recurrenteSecretKey" | "recurrenteTerminalId" | "logoUrl" | "receiptTemplate" | "plan" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["tenant"]>
+export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "qpayproApiKey" | "qpayproApiSecret" | "isQpayproActive" | "recurrenteSecretKey" | "recurrenteTerminalId" | "isRecurrenteActive" | "logoUrl" | "receiptTemplate" | "plan" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["tenant"]>
 export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Tenant$usersArgs<ExtArgs>
   customers?: boolean | Prisma.Tenant$customersArgs<ExtArgs>
   products?: boolean | Prisma.Tenant$productsArgs<ExtArgs>
   sales?: boolean | Prisma.Tenant$salesArgs<ExtArgs>
   saleItems?: boolean | Prisma.Tenant$saleItemsArgs<ExtArgs>
+  notifications?: boolean | Prisma.Tenant$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TenantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1205,14 +1453,17 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     products: Prisma.$ProductPayload<ExtArgs>[]
     sales: Prisma.$SalePayload<ExtArgs>[]
     saleItems: Prisma.$SaleItemPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     qpayproApiKey: string | null
     qpayproApiSecret: string | null
+    isQpayproActive: boolean
     recurrenteSecretKey: string | null
     recurrenteTerminalId: string | null
+    isRecurrenteActive: boolean
     logoUrl: string | null
     receiptTemplate: string
     plan: string
@@ -1618,6 +1869,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   products<T extends Prisma.Tenant$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sales<T extends Prisma.Tenant$salesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$salesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   saleItems<T extends Prisma.Tenant$saleItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$saleItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SaleItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.Tenant$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1651,8 +1903,10 @@ export interface TenantFieldRefs {
   readonly name: Prisma.FieldRef<"Tenant", 'String'>
   readonly qpayproApiKey: Prisma.FieldRef<"Tenant", 'String'>
   readonly qpayproApiSecret: Prisma.FieldRef<"Tenant", 'String'>
+  readonly isQpayproActive: Prisma.FieldRef<"Tenant", 'Boolean'>
   readonly recurrenteSecretKey: Prisma.FieldRef<"Tenant", 'String'>
   readonly recurrenteTerminalId: Prisma.FieldRef<"Tenant", 'String'>
+  readonly isRecurrenteActive: Prisma.FieldRef<"Tenant", 'Boolean'>
   readonly logoUrl: Prisma.FieldRef<"Tenant", 'String'>
   readonly receiptTemplate: Prisma.FieldRef<"Tenant", 'String'>
   readonly plan: Prisma.FieldRef<"Tenant", 'String'>
@@ -2169,6 +2423,30 @@ export type Tenant$saleItemsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.SaleItemScalarFieldEnum | Prisma.SaleItemScalarFieldEnum[]
+}
+
+/**
+ * Tenant.notifications
+ */
+export type Tenant$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
 }
 
 /**

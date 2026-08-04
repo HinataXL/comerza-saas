@@ -19,4 +19,5 @@ router.get('/gateways/status', auth_middleware_1.authenticate, superadmin_contro
 router.get('/users', auth_middleware_1.authenticate, superadmin_controller_1.getAllUsers);
 router.post('/users/superadmin', auth_middleware_1.authenticate, superadmin_controller_1.createSuperadmin);
 router.delete('/users/:id', auth_middleware_1.authenticate, superadmin_controller_1.deleteUser);
+router.post('/notifications', auth_middleware_1.authenticate, superadmin_controller_1.createGlobalNotification);
 exports.default = router;

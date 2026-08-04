@@ -9,7 +9,7 @@ export function proxy(request: NextRequest) {
 
     // Si no hay token, redirigir al login
     if (!token) {
-      const loginUrl = new URL('/', request.url);
+      const loginUrl = new URL('/login', request.url);
       return NextResponse.redirect(loginUrl);
     }
     

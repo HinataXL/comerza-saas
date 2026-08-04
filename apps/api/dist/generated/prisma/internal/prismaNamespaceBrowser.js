@@ -48,7 +48,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.AuditLogScalarFieldEnum = exports.PlanConfigScalarFieldEnum = exports.SaleItemScalarFieldEnum = exports.SaleScalarFieldEnum = exports.ProductScalarFieldEnum = exports.CustomerScalarFieldEnum = exports.UserScalarFieldEnum = exports.TenantScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
+exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.NotificationScalarFieldEnum = exports.AuditLogScalarFieldEnum = exports.PlanConfigScalarFieldEnum = exports.SaleItemScalarFieldEnum = exports.SaleScalarFieldEnum = exports.ProductScalarFieldEnum = exports.CustomerScalarFieldEnum = exports.UserScalarFieldEnum = exports.TenantScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/index-browser"));
 exports.Decimal = runtime.Decimal;
 exports.NullTypes = {
@@ -82,7 +82,8 @@ exports.ModelName = {
     Sale: 'Sale',
     SaleItem: 'SaleItem',
     PlanConfig: 'PlanConfig',
-    AuditLog: 'AuditLog'
+    AuditLog: 'AuditLog',
+    Notification: 'Notification'
 };
 /*
  * Enums
@@ -98,8 +99,10 @@ exports.TenantScalarFieldEnum = {
     name: 'name',
     qpayproApiKey: 'qpayproApiKey',
     qpayproApiSecret: 'qpayproApiSecret',
+    isQpayproActive: 'isQpayproActive',
     recurrenteSecretKey: 'recurrenteSecretKey',
     recurrenteTerminalId: 'recurrenteTerminalId',
+    isRecurrenteActive: 'isRecurrenteActive',
     logoUrl: 'logoUrl',
     receiptTemplate: 'receiptTemplate',
     plan: 'plan',
@@ -175,6 +178,16 @@ exports.AuditLogScalarFieldEnum = {
     targetId: 'targetId',
     details: 'details',
     createdAt: 'createdAt'
+};
+exports.NotificationScalarFieldEnum = {
+    id: 'id',
+    tenantId: 'tenantId',
+    title: 'title',
+    message: 'message',
+    type: 'type',
+    isRead: 'isRead',
+    createdAt: 'createdAt',
+    expiresAt: 'expiresAt'
 };
 exports.SortOrder = {
     asc: 'asc',

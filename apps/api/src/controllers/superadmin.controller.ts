@@ -3,6 +3,7 @@ import { prisma } from '../lib/prisma';
 import { AuthRequest } from '../middlewares/auth.middleware';
 import bcrypt from 'bcrypt';
 import { sendWelcomeEmail, sendSuperAdminWelcomeEmail, sendSuspensionEmail } from '../services/email.service';
+import { broadcastNotification } from './notifications.controller';
 
 export const getGlobalMetrics = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
@@ -655,6 +656,70 @@ export const deleteUser = async (req: AuthRequest, res: Response): Promise<void>
       return;
     }
     res.status(500).json({ message: 'Server error deleting user' });
+  }
+};
+
+export const createGlobalNotification = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    if (req.user?.role !== 'SUPERADMIN') {
+      res.status(403).json({ message: 'Forbidden: SuperAdmin only' });
+      return;
+    }
+
+    const { title, message, type } = req.body;
+
+    if (!title || !message) {
+      res.status(400).json({ message: 'Title and message are required' });
+      return;
+    }
+
+    // Get all active tenants
+    const activeTenants = await prisma.tenant.findMany({
+      where: { isActive: true },
+      select: { id: true }
+    });
+
+    if (activeTenants.length === 0) {
+      res.status(404).json({ message: 'No active tenants found' });
+      return;
+    }
+
+    const expiresAt = new Date(Date.now() + 12 * 60 * 60 * 1000); // 12 hours from now
+
+    // Create a notification for each active tenant
+    const notificationsData = activeTenants.map(tenant => ({
+      tenantId: tenant.id,
+      title,
+      message,
+      type: type || 'INFO',
+      expiresAt
+    }));
+
+    await prisma.notification.createMany({
+      data: notificationsData
+    });
+
+    // Notify connected SSE clients in real-time
+    notificationsData.forEach(notif => {
+      broadcastNotification(notif.tenantId, {
+        ...notif,
+        id: crypto.randomUUID(), // Temp ID until page reload or it could be omitted
+        isRead: false
+      });
+    });
+
+    await prisma.auditLog.create({
+      data: {
+        action: 'GLOBAL_NOTIFICATION_SENT',
+        actorId: req.user.id as string,
+        details: JSON.stringify({ title, type, tenantCount: activeTenants.length })
+      }
+    });
+
+    res.status(201).json({ message: 'Global notification sent successfully', count: activeTenants.length });
+  } catch (error) {
+    console.error('Error creating global notification:', error);
+    res.status(500).json({ message: 'Server error creating global notification' });
   }
 };
 

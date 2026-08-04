@@ -69,7 +69,7 @@ export default function Sidebar() {
         if (data.isSuperadmin) {
           window.location.href = '/superadmin';
         } else {
-          router.push('/');
+          router.push('/login');
         }
       }
     } catch (error) {

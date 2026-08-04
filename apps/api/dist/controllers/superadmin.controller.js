@@ -3,10 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.deleteTenant = exports.createSuperadmin = exports.getAllUsers = exports.getGatewaysStatus = exports.getAuditLogs = exports.getHealth = exports.updatePlan = exports.getPlans = exports.changeTenantPlan = exports.impersonateTenant = exports.toggleTenantStatus = exports.createTenant = exports.getTenants = exports.getGlobalMetrics = void 0;
+exports.createGlobalNotification = exports.deleteUser = exports.deleteTenant = exports.createSuperadmin = exports.getAllUsers = exports.getGatewaysStatus = exports.getAuditLogs = exports.getHealth = exports.updatePlan = exports.getPlans = exports.changeTenantPlan = exports.impersonateTenant = exports.toggleTenantStatus = exports.createTenant = exports.getTenants = exports.getGlobalMetrics = void 0;
 const prisma_1 = require("../lib/prisma");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const email_service_1 = require("../services/email.service");
+const notifications_controller_1 = require("./notifications.controller");
 const getGlobalMetrics = async (req, res) => {
     try {
         if (req.user?.role !== 'SUPERADMIN') {
@@ -597,3 +598,58 @@ const deleteUser = async (req, res) => {
     }
 };
 exports.deleteUser = deleteUser;
+const createGlobalNotification = async (req, res) => {
+    try {
+        if (req.user?.role !== 'SUPERADMIN') {
+            res.status(403).json({ message: 'Forbidden: SuperAdmin only' });
+            return;
+        }
+        const { title, message, type } = req.body;
+        if (!title || !message) {
+            res.status(400).json({ message: 'Title and message are required' });
+            return;
+        }
+        // Get all active tenants
+        const activeTenants = await prisma_1.prisma.tenant.findMany({
+            where: { isActive: true },
+            select: { id: true }
+        });
+        if (activeTenants.length === 0) {
+            res.status(404).json({ message: 'No active tenants found' });
+            return;
+        }
+        const expiresAt = new Date(Date.now() + 12 * 60 * 60 * 1000); // 12 hours from now
+        // Create a notification for each active tenant
+        const notificationsData = activeTenants.map(tenant => ({
+            tenantId: tenant.id,
+            title,
+            message,
+            type: type || 'INFO',
+            expiresAt
+        }));
+        await prisma_1.prisma.notification.createMany({
+            data: notificationsData
+        });
+        // Notify connected SSE clients in real-time
+        notificationsData.forEach(notif => {
+            (0, notifications_controller_1.broadcastNotification)(notif.tenantId, {
+                ...notif,
+                id: crypto.randomUUID(), // Temp ID until page reload or it could be omitted
+                isRead: false
+            });
+        });
+        await prisma_1.prisma.auditLog.create({
+            data: {
+                action: 'GLOBAL_NOTIFICATION_SENT',
+                actorId: req.user.id,
+                details: JSON.stringify({ title, type, tenantCount: activeTenants.length })
+            }
+        });
+        res.status(201).json({ message: 'Global notification sent successfully', count: activeTenants.length });
+    }
+    catch (error) {
+        console.error('Error creating global notification:', error);
+        res.status(500).json({ message: 'Server error creating global notification' });
+    }
+};
+exports.createGlobalNotification = createGlobalNotification;

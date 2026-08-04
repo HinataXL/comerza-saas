@@ -16,8 +16,10 @@ export const getTenantIntegrations = async (req: AuthRequest, res: Response): Pr
       select: {
         qpayproApiKey: true,
         qpayproApiSecret: true,
+        isQpayproActive: true,
         recurrenteSecretKey: true,
-        recurrenteTerminalId: true
+        recurrenteTerminalId: true,
+        isRecurrenteActive: true
       }
     });
 
@@ -29,8 +31,10 @@ export const getTenantIntegrations = async (req: AuthRequest, res: Response): Pr
     res.json({
       qpayproApiKey: tenant.qpayproApiKey || '',
       qpayproApiSecret: tenant.qpayproApiSecret || '',
+      isQpayproActive: tenant.isQpayproActive || false,
       recurrenteSecretKey: tenant.recurrenteSecretKey || '',
-      recurrenteTerminalId: tenant.recurrenteTerminalId || ''
+      recurrenteTerminalId: tenant.recurrenteTerminalId || '',
+      isRecurrenteActive: tenant.isRecurrenteActive || false
     });
   } catch (error) {
     console.error(error);
@@ -46,21 +50,25 @@ export const updateTenantIntegrations = async (req: AuthRequest, res: Response):
       return;
     }
 
-    const { qpayproApiKey, qpayproApiSecret, recurrenteSecretKey, recurrenteTerminalId } = req.body;
+    const { qpayproApiKey, qpayproApiSecret, isQpayproActive, recurrenteSecretKey, recurrenteTerminalId, isRecurrenteActive } = req.body;
 
     const tenant = await prisma.tenant.update({
       where: { id: tenantId },
       data: {
         qpayproApiKey: qpayproApiKey || null,
         qpayproApiSecret: qpayproApiSecret || null,
+        isQpayproActive: isQpayproActive !== undefined ? isQpayproActive : undefined,
         recurrenteSecretKey: recurrenteSecretKey || null,
-        recurrenteTerminalId: recurrenteTerminalId || null
+        recurrenteTerminalId: recurrenteTerminalId || null,
+        isRecurrenteActive: isRecurrenteActive !== undefined ? isRecurrenteActive : undefined
       },
       select: {
         qpayproApiKey: true,
         qpayproApiSecret: true,
+        isQpayproActive: true,
         recurrenteSecretKey: true,
-        recurrenteTerminalId: true
+        recurrenteTerminalId: true,
+        isRecurrenteActive: true
       }
     });
 

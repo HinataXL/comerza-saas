@@ -12,96 +12,59 @@ const getDashboardMetrics = async (req, res) => {
         const now = new Date();
         const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
         const previousMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        const [tenant, currentMonthSales, previousMonthSales, pendingCollections, currentMonthFel, previousMonthFel, currentMonthTotalTransactions, previousMonthTotalTransactions, paymentMethodsStats, felStatusCounts, lowStockProducts, recentTransactions, recentInvoices] = await Promise.all([
+            prisma_1.prisma.tenant.findUnique({ where: { id: tenantId }, select: { isQpayproActive: true, isRecurrenteActive: true } }),
+            prisma_1.prisma.sale.aggregate({ where: { tenantId, createdAt: { gte: currentMonthStart }, status: 'COMPLETED' }, _sum: { total: true }, _count: true }),
+            prisma_1.prisma.sale.aggregate({ where: { tenantId, createdAt: { gte: previousMonthStart, lt: currentMonthStart }, status: 'COMPLETED' }, _sum: { total: true }, _count: true }),
+            prisma_1.prisma.sale.aggregate({ where: { tenantId, status: 'PENDING' }, _sum: { total: true }, _count: true }),
+            prisma_1.prisma.sale.count({ where: { tenantId, createdAt: { gte: currentMonthStart }, felStatus: 'CERTIFICADA' } }),
+            prisma_1.prisma.sale.count({ where: { tenantId, createdAt: { gte: previousMonthStart, lt: currentMonthStart }, felStatus: 'CERTIFICADA' } }),
+            prisma_1.prisma.sale.count({ where: { tenantId, createdAt: { gte: currentMonthStart } } }),
+            prisma_1.prisma.sale.count({ where: { tenantId, createdAt: { gte: previousMonthStart, lt: currentMonthStart } } }),
+            prisma_1.prisma.sale.groupBy({ by: ['paymentMethod'], where: { tenantId, createdAt: { gte: currentMonthStart }, status: 'COMPLETED', paymentMethod: { not: null } }, _sum: { total: true } }),
+            prisma_1.prisma.sale.groupBy({ by: ['felStatus'], where: { tenantId }, _count: true }),
+            prisma_1.prisma.product.findMany({ where: { tenantId, stock: { lte: 5 } }, select: { name: true, stock: true }, take: 5 }),
+            prisma_1.prisma.sale.findMany({ where: { tenantId }, take: 5, orderBy: { createdAt: 'desc' }, include: { customer: true } }),
+            prisma_1.prisma.sale.findMany({ where: { tenantId, felStatus: { not: null } }, take: 5, orderBy: { createdAt: 'desc' }, include: { customer: true } })
+        ]);
         // 1. Ventas del mes
-        const currentMonthSales = await prisma_1.prisma.sale.aggregate({
-            where: {
-                tenantId,
-                createdAt: { gte: currentMonthStart },
-                status: 'COMPLETED'
-            },
-            _sum: { total: true },
-            _count: true
-        });
-        const previousMonthSales = await prisma_1.prisma.sale.aggregate({
-            where: {
-                tenantId,
-                createdAt: { gte: previousMonthStart, lt: currentMonthStart },
-                status: 'COMPLETED'
-            },
-            _sum: { total: true },
-            _count: true
-        });
         const ventasDelMes = currentMonthSales._sum.total || 0;
         const previousVentas = previousMonthSales._sum.total || 0;
         const ventasTrend = previousVentas === 0 ? 100 : ((ventasDelMes - previousVentas) / previousVentas) * 100;
         // 2. Cobros pendientes
-        const pendingCollections = await prisma_1.prisma.sale.aggregate({
-            where: { tenantId, status: 'PENDING' },
-            _sum: { total: true },
-            _count: true
-        });
         const cobrosPendientes = pendingCollections._sum.total || 0;
         const cobrosPendientesCount = pendingCollections._count || 0;
         // 3. Facturas FEL emitidas
-        const currentMonthFel = await prisma_1.prisma.sale.count({
-            where: {
-                tenantId,
-                createdAt: { gte: currentMonthStart },
-                felStatus: 'CERTIFICADA'
-            }
-        });
-        const previousMonthFel = await prisma_1.prisma.sale.count({
-            where: {
-                tenantId,
-                createdAt: { gte: previousMonthStart, lt: currentMonthStart },
-                felStatus: 'CERTIFICADA'
-            }
-        });
         const felTrend = previousMonthFel === 0 ? 100 : ((currentMonthFel - previousMonthFel) / previousMonthFel) * 100;
         // 4. Transacciones aprobadas
-        const currentMonthTotalTransactions = await prisma_1.prisma.sale.count({
-            where: { tenantId, createdAt: { gte: currentMonthStart } }
-        });
         const transaccionesAprobadasPct = currentMonthTotalTransactions === 0
             ? 0
-            : ((currentMonthSales._count / currentMonthTotalTransactions) * 100);
-        const previousMonthTotalTransactions = await prisma_1.prisma.sale.count({
-            where: { tenantId, createdAt: { gte: previousMonthStart, lt: currentMonthStart } }
-        });
+            : ((Number(currentMonthSales._count) / currentMonthTotalTransactions) * 100);
         const previousTransaccionesAprobadasPct = previousMonthTotalTransactions === 0
             ? 0
-            : ((previousMonthSales._count / previousMonthTotalTransactions) * 100);
+            : ((Number(previousMonthSales._count) / previousMonthTotalTransactions) * 100);
         const transaccionesTrend = transaccionesAprobadasPct - previousTransaccionesAprobadasPct;
         // 5. Gráfica: Ventas y cobros (Últimos 6 meses)
-        const sixMonthsData = [];
+        const sixMonthsPromises = [];
         for (let i = 5; i >= 0; i--) {
             const start = new Date(now.getFullYear(), now.getMonth() - i, 1);
             const end = new Date(now.getFullYear(), now.getMonth() - i + 1, 1);
-            const monthSales = await prisma_1.prisma.sale.aggregate({
-                where: { tenantId, createdAt: { gte: start, lt: end } },
-                _sum: { total: true }
-            });
-            const monthCobros = await prisma_1.prisma.sale.aggregate({
-                where: { tenantId, createdAt: { gte: start, lt: end }, status: 'COMPLETED' },
-                _sum: { total: true }
-            });
-            sixMonthsData.push({
-                name: start.toLocaleString('es-ES', { month: 'short' }),
-                ventas: monthSales._sum.total || 0,
-                cobros: monthCobros._sum.total || 0
-            });
+            const promise = (async () => {
+                const [monthSales, monthCobros] = await Promise.all([
+                    prisma_1.prisma.sale.aggregate({ where: { tenantId, createdAt: { gte: start, lt: end } }, _sum: { total: true } }),
+                    prisma_1.prisma.sale.aggregate({ where: { tenantId, createdAt: { gte: start, lt: end }, status: 'COMPLETED' }, _sum: { total: true } })
+                ]);
+                return { start, monthSales, monthCobros };
+            })();
+            sixMonthsPromises.push(promise);
         }
+        const sixMonthsResults = await Promise.all(sixMonthsPromises);
+        const sixMonthsData = sixMonthsResults.map(({ start, monthSales, monthCobros }) => ({
+            name: start.toLocaleString('es-ES', { month: 'short' }),
+            ventas: monthSales._sum.total || 0,
+            cobros: monthCobros._sum.total || 0
+        }));
         // 6. Gráfica: Métodos de pago
-        const paymentMethodsStats = await prisma_1.prisma.sale.groupBy({
-            by: ['paymentMethod'],
-            where: {
-                tenantId,
-                createdAt: { gte: currentMonthStart },
-                status: 'COMPLETED',
-                paymentMethod: { not: null }
-            },
-            _sum: { total: true }
-        });
         const totalPaymentsValue = paymentMethodsStats.reduce((acc, curr) => acc + (curr._sum.total || 0), 0);
         const paymentMethodsData = paymentMethodsStats.map(pm => {
             let color = '#4b5563';
@@ -122,11 +85,6 @@ const getDashboardMetrics = async (req, res) => {
             };
         });
         // 7. Gateways y FEL Status
-        const felStatusCounts = await prisma_1.prisma.sale.groupBy({
-            by: ['felStatus'],
-            where: { tenantId },
-            _count: true
-        });
         let certificadas = 0, pendientes = 0, errorFel = 0;
         felStatusCounts.forEach(f => {
             if (f.felStatus === 'CERTIFICADA')
@@ -136,19 +94,7 @@ const getDashboardMetrics = async (req, res) => {
             if (f.felStatus === 'ERROR')
                 errorFel = f._count;
         });
-        // 8. Alertas de inventario
-        const lowStockProducts = await prisma_1.prisma.product.findMany({
-            where: { tenantId, stock: { lte: 5 } },
-            select: { name: true, stock: true },
-            take: 5
-        });
-        // 9. Tablas recientes
-        const recentTransactions = await prisma_1.prisma.sale.findMany({
-            where: { tenantId },
-            take: 5,
-            orderBy: { createdAt: 'desc' },
-            include: { customer: true }
-        });
+        // 8. Tablas recientes
         const recentTxFormatted = recentTransactions.map(tx => ({
             date: tx.createdAt.toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' }),
             client: tx.customer ? tx.customer.name : 'Cliente Final',
@@ -156,12 +102,6 @@ const getDashboardMetrics = async (req, res) => {
             amount: `Q ${tx.total.toFixed(2)}`,
             status: tx.status === 'COMPLETED' ? 'Aprobado' : tx.status === 'FAILED' ? 'Rechazado' : 'Pendiente'
         }));
-        const recentInvoices = await prisma_1.prisma.sale.findMany({
-            where: { tenantId, felStatus: { not: null } },
-            take: 5,
-            orderBy: { createdAt: 'desc' },
-            include: { customer: true }
-        });
         const recentInvoicesFormatted = recentInvoices.map(inv => ({
             no: `FEL-${inv.id.substring(0, 6).toUpperCase()}`,
             client: inv.customer ? inv.customer.name : 'Cliente Final',
@@ -197,6 +137,10 @@ const getDashboardMetrics = async (req, res) => {
                 pieData: paymentMethodsData
             },
             gatewaysAndFel: {
+                activeGateways: {
+                    qpaypro: tenant?.isQpayproActive || false,
+                    recurrente: tenant?.isRecurrenteActive || false
+                },
                 fel: {
                     certificadas,
                     pendientes,

@@ -19,8 +19,10 @@ const getTenantIntegrations = async (req, res) => {
             select: {
                 qpayproApiKey: true,
                 qpayproApiSecret: true,
+                isQpayproActive: true,
                 recurrenteSecretKey: true,
-                recurrenteTerminalId: true
+                recurrenteTerminalId: true,
+                isRecurrenteActive: true
             }
         });
         if (!tenant) {
@@ -30,8 +32,10 @@ const getTenantIntegrations = async (req, res) => {
         res.json({
             qpayproApiKey: tenant.qpayproApiKey || '',
             qpayproApiSecret: tenant.qpayproApiSecret || '',
+            isQpayproActive: tenant.isQpayproActive || false,
             recurrenteSecretKey: tenant.recurrenteSecretKey || '',
-            recurrenteTerminalId: tenant.recurrenteTerminalId || ''
+            recurrenteTerminalId: tenant.recurrenteTerminalId || '',
+            isRecurrenteActive: tenant.isRecurrenteActive || false
         });
     }
     catch (error) {
@@ -47,20 +51,24 @@ const updateTenantIntegrations = async (req, res) => {
             res.status(401).json({ message: 'Unauthorized' });
             return;
         }
-        const { qpayproApiKey, qpayproApiSecret, recurrenteSecretKey, recurrenteTerminalId } = req.body;
+        const { qpayproApiKey, qpayproApiSecret, isQpayproActive, recurrenteSecretKey, recurrenteTerminalId, isRecurrenteActive } = req.body;
         const tenant = await prisma_1.prisma.tenant.update({
             where: { id: tenantId },
             data: {
                 qpayproApiKey: qpayproApiKey || null,
                 qpayproApiSecret: qpayproApiSecret || null,
+                isQpayproActive: isQpayproActive !== undefined ? isQpayproActive : undefined,
                 recurrenteSecretKey: recurrenteSecretKey || null,
-                recurrenteTerminalId: recurrenteTerminalId || null
+                recurrenteTerminalId: recurrenteTerminalId || null,
+                isRecurrenteActive: isRecurrenteActive !== undefined ? isRecurrenteActive : undefined
             },
             select: {
                 qpayproApiKey: true,
                 qpayproApiSecret: true,
+                isQpayproActive: true,
                 recurrenteSecretKey: true,
-                recurrenteTerminalId: true
+                recurrenteTerminalId: true,
+                isRecurrenteActive: true
             }
         });
         res.json(tenant);

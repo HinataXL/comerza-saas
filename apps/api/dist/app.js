@@ -21,6 +21,7 @@ const superadmin_routes_1 = __importDefault(require("./routes/superadmin.routes"
 const webhooks_routes_1 = __importDefault(require("./routes/webhooks.routes"));
 const reports_routes_1 = __importDefault(require("./routes/reports.routes"));
 const upload_routes_1 = __importDefault(require("./routes/upload.routes"));
+const notifications_routes_1 = __importDefault(require("./routes/notifications.routes"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
@@ -42,4 +43,5 @@ app.use('/api/superadmin', superadmin_routes_1.default);
 app.use('/api/webhooks', webhooks_routes_1.default);
 app.use('/api/reports', reports_routes_1.default);
 app.use('/api/upload', upload_routes_1.default);
+app.use('/api/notifications', notifications_routes_1.default);
 exports.default = app;

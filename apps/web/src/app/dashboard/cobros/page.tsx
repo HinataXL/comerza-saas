@@ -46,7 +46,7 @@ function CobrosContent() {
       ]);
 
       if (salesRes.status === 401) {
-        router.push('/');
+        router.push('/login');
         return;
       }
       if (salesRes.ok) {

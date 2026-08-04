@@ -21,7 +21,7 @@ export default function ConfiguracionPage() {
       try {
         const res = await fetch('/api/tenant/settings', { credentials: 'include' });
         if (res.status === 401) {
-          router.push('/');
+          router.push('/login');
           return;
         }
         if (res.ok) {

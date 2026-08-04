@@ -35,7 +35,7 @@ export default function ProductsPage() {
         credentials: 'include'
       });
       if (res.status === 401) {
-        router.push('/');
+        router.push('/login');
         return;
       }
       if (!res.ok) throw new Error('Error al cargar productos');

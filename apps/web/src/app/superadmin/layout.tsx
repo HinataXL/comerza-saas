@@ -9,7 +9,8 @@ import {
   LogOut,
   ShieldCheck,
   Layers,
-  ShieldAlert
+  ShieldAlert,
+  BellRing
 } from 'lucide-react';
 import '../../components/Sidebar.css';
 
@@ -19,6 +20,7 @@ const adminNavItems = [
   { name: 'Planes', href: '/superadmin/planes', icon: Layers },
   { name: 'Usuarios', href: '/superadmin/users', icon: Users },
   { name: 'Auditoría', href: '/superadmin/audit', icon: ShieldAlert },
+  { name: 'Notificaciones', href: '/superadmin/notificaciones', icon: BellRing },
   { name: 'Ajustes Plataforma', href: '/superadmin/settings', icon: Settings },
 ];
 
@@ -32,7 +34,7 @@ export default function SuperAdminLayout({ children }: { children: React.ReactNo
         method: 'POST',
         credentials: 'include' 
       });
-      router.push('/');
+      router.push('/login');
     } catch (error) {
       console.error('Error logging out:', error);
     }

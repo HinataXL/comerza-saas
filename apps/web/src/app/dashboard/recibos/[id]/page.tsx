@@ -57,7 +57,7 @@ export default function ReciboDetallePage({ params }: { params: Promise<{ id: st
       try {
         const res = await fetch(`/api/sales/${resolvedParams.id}`, { credentials: 'include' });
         if (res.status === 401) {
-          router.push('/');
+          router.push('/login');
           return;
         }
         if (res.ok) {

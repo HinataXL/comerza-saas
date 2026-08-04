@@ -28,7 +28,7 @@ export default function SuperAdminTenants() {
       });
       
       if (res.status === 401 || res.status === 403) {
-        router.push('/');
+        router.push('/login');
         return;
       }
 

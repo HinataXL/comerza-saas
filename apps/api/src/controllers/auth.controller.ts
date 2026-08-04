@@ -123,6 +123,9 @@ export const logout = (req: AuthRequest, res: Response): void => {
   res.status(200).json({ message: 'Logged out successfully' });
 };
 
+// Cache para las configuraciones de los planes (no cambian frecuentemente)
+const planCache = new Map<string, { features: string[], expiresAt: number }>();
+
 export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     if (!req.user) {
@@ -142,11 +145,21 @@ export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
 
     let features: string[] = [];
     if (user.tenant?.plan) {
-      const planConfig = await prisma.planConfig.findUnique({
-        where: { name: user.tenant.plan }
-      });
-      if (planConfig && planConfig.features) {
-        features = JSON.parse(planConfig.features);
+      const planName = user.tenant.plan;
+      const now = Date.now();
+      const cachedPlan = planCache.get(planName);
+
+      if (cachedPlan && cachedPlan.expiresAt > now) {
+        features = cachedPlan.features;
+      } else {
+        const planConfig = await prisma.planConfig.findUnique({
+          where: { name: planName }
+        });
+        if (planConfig && planConfig.features) {
+          features = JSON.parse(planConfig.features);
+          // Caché por 5 minutos
+          planCache.set(planName, { features, expiresAt: now + 300000 });
+        }
       }
     }
 

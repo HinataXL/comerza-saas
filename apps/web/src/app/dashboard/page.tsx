@@ -21,7 +21,7 @@ export default function DashboardPage() {
         });
         
         if (res.status === 401) {
-          router.push('/');
+          router.push('/login');
           return;
         }
 
@@ -80,16 +80,7 @@ export default function DashboardPage() {
           iconColor="#f59e0b"
           iconBg="#fef3c7"
         />
-        <KpiCard 
-          title="Facturas FEL emitidas" 
-          value={data.kpis.facturasFel.value.toString()} 
-          trend={data.kpis.facturasFel.trend} 
-          isPositive={data.kpis.facturasFel.isPositive} 
-          subtitle="vs. mes anterior"
-          icon={FileText}
-          iconColor="#10b981"
-          iconBg="#d1fae5"
-        />
+
         <KpiCard 
           title="Transacciones aprobadas" 
           value={data.kpis.transaccionesAprobadas.value} 
@@ -104,7 +95,7 @@ export default function DashboardPage() {
 
       <Charts lineData={data.charts.lineData} pieData={data.charts.pieData} />
       
-      <GatewaysAndAlerts fel={data.gatewaysAndFel.fel} inventoryAlerts={data.gatewaysAndFel.inventoryAlerts} />
+      <GatewaysAndAlerts activeGateways={data.gatewaysAndFel.activeGateways} fel={data.gatewaysAndFel.fel} inventoryAlerts={data.gatewaysAndFel.inventoryAlerts} />
       
       <RecentTables transactions={data.tables.transactions} invoices={data.tables.invoices} />
     </div>
