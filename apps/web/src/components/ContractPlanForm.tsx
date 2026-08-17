@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PlanCode, CreateSubscriptionCheckoutRequest } from '../types/subscription';
 import { X, Loader2 } from 'lucide-react';
-import { API_URL } from '../proxy';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
 interface ContractPlanFormProps {
   selectedPlan: PlanCode;
