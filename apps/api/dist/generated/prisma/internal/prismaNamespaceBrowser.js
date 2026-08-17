@@ -48,7 +48,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.NotificationScalarFieldEnum = exports.AuditLogScalarFieldEnum = exports.PlanConfigScalarFieldEnum = exports.SaleItemScalarFieldEnum = exports.SaleScalarFieldEnum = exports.ProductScalarFieldEnum = exports.CustomerScalarFieldEnum = exports.UserScalarFieldEnum = exports.TenantScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
+exports.JsonNullValueFilter = exports.NullsOrder = exports.QueryMode = exports.JsonNullValueInput = exports.NullableJsonNullValueInput = exports.SortOrder = exports.SubscriptionEventScalarFieldEnum = exports.SubscriptionScalarFieldEnum = exports.PlanScalarFieldEnum = exports.NotificationScalarFieldEnum = exports.AuditLogScalarFieldEnum = exports.PlanConfigScalarFieldEnum = exports.SaleItemScalarFieldEnum = exports.SaleScalarFieldEnum = exports.ProductScalarFieldEnum = exports.CustomerScalarFieldEnum = exports.UserScalarFieldEnum = exports.TenantScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/index-browser"));
 exports.Decimal = runtime.Decimal;
 exports.NullTypes = {
@@ -83,7 +83,10 @@ exports.ModelName = {
     SaleItem: 'SaleItem',
     PlanConfig: 'PlanConfig',
     AuditLog: 'AuditLog',
-    Notification: 'Notification'
+    Notification: 'Notification',
+    Plan: 'Plan',
+    Subscription: 'Subscription',
+    SubscriptionEvent: 'SubscriptionEvent'
 };
 /*
  * Enums
@@ -107,6 +110,11 @@ exports.TenantScalarFieldEnum = {
     receiptTemplate: 'receiptTemplate',
     plan: 'plan',
     isActive: 'isActive',
+    status: 'status',
+    nit: 'nit',
+    responsibleName: 'responsibleName',
+    email: 'email',
+    phone: 'phone',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
@@ -189,9 +197,58 @@ exports.NotificationScalarFieldEnum = {
     createdAt: 'createdAt',
     expiresAt: 'expiresAt'
 };
+exports.PlanScalarFieldEnum = {
+    id: 'id',
+    code: 'code',
+    name: 'name',
+    monthlyPrice: 'monthlyPrice',
+    currency: 'currency',
+    description: 'description',
+    isActive: 'isActive',
+    recurrentePlanId: 'recurrentePlanId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.SubscriptionScalarFieldEnum = {
+    id: 'id',
+    tenantId: 'tenantId',
+    planId: 'planId',
+    provider: 'provider',
+    providerSubscriptionId: 'providerSubscriptionId',
+    providerCustomerId: 'providerCustomerId',
+    status: 'status',
+    amount: 'amount',
+    currency: 'currency',
+    billingCycle: 'billingCycle',
+    checkoutUrl: 'checkoutUrl',
+    startedAt: 'startedAt',
+    nextPaymentAt: 'nextPaymentAt',
+    cancelledAt: 'cancelledAt',
+    rawGatewayResponse: 'rawGatewayResponse',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.SubscriptionEventScalarFieldEnum = {
+    id: 'id',
+    subscriptionId: 'subscriptionId',
+    tenantId: 'tenantId',
+    provider: 'provider',
+    eventType: 'eventType',
+    providerEventId: 'providerEventId',
+    payload: 'payload',
+    processedAt: 'processedAt',
+    createdAt: 'createdAt'
+};
 exports.SortOrder = {
     asc: 'asc',
     desc: 'desc'
+};
+exports.NullableJsonNullValueInput = {
+    DbNull: exports.DbNull,
+    JsonNull: exports.JsonNull
+};
+exports.JsonNullValueInput = {
+    JsonNull: exports.JsonNull
 };
 exports.QueryMode = {
     default: 'default',
@@ -200,4 +257,9 @@ exports.QueryMode = {
 exports.NullsOrder = {
     first: 'first',
     last: 'last'
+};
+exports.JsonNullValueFilter = {
+    DbNull: exports.DbNull,
+    JsonNull: exports.JsonNull,
+    AnyNull: exports.AnyNull
 };

@@ -11,6 +11,10 @@ const email_service_1 = require("../services/email.service");
 const register = async (req, res) => {
     try {
         const { email, password, name, companyName } = req.body;
+        if (!email || !password) {
+            res.status(400).json({ message: 'Email and password are required' });
+            return;
+        }
         const existingUser = await prisma_1.prisma.user.findUnique({ where: { email } });
         if (existingUser) {
             res.status(400).json({ message: 'User already exists' });
@@ -48,6 +52,10 @@ exports.register = register;
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
+        if (!email || !password) {
+            res.status(400).json({ message: 'Email and password are required' });
+            return;
+        }
         const user = await prisma_1.prisma.user.findUnique({
             where: { email },
             include: { tenant: true }

@@ -47,8 +47,8 @@ const createPaymentLink = async (credentials, payload) => {
         ]),
         taxes: '0.00',
         http_origin: frontendUrl,
-        origen: 'PLUGIN',
-        store_type: 'hostedpage'
+        origen: 'comerza-app',
+        store_type: 'COMERZA'
     };
     console.log('Sending payload to QPayPro para generar Token...');
     try {

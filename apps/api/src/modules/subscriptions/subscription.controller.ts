@@ -14,7 +14,7 @@ export const createRecurrenteCheckout = async (req: Request, res: Response): Pro
     console.error("Error creating subscription checkout:", error);
     
     if (error instanceof z.ZodError) {
-      res.status(400).json({ code: "VALIDATION_ERROR", message: error.errors });
+      res.status(400).json({ code: "VALIDATION_ERROR", message: (error as z.ZodError<any>).issues });
       return;
     }
 
