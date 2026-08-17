@@ -22,18 +22,18 @@ export default function MaintenancePage() {
         maxWidth: '600px',
         width: '100%',
         backgroundColor: '#ffffff',
-        padding: '40px',
-        borderRadius: '16px',
-        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.05)',
+        padding: '40px 30px',
+        borderRadius: '24px',
+        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.08)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         textAlign: 'center',
-        gap: '24px'
+        gap: '32px'
       }}>
-
-        {/* Logo de Comerza */}
-        <div style={{ position: 'relative', width: '250px', height: '100px', marginBottom: '16px' }}>
+        
+        {/* Logo de Comerza (Tamaño proporcionado) */}
+        <div style={{ position: 'relative', width: '280px', height: '70px' }}>
           <Image
             src="/logo.png"
             alt="Comerza Logo"
@@ -43,30 +43,28 @@ export default function MaintenancePage() {
           />
         </div>
 
-        {/* 
-          AQUÍ SE INSERTARÁ EL VIDEO MP4 CUANDO LO SUBAS.
-          Si subes el archivo a la carpeta 'public' como 'mantenimiento.mp4', 
-          descomenta el bloque de abajo y elimina el icono de la llave inglesa.
-        */}
-        {
+        {/* Video Animado */}
+        <div style={{ width: '100%', maxWidth: '400px', display: 'flex', justifyContent: 'center' }}>
           <video
             src="/mantenimiento.mp4"
             autoPlay
             loop
             muted
             playsInline
-            style={{ width: '150px', borderRadius: '8px' }}
+            style={{ 
+              width: '100%', 
+              borderRadius: '20px',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.05)'
+            }}
           />
-        }
-
-
+        </div>
 
         {/* Textos */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <h1 style={{ margin: 0, fontSize: '28px', fontWeight: '800', color: '#1e293b' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '0 10px' }}>
+          <h1 style={{ margin: 0, fontSize: '32px', fontWeight: '800', color: '#1e293b', letterSpacing: '-0.5px' }}>
             Estamos en Mantenimiento
           </h1>
-          <p style={{ margin: 0, fontSize: '16px', color: '#64748b', lineHeight: '1.5' }}>
+          <p style={{ margin: 0, fontSize: '16px', color: '#64748b', lineHeight: '1.6' }}>
             Pronto regresaremos con nuevas funciones y mejoras para ofrecerte la mejor experiencia. ¡Gracias por tu paciencia!
           </p>
         </div>
@@ -78,12 +76,12 @@ export default function MaintenancePage() {
           backgroundColor: '#f1f5f9',
           borderRadius: '8px',
           overflow: 'hidden',
-          marginTop: '16px'
+          marginTop: '8px'
         }}>
           <div style={{
             height: '100%',
             backgroundColor: '#2563eb',
-            width: '30%',
+            width: '40%',
             borderRadius: '8px'
           }}></div>
         </div>
