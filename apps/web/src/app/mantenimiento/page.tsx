@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 export const metadata = {
   title: 'Mantenimiento - Comerza',
@@ -32,16 +31,16 @@ export default function MaintenancePage() {
         gap: '32px'
       }}>
         
-        {/* Logo de Comerza (Tamaño proporcionado) */}
-        <div style={{ position: 'relative', width: '280px', height: '70px' }}>
-          <Image
-            src="/logo.png"
-            alt="Comerza Logo"
-            fill
-            style={{ objectFit: 'contain' }}
-            priority
-          />
-        </div>
+        {/* Título de Comerza */}
+        <h1 style={{ 
+          margin: 0, 
+          fontSize: '40px', 
+          fontWeight: '900', 
+          color: '#2563eb', 
+          letterSpacing: '-1px' 
+        }}>
+          Comerza
+        </h1>
 
         {/* Video Animado */}
         <div style={{ width: '100%', maxWidth: '400px', display: 'flex', justifyContent: 'center' }}>
@@ -61,9 +60,9 @@ export default function MaintenancePage() {
 
         {/* Textos */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '0 10px' }}>
-          <h1 style={{ margin: 0, fontSize: '32px', fontWeight: '800', color: '#1e293b', letterSpacing: '-0.5px' }}>
+          <h2 style={{ margin: 0, fontSize: '28px', fontWeight: '700', color: '#1e293b', letterSpacing: '-0.5px' }}>
             Estamos en Mantenimiento
-          </h1>
+          </h2>
           <p style={{ margin: 0, fontSize: '16px', color: '#64748b', lineHeight: '1.6' }}>
             Pronto regresaremos con nuevas funciones y mejoras para ofrecerte la mejor experiencia. ¡Gracias por tu paciencia!
           </p>
