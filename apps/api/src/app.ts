@@ -17,6 +17,7 @@ import webhooksRoutes from './routes/webhooks.routes';
 import reportsRoutes from './routes/reports.routes';
 import uploadRoutes from './routes/upload.routes';
 import notificationsRoutes from './routes/notifications.routes';
+import subscriptionRoutes from './modules/subscriptions/subscription.routes';
 
 const app = express();
 
@@ -43,5 +44,6 @@ app.use('/api/webhooks', webhooksRoutes);
 app.use('/api/reports', reportsRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/notifications', notificationsRoutes);
+app.use('/api/subscriptions', subscriptionRoutes);
 
 export default app;

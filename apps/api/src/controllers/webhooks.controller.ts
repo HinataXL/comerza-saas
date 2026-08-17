@@ -27,6 +27,83 @@ export const handleRecurrenteWebhook = async (req: Request, res: Response): Prom
       }
     }
 
+    // Eventos de suscripción de Recurrente
+    if (event_type && event_type.startsWith('subscription.')) {
+      const subscriptionId = req.body.checkout?.metadata?.subscriptionId || req.body.subscription?.metadata?.subscriptionId;
+      const tenantId = req.body.checkout?.metadata?.tenantId || req.body.subscription?.metadata?.tenantId;
+      const providerEventId = req.body.id || 'TODO_EVENT_ID';
+
+      if (subscriptionId) {
+        try {
+          await prisma.subscriptionEvent.create({
+            data: {
+              subscriptionId,
+              tenantId,
+              provider: 'RECURRENTE',
+              eventType: event_type,
+              providerEventId,
+              payload: req.body,
+              processedAt: new Date(),
+            }
+          });
+
+          if (event_type === 'subscription.payment_succeeded' || event_type === 'subscription.activated') {
+            await prisma.subscription.update({
+              where: { id: subscriptionId },
+              data: {
+                status: 'ACTIVE',
+                startedAt: new Date()
+              }
+            });
+
+            if (tenantId) {
+              await prisma.tenant.update({
+                where: { id: tenantId },
+                data: { status: 'ACTIVE' }
+              });
+            }
+            console.log(`Subscription ${subscriptionId} and Tenant ${tenantId} activated.`);
+          } else if (event_type === 'subscription.payment_failed') {
+            await prisma.subscription.update({
+              where: { id: subscriptionId },
+              data: { status: 'PAST_DUE' }
+            });
+          } else if (event_type === 'subscription.cancelled') {
+            await prisma.subscription.update({
+              where: { id: subscriptionId },
+              data: {
+                status: 'CANCELLED',
+                cancelledAt: new Date()
+              }
+            });
+            if (tenantId) {
+              await prisma.tenant.update({
+                where: { id: tenantId },
+                data: { status: 'SUSPENDED' }
+              });
+            }
+          } else if (event_type === 'subscription.expired') {
+            await prisma.subscription.update({
+              where: { id: subscriptionId },
+              data: { status: 'EXPIRED' }
+            });
+            if (tenantId) {
+              await prisma.tenant.update({
+                where: { id: tenantId },
+                data: { status: 'SUSPENDED' }
+              });
+            }
+          }
+        } catch (e: any) {
+          if (e.code === 'P2002') {
+            console.log(`Webhook event ${providerEventId} ya fue procesado.`);
+          } else {
+            throw e;
+          }
+        }
+      }
+    }
+
     // Siempre respondemos 200 OK para que Recurrente sepa que recibimos el webhook
     res.status(200).send('Webhook received');
   } catch (error) {

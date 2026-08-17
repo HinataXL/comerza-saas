@@ -23,6 +23,11 @@ model Tenant {
   receiptTemplate   String   @default("CLASSIC") // CLASSIC, TICKET
   plan              String   @default("PRO") // PRO, PREMIUM
   isActive          Boolean  @default(true)
+  status            String   @default("PENDING_PAYMENT") // ACTIVE, PENDING_PAYMENT, SUSPENDED, CANCELLED
+  nit               String?
+  responsibleName   String?
+  email             String?
+  phone             String?
   createdAt         DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   users     User[]
@@ -31,6 +36,7 @@ model Tenant {
   sales         Sale[]
   saleItems     SaleItem[]
   notifications Notification[]
+  subscriptions Subscription[]
 }
 
 model User {
@@ -132,4 +138,57 @@ model Notification {
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
   expiresAt DateTime
+}
+
+model Plan {
+  id               String   @id @default(uuid())
+  code             String   @unique
+  name             String
+  monthlyPrice     Decimal
+  currency         String   @default("GTQ")
+  description      String?
+  isActive         Boolean  @default(true)
+  recurrentePlanId String?
+  subscriptions    Subscription[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Subscription {
+  id                     String   @id @default(uuid())
+  tenantId               String
+  planId                 String
+  provider               String
+  providerSubscriptionId String?
+  providerCustomerId     String?
+  status                 String
+  amount                 Decimal
+  currency               String
+  billingCycle           String
+  checkoutUrl            String?
+  startedAt              DateTime?
+  nextPaymentAt          DateTime?
+  cancelledAt            DateTime?
+  rawGatewayResponse     Json?
+  tenant                 Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  plan                   Plan     @relation(fields: [planId], references: [id])
+  events                 SubscriptionEvent[]
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+}
+
+model SubscriptionEvent {
+  id              String   @id @default(uuid())
+  subscriptionId  String?
+  tenantId        String?
+  provider        String
+  eventType       String
+  providerEventId String
+  payload         Json
+  processedAt     DateTime?
+  createdAt       DateTime @default(now())
+
+  subscription Subscription? @relation(fields: [subscriptionId], references: [id])
+
+  @@unique([provider, providerEventId])
 }

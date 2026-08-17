@@ -4,9 +4,34 @@ import bcrypt from 'bcrypt';
 async function main() {
   console.log('Seeding database...');
 
+  // Create plans
+  await prisma.plan.upsert({
+    where: { code: 'PRO' },
+    update: {},
+    create: {
+      code: 'PRO',
+      name: 'Pro',
+      monthlyPrice: 299,
+      currency: 'GTQ',
+      recurrentePlanId: 'TODO_PRO_PLAN_ID',
+    },
+  });
+
+  await prisma.plan.upsert({
+    where: { code: 'PREMIUM' },
+    update: {},
+    create: {
+      code: 'PREMIUM',
+      name: 'Premium',
+      monthlyPrice: 499,
+      currency: 'GTQ',
+      recurrentePlanId: 'TODO_PREMIUM_PLAN_ID',
+    },
+  });
+
   // Create a tenant first
   const tenant = await prisma.tenant.create({
-    data: { name: 'Comerza Demo' }
+    data: { name: 'Comerza Demo', status: 'ACTIVE' }
   });
   
   // Create a default admin user

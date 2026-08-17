@@ -1,4 +1,5 @@
 'use client';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
   ShoppingCart, ShieldCheck, CheckCircle2, 
@@ -7,8 +8,17 @@ import {
   Zap, Eye, ArrowRight, Check
 } from 'lucide-react';
 import './landing.css';
+import { ContractPlanForm } from '../components/ContractPlanForm';
+import { PlanCode } from '../types/subscription';
 
 export default function LandingPage() {
+  const [selectedPlan, setSelectedPlan] = useState<PlanCode | null>(null);
+  const [showCheckoutForm, setShowCheckoutForm] = useState(false);
+
+  const handleSelectPlan = (planCode: PlanCode) => {
+    setSelectedPlan(planCode);
+    setShowCheckoutForm(true);
+  };
   return (
     <div className="landing-body">
       {/* Header */}
@@ -254,46 +264,40 @@ export default function LandingPage() {
         <div className="pricing-grid">
           
           <div className="pricing-card">
-            <div className="pricing-title">Básico</div>
-            <div className="pricing-desc">Ideal para empezar a ordenar tu negocio.</div>
-            <div className="pricing-price">Q99<span>/mes</span></div>
+            <div className="pricing-title">Pro</div>
+            <div className="pricing-desc">Ideal para comercios que quieren ordenar sus ventas, cobros y pagos.</div>
+            <div className="pricing-price">Q299<span>/mes</span></div>
             <ul className="pricing-features">
               <li><Check size={18} color="#22c55e" /> Ventas y cobros ilimitados</li>
-              <li><Check size={18} color="#22c55e" /> Links de pago</li>
               <li><Check size={18} color="#22c55e" /> Clientes y productos ilimitados</li>
-              <li><Check size={18} color="#22c55e" /> Reportes básicos</li>
+              <li><Check size={18} color="#22c55e" /> Links de pago</li>
+              <li><Check size={18} color="#22c55e" /> Control de pagos manuales</li>
+              <li><Check size={18} color="#22c55e" /> Reportes del negocio</li>
+              <li><Check size={18} color="#22c55e" /> Inventario básico</li>
               <li><Check size={18} color="#22c55e" /> Soporte por WhatsApp</li>
+              <li><Check size={18} color="#22c55e" /> 1 usuario administrador</li>
             </ul>
-            <Link href="/login" className="btn-outline" style={{ textAlign: 'center', width: '100%', display: 'block', padding: '0.75rem' }}>Elegir plan</Link>
+            <button onClick={() => handleSelectPlan('PRO')} className="btn-outline" style={{ textAlign: 'center', width: '100%', display: 'block', padding: '0.75rem' }}>Elegir plan Pro</button>
           </div>
 
           <div className="pricing-card popular">
-            <div className="popular-badge">Más popular</div>
-            <div className="pricing-title">Negocio</div>
-            <div className="pricing-desc">Para negocios en crecimiento.</div>
-            <div className="pricing-price">Q149<span>/mes</span></div>
+            <div className="popular-badge">Recomendado</div>
+            <div className="pricing-title">Premium</div>
+            <div className="pricing-desc">Para comercios que necesitan automatización, integraciones y mayor control.</div>
+            <div className="pricing-price">Q499<span>/mes</span></div>
             <ul className="pricing-features">
-              <li><Check size={18} color="#2563eb" /> Todo lo del plan Básico</li>
-              <li><Check size={18} color="#2563eb" /> Inventario con alertas</li>
-              <li><Check size={18} color="#2563eb" /> Facturación FEL Incluida</li>
+              <li><Check size={18} color="#2563eb" /> Todo lo del plan Pro</li>
+              <li><Check size={18} color="#2563eb" /> Multiusuario</li>
+              <li><Check size={18} color="#2563eb" /> Integración con pasarelas de pago</li>
+              <li><Check size={18} color="#2563eb" /> Configuración de QPayPro por comercio</li>
+              <li><Check size={18} color="#2563eb" /> Preparado para Recurrente / POS NFC</li>
+              <li><Check size={18} color="#2563eb" /> Facturación FEL</li>
               <li><Check size={18} color="#2563eb" /> Reportes avanzados</li>
+              <li><Check size={18} color="#2563eb" /> Alertas de inventario y cobros</li>
               <li><Check size={18} color="#2563eb" /> Soporte prioritario</li>
+              <li><Check size={18} color="#2563eb" /> Sucursales, si aplica</li>
             </ul>
-            <Link href="/login" className="btn-primary" style={{ textAlign: 'center', width: '100%', display: 'block', padding: '0.75rem' }}>Elegir plan</Link>
-          </div>
-
-          <div className="pricing-card">
-            <div className="pricing-title">Pro</div>
-            <div className="pricing-desc">Para negocios que necesitan más.</div>
-            <div className="pricing-price">Q299<span>/mes</span></div>
-            <ul className="pricing-features">
-              <li><Check size={18} color="#22c55e" /> Todo lo del plan Negocio</li>
-              <li><Check size={18} color="#22c55e" /> Multiusuarios</li>
-              <li><Check size={18} color="#22c55e" /> Integraciones con pasarelas</li>
-              <li><Check size={18} color="#22c55e" /> Exportación de datos</li>
-              <li><Check size={18} color="#22c55e" /> Soporte dedicado</li>
-            </ul>
-            <Link href="/login" className="btn-outline" style={{ textAlign: 'center', width: '100%', display: 'block', padding: '0.75rem' }}>Elegir plan</Link>
+            <button onClick={() => handleSelectPlan('PREMIUM')} className="btn-primary" style={{ textAlign: 'center', width: '100%', display: 'block', padding: '0.75rem' }}>Elegir plan Premium</button>
           </div>
 
         </div>
@@ -379,6 +383,13 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
+
+      {showCheckoutForm && selectedPlan && (
+        <ContractPlanForm
+          selectedPlan={selectedPlan}
+          onClose={() => setShowCheckoutForm(false)}
+        />
+      )}
     </div>
   );
 }

@@ -23,48 +23,48 @@ export const createPaymentLink = async (credentials: QPayProCredentials, payload
   const firstName = nameParts[0];
   const lastName = nameParts.slice(1).join(' ') || 'Final';
 
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-    const apiUrl = process.env.API_URL || 'http://localhost:3001/api';
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+  const apiUrl = process.env.API_URL || 'http://localhost:3001/api';
 
-    // Estructura exacta solicitada por QPayPro
-    const qpayproPayload = {
-      x_login: credentials.apiKey, // Public Key / API Login ID
-      x_api_key: credentials.apiSecret, // Private Key / API Secret / Transaction Key
-      x_amount: payload.amount.toFixed(2),
-      x_currency_code: 'GTQ',
-      x_first_name: firstName,
-      x_last_name: lastName,
-      x_phone: payload.customerPhone || '00000000',
-      x_description: payload.description,
-      x_reference: payload.reference,
-      x_url_cancel: `${frontendUrl}/dashboard/ventas`, // Fallback
-      x_company: 'C/F',
-      x_address: 'Ciudad',
-      x_city: 'Guatemala',
-      x_country: 'GT',
-      x_state: 'GU',
-      x_zip: '01001',
-      x_freight: '0.00',
-      x_email: payload.customerEmail || 'correo@ejemplo.com',
-      x_type: 'AUTH_ONLY',
-      x_method: 'CC',
-      x_invoice_num: payload.reference.substring(0, 8),
-      custom_fields: {},
-      x_visacuotas: 'no',
-      x_relay_url: `${apiUrl}/qpaypro/relay/${payload.reference}`,
-      products: payload.items.map(item => [
-        item.name, 
-        item.id.substring(0, 8), 
-        '', 
-        item.quantity, 
-        item.price.toFixed(2), 
-        (item.quantity * item.price).toFixed(2)
-      ]), 
-      taxes: '0.00',
-      http_origin: frontendUrl,
-      origen: 'PLUGIN',
-      store_type: 'hostedpage'
-    };
+  // Estructura exacta solicitada por QPayPro
+  const qpayproPayload = {
+    x_login: credentials.apiKey, // Public Key / API Login ID
+    x_api_key: credentials.apiSecret, // Private Key / API Secret / Transaction Key
+    x_amount: payload.amount.toFixed(2),
+    x_currency_code: 'GTQ',
+    x_first_name: firstName,
+    x_last_name: lastName,
+    x_phone: payload.customerPhone || '00000000',
+    x_description: payload.description,
+    x_reference: payload.reference,
+    x_url_cancel: `${frontendUrl}/dashboard/ventas`, // Fallback
+    x_company: 'C/F',
+    x_address: 'Ciudad',
+    x_city: 'Guatemala',
+    x_country: 'GT',
+    x_state: 'GU',
+    x_zip: '01001',
+    x_freight: '0.00',
+    x_email: payload.customerEmail || 'correo@ejemplo.com',
+    x_type: 'AUTH_ONLY',
+    x_method: 'CC',
+    x_invoice_num: payload.reference.substring(0, 8),
+    custom_fields: {},
+    x_visacuotas: 'no',
+    x_relay_url: `${apiUrl}/qpaypro/relay/${payload.reference}`,
+    products: payload.items.map(item => [
+      item.name,
+      item.id.substring(0, 8),
+      '',
+      item.quantity,
+      item.price.toFixed(2),
+      (item.quantity * item.price).toFixed(2)
+    ]),
+    taxes: '0.00',
+    http_origin: frontendUrl,
+    origen: 'comerza-app',
+    store_type: 'COMERZA'
+  };
 
   console.log('Sending payload to QPayPro para generar Token...');
 
@@ -86,7 +86,7 @@ export const createPaymentLink = async (credentials: QPayProCredentials, payload
     }
 
     const responseBody = await res.json() as any;
-    
+
     // QPayPro puede devolver "status" o "estado" para indicar error
     if (responseBody.status === 'error' || responseBody.estado === 'error') {
       console.error('QPayPro Error Response:', responseBody);
@@ -102,10 +102,10 @@ export const createPaymentLink = async (credentials: QPayProCredentials, payload
 
     // Generamos el link final con el token que nos pediste
     return `https://payments.qpaypro.com/checkout/store?token=${token}`;
-    
+
   } catch (error: any) {
     console.error('Error generando link de pago:', error);
-    
+
     // Lanzamos el error real en lugar de usar un token simulado para que puedas ver por qué falla
     throw error;
   }
