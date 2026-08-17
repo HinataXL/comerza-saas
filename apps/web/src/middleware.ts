@@ -34,5 +34,5 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   // Configurar el matcher para que se ejecute en todas las rutas excepto estáticos y api internos de Next
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|mp4|webm)$).*)'],
 };
