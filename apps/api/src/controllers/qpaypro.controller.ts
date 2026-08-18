@@ -8,34 +8,40 @@ export const handleRelay = async (req: Request, res: Response): Promise<void> =>
 
     console.log(`QPayPro Relay received for sale ${saleId}:`, { query: req.query, body: req.body });
 
-    // Si la transacción fue exitosa (x_response_status = 1)
-    if (x_response_status === '1' && saleId) {
-      
-      const sale = await prisma.sale.findUnique({
-        where: { id: saleId as string }
-      });
+    let sale = await prisma.sale.findUnique({
+      where: { id: saleId as string }
+    });
 
-      if (sale && sale.status === 'PENDING') {
-        // Actualizar estado de la venta
-        await prisma.sale.update({
-          where: { id: sale.id },
-          data: { status: 'COMPLETED' }
-        });
-        
-        console.log(`Sale ${sale.id} automatically marked as COMPLETED via QPayPro Relay`);
+    if (sale) {
+      if (x_response_status === '1') {
+        if (sale.status === 'PENDING') {
+          // Actualizar estado de la venta
+          sale = await prisma.sale.update({
+            where: { id: sale.id },
+            data: { status: 'COMPLETED' }
+          });
+          console.log(`Sale ${sale.id} automatically marked as COMPLETED via QPayPro Relay`);
+        }
+      } else if (x_response_status) {
+        if (sale.status === 'PENDING') {
+          sale = await prisma.sale.update({
+            where: { id: sale.id },
+            data: { status: 'FAILED' }
+          });
+          console.log(`Sale ${sale.id} automatically marked as FAILED via QPayPro Relay`);
+        }
       }
     }
 
     const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
 
-    // Redirigir según el estado
-    if (x_response_status === '1') {
+    // Redirigir según el estado actual de la venta (leído de la BD)
+    if (sale?.status === 'COMPLETED') {
       res.redirect(`${frontendUrl}/pago/exitoso?saleId=${saleId || ''}`);
-    } else if (x_response_status) {
-      // Si hay un status pero no es 1, es que falló
+    } else if (sale?.status === 'FAILED' || (x_response_status && x_response_status !== '1')) {
       res.redirect(`${frontendUrl}/pago/fallido?saleId=${saleId || ''}`);
     } else {
-      // Si llega vacío (webhook en segundo plano o recarga de página)
+      // Si sigue PENDING, no hay status
       res.redirect(`${frontendUrl}`);
     }
 
