@@ -1,7 +1,7 @@
 import ReportesClient from './ReportesClient';
 
 export const metadata = {
-  title: 'Reportes | Comerza POS',
+  title: 'Reportes',
   description: 'Reportes y análisis de ventas de tu negocio',
 };
 

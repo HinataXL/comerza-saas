@@ -92,7 +92,8 @@ export const getTenantSettings = async (req: AuthRequest, res: Response): Promis
       select: {
         name: true,
         logoUrl: true,
-        receiptTemplate: true
+        receiptTemplate: true,
+        reservationNotificationType: true
       }
     });
 
@@ -116,18 +117,20 @@ export const updateTenantSettings = async (req: AuthRequest, res: Response): Pro
       return;
     }
 
-    const { name, receiptTemplate } = req.body;
+    const { name, receiptTemplate, reservationNotificationType } = req.body;
 
     const tenant = await prisma.tenant.update({
       where: { id: tenantId },
       data: {
         name: name !== undefined ? name : undefined,
-        receiptTemplate: receiptTemplate !== undefined ? receiptTemplate : undefined
+        receiptTemplate: receiptTemplate !== undefined ? receiptTemplate : undefined,
+        reservationNotificationType: reservationNotificationType !== undefined ? reservationNotificationType : undefined
       },
       select: {
         name: true,
         logoUrl: true,
-        receiptTemplate: true
+        receiptTemplate: true,
+        reservationNotificationType: true
       }
     });
 

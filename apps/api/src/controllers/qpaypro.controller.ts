@@ -4,9 +4,9 @@ import { prisma } from '../lib/prisma';
 export const handleRelay = async (req: Request, res: Response): Promise<void> => {
   try {
     const { saleId } = req.params;
-    const { x_response_status } = req.query;
+    const x_response_status = req.query.x_response_status || req.body.x_response_status;
 
-    console.log(`QPayPro Relay received for sale ${saleId}:`, req.query);
+    console.log(`QPayPro Relay received for sale ${saleId}:`, { query: req.query, body: req.body });
 
     // Si la transacción fue exitosa (x_response_status = 1)
     if (x_response_status === '1' && saleId) {
@@ -26,23 +26,23 @@ export const handleRelay = async (req: Request, res: Response): Promise<void> =>
       }
     }
 
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
 
     // Redirigir según el estado
     if (x_response_status === '1') {
-      res.redirect(`${frontendUrl}/dashboard/cobros?payment=success`);
+      res.redirect(`${frontendUrl}/pago/exitoso?saleId=${saleId || ''}`);
     } else if (x_response_status) {
       // Si hay un status pero no es 1, es que falló
-      res.redirect(`${frontendUrl}/dashboard/cobros?payment=failed`);
+      res.redirect(`${frontendUrl}/pago/fallido?saleId=${saleId || ''}`);
     } else {
       // Si llega vacío (webhook en segundo plano o recarga de página)
-      res.redirect(`${frontendUrl}/dashboard/cobros`);
+      res.redirect(`${frontendUrl}`);
     }
 
   } catch (error) {
     console.error('Error handling QPayPro relay:', error);
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
     // Redirigir al frontend incluso si hubo un error en nuestro lado
-    res.redirect(`${frontendUrl}/dashboard/cobros?payment=error`);
+    res.redirect(`${frontendUrl}/pago/fallido?error=server`);
   }
 };

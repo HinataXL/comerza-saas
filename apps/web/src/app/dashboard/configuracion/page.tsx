@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Settings, Upload, Image as ImageIcon, Save, CheckCircle, FileText, ScrollText } from 'lucide-react';
+import { Settings, Upload, Image as ImageIcon, Save, CheckCircle, FileText, ScrollText, Mail, MessageCircle } from 'lucide-react';
 import './configuracion.css';
 
 export default function ConfiguracionPage() {
@@ -11,6 +11,7 @@ export default function ConfiguracionPage() {
   const [name, setName] = useState('');
   const [logoUrl, setLogoUrl] = useState('');
   const [receiptTemplate, setReceiptTemplate] = useState('CLASSIC');
+  const [reservationNotificationType, setReservationNotificationType] = useState('EMAIL');
   
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -29,6 +30,7 @@ export default function ConfiguracionPage() {
           setName(data.name || '');
           setLogoUrl(data.logoUrl || '');
           setReceiptTemplate(data.receiptTemplate || 'CLASSIC');
+          setReservationNotificationType(data.reservationNotificationType || 'EMAIL');
         }
       } catch (error) {
         console.error('Error fetching settings:', error);
@@ -68,7 +70,7 @@ export default function ConfiguracionPage() {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ name, receiptTemplate })
+        body: JSON.stringify({ name, receiptTemplate, reservationNotificationType })
       });
       
       if (res.ok) {
@@ -155,6 +157,51 @@ export default function ConfiguracionPage() {
             <h3 style={{ fontSize: '1rem', fontWeight: 600, margin: '0.5rem 0' }}>Plantilla Ticket (80mm)</h3>
             <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
               Formato estrecho optimizado para impresoras térmicas de puntos de venta (POS).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="config-card" style={{ marginTop: '1.5rem' }}>
+        <h2 className="config-section-title">Notificaciones de Reservaciones</h2>
+        <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+          Selecciona cómo quieres que los clientes reciban las notificaciones y solicitudes de confirmación.
+        </p>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+          <div 
+            className={`template-option ${reservationNotificationType === 'EMAIL' ? 'selected' : ''}`}
+            onClick={() => setReservationNotificationType('EMAIL')}
+          >
+            <Mail size={32} className="template-icon" />
+            <h3 style={{ fontSize: '1rem', fontWeight: 600, margin: '0.5rem 0' }}>Solo Correo</h3>
+            <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+              Se enviará un enlace por correo electrónico.
+            </p>
+          </div>
+
+          <div 
+            className={`template-option ${reservationNotificationType === 'WHATSAPP' ? 'selected' : ''}`}
+            onClick={() => setReservationNotificationType('WHATSAPP')}
+          >
+            <MessageCircle size={32} className="template-icon" />
+            <h3 style={{ fontSize: '1rem', fontWeight: 600, margin: '0.5rem 0' }}>Solo WhatsApp</h3>
+            <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+              Se enviará un mensaje de WhatsApp interactivo (si hay teléfono).
+            </p>
+          </div>
+
+          <div 
+            className={`template-option ${reservationNotificationType === 'BOTH' ? 'selected' : ''}`}
+            onClick={() => setReservationNotificationType('BOTH')}
+          >
+            <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
+              <Mail size={32} className="template-icon" style={{ margin: 0 }} />
+              <MessageCircle size={32} className="template-icon" style={{ margin: 0 }} />
+            </div>
+            <h3 style={{ fontSize: '1rem', fontWeight: 600, margin: '0.5rem 0' }}>Ambos</h3>
+            <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+              El cliente recibirá tanto correo como mensaje de WhatsApp.
             </p>
           </div>
         </div>

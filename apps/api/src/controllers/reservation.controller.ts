@@ -4,6 +4,7 @@ import { prisma } from '../lib/prisma';
 import { z } from 'zod';
 import { generateToken, verifyToken } from '../utils/jwt';
 import { sendReservationEmail } from '../services/email.service';
+import { sendReservationWhatsApp } from '../services/whatsapp.service';
 
 const createReservationSchema = z.object({
   customerId: z.string().uuid(),
@@ -77,8 +78,11 @@ export const createReservation = async (req: AuthRequest, res: Response) => {
       },
     });
 
-    if (reservation.customer.email) {
-      const token = generateToken({ reservationId: reservation.id }, '7d');
+    const notificationType = reservation.tenant.reservationNotificationType || 'EMAIL';
+    const token = generateToken({ reservationId: reservation.id }, '7d');
+
+    // Send Email
+    if ((notificationType === 'EMAIL' || notificationType === 'BOTH') && reservation.customer.email) {
       sendReservationEmail({
         toEmail: reservation.customer.email,
         customerName: reservation.customer.name,
@@ -87,6 +91,18 @@ export const createReservation = async (req: AuthRequest, res: Response) => {
         title: reservation.title,
         token
       }).catch(err => console.error('Error enviando email de reservación:', err));
+    }
+
+    // Send WhatsApp
+    if ((notificationType === 'WHATSAPP' || notificationType === 'BOTH') && reservation.customer.phone) {
+      sendReservationWhatsApp({
+        toPhone: reservation.customer.phone,
+        customerName: reservation.customer.name,
+        companyName: reservation.tenant.name,
+        date: reservation.startTime,
+        title: reservation.title,
+        token
+      }).catch(err => console.error('Error enviando whatsapp de reservación:', err));
     }
 
     res.status(201).json(reservation);

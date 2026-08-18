@@ -257,7 +257,7 @@ export const sendReservationEmail = async (params: {
 
   const resend = new Resend(resendApiKey);
   
-  const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
+  const frontendUrl = (process.env.FRONTEND_URL || 'https://comerza.me').replace(/\/$/, '');
   const confirmUrl = `${frontendUrl}/reserva/confirmar?token=${token}&action=CONFIRMED`;
   const cancelUrl = `${frontendUrl}/reserva/confirmar?token=${token}&action=CANCELLED`;
 

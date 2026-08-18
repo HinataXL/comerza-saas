@@ -36,6 +36,7 @@ export type TenantMinAggregateOutputType = {
   logoUrl: string | null
   receiptTemplate: string | null
   plan: string | null
+  reservationNotificationType: string | null
   isActive: boolean | null
   status: string | null
   nit: string | null
@@ -58,6 +59,7 @@ export type TenantMaxAggregateOutputType = {
   logoUrl: string | null
   receiptTemplate: string | null
   plan: string | null
+  reservationNotificationType: string | null
   isActive: boolean | null
   status: string | null
   nit: string | null
@@ -80,6 +82,7 @@ export type TenantCountAggregateOutputType = {
   logoUrl: number
   receiptTemplate: number
   plan: number
+  reservationNotificationType: number
   isActive: number
   status: number
   nit: number
@@ -104,6 +107,7 @@ export type TenantMinAggregateInputType = {
   logoUrl?: true
   receiptTemplate?: true
   plan?: true
+  reservationNotificationType?: true
   isActive?: true
   status?: true
   nit?: true
@@ -126,6 +130,7 @@ export type TenantMaxAggregateInputType = {
   logoUrl?: true
   receiptTemplate?: true
   plan?: true
+  reservationNotificationType?: true
   isActive?: true
   status?: true
   nit?: true
@@ -148,6 +153,7 @@ export type TenantCountAggregateInputType = {
   logoUrl?: true
   receiptTemplate?: true
   plan?: true
+  reservationNotificationType?: true
   isActive?: true
   status?: true
   nit?: true
@@ -243,6 +249,7 @@ export type TenantGroupByOutputType = {
   logoUrl: string | null
   receiptTemplate: string
   plan: string
+  reservationNotificationType: string
   isActive: boolean
   status: string
   nit: string | null
@@ -286,6 +293,7 @@ export type TenantWhereInput = {
   logoUrl?: Prisma.StringNullableFilter<"Tenant"> | string | null
   receiptTemplate?: Prisma.StringFilter<"Tenant"> | string
   plan?: Prisma.StringFilter<"Tenant"> | string
+  reservationNotificationType?: Prisma.StringFilter<"Tenant"> | string
   isActive?: Prisma.BoolFilter<"Tenant"> | boolean
   status?: Prisma.StringFilter<"Tenant"> | string
   nit?: Prisma.StringNullableFilter<"Tenant"> | string | null
@@ -316,6 +324,7 @@ export type TenantOrderByWithRelationInput = {
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   receiptTemplate?: Prisma.SortOrder
   plan?: Prisma.SortOrder
+  reservationNotificationType?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
   nit?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -349,6 +358,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   logoUrl?: Prisma.StringNullableFilter<"Tenant"> | string | null
   receiptTemplate?: Prisma.StringFilter<"Tenant"> | string
   plan?: Prisma.StringFilter<"Tenant"> | string
+  reservationNotificationType?: Prisma.StringFilter<"Tenant"> | string
   isActive?: Prisma.BoolFilter<"Tenant"> | boolean
   status?: Prisma.StringFilter<"Tenant"> | string
   nit?: Prisma.StringNullableFilter<"Tenant"> | string | null
@@ -379,6 +389,7 @@ export type TenantOrderByWithAggregationInput = {
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   receiptTemplate?: Prisma.SortOrder
   plan?: Prisma.SortOrder
+  reservationNotificationType?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
   nit?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -407,6 +418,7 @@ export type TenantScalarWhereWithAggregatesInput = {
   logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Tenant"> | string | null
   receiptTemplate?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   plan?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
+  reservationNotificationType?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"Tenant"> | boolean
   status?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   nit?: Prisma.StringNullableWithAggregatesFilter<"Tenant"> | string | null
@@ -429,6 +441,7 @@ export type TenantCreateInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -459,6 +472,7 @@ export type TenantUncheckedCreateInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -489,6 +503,7 @@ export type TenantUpdateInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -519,6 +534,7 @@ export type TenantUncheckedUpdateInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -549,6 +565,7 @@ export type TenantCreateManyInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -571,6 +588,7 @@ export type TenantUpdateManyMutationInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -593,6 +611,7 @@ export type TenantUncheckedUpdateManyInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -615,6 +634,7 @@ export type TenantCountOrderByAggregateInput = {
   logoUrl?: Prisma.SortOrder
   receiptTemplate?: Prisma.SortOrder
   plan?: Prisma.SortOrder
+  reservationNotificationType?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
   nit?: Prisma.SortOrder
@@ -637,6 +657,7 @@ export type TenantMaxOrderByAggregateInput = {
   logoUrl?: Prisma.SortOrder
   receiptTemplate?: Prisma.SortOrder
   plan?: Prisma.SortOrder
+  reservationNotificationType?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
   nit?: Prisma.SortOrder
@@ -659,6 +680,7 @@ export type TenantMinOrderByAggregateInput = {
   logoUrl?: Prisma.SortOrder
   receiptTemplate?: Prisma.SortOrder
   plan?: Prisma.SortOrder
+  reservationNotificationType?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
   nit?: Prisma.SortOrder
@@ -821,6 +843,7 @@ export type TenantCreateWithoutUsersInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -850,6 +873,7 @@ export type TenantUncheckedCreateWithoutUsersInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -895,6 +919,7 @@ export type TenantUpdateWithoutUsersInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -924,6 +949,7 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -953,6 +979,7 @@ export type TenantCreateWithoutCustomersInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -982,6 +1009,7 @@ export type TenantUncheckedCreateWithoutCustomersInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -1027,6 +1055,7 @@ export type TenantUpdateWithoutCustomersInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1056,6 +1085,7 @@ export type TenantUncheckedUpdateWithoutCustomersInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1085,6 +1115,7 @@ export type TenantCreateWithoutProductsInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -1114,6 +1145,7 @@ export type TenantUncheckedCreateWithoutProductsInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -1159,6 +1191,7 @@ export type TenantUpdateWithoutProductsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1188,6 +1221,7 @@ export type TenantUncheckedUpdateWithoutProductsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1217,6 +1251,7 @@ export type TenantCreateWithoutSalesInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -1246,6 +1281,7 @@ export type TenantUncheckedCreateWithoutSalesInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -1291,6 +1327,7 @@ export type TenantUpdateWithoutSalesInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1320,6 +1357,7 @@ export type TenantUncheckedUpdateWithoutSalesInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1349,6 +1387,7 @@ export type TenantCreateWithoutSaleItemsInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -1378,6 +1417,7 @@ export type TenantUncheckedCreateWithoutSaleItemsInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -1423,6 +1463,7 @@ export type TenantUpdateWithoutSaleItemsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1452,6 +1493,7 @@ export type TenantUncheckedUpdateWithoutSaleItemsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1481,6 +1523,7 @@ export type TenantCreateWithoutNotificationsInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -1510,6 +1553,7 @@ export type TenantUncheckedCreateWithoutNotificationsInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -1555,6 +1599,7 @@ export type TenantUpdateWithoutNotificationsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1584,6 +1629,7 @@ export type TenantUncheckedUpdateWithoutNotificationsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1613,6 +1659,7 @@ export type TenantCreateWithoutSubscriptionsInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -1642,6 +1689,7 @@ export type TenantUncheckedCreateWithoutSubscriptionsInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -1687,6 +1735,7 @@ export type TenantUpdateWithoutSubscriptionsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1716,6 +1765,7 @@ export type TenantUncheckedUpdateWithoutSubscriptionsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1745,6 +1795,7 @@ export type TenantCreateWithoutReservationsInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -1774,6 +1825,7 @@ export type TenantUncheckedCreateWithoutReservationsInput = {
   logoUrl?: string | null
   receiptTemplate?: string
   plan?: string
+  reservationNotificationType?: string
   isActive?: boolean
   status?: string
   nit?: string | null
@@ -1819,6 +1871,7 @@ export type TenantUpdateWithoutReservationsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1848,6 +1901,7 @@ export type TenantUncheckedUpdateWithoutReservationsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.StringFieldUpdateOperationsInput | string
+  reservationNotificationType?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1971,6 +2025,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   logoUrl?: boolean
   receiptTemplate?: boolean
   plan?: boolean
+  reservationNotificationType?: boolean
   isActive?: boolean
   status?: boolean
   nit?: boolean
@@ -2002,6 +2057,7 @@ export type TenantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   logoUrl?: boolean
   receiptTemplate?: boolean
   plan?: boolean
+  reservationNotificationType?: boolean
   isActive?: boolean
   status?: boolean
   nit?: boolean
@@ -2024,6 +2080,7 @@ export type TenantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   logoUrl?: boolean
   receiptTemplate?: boolean
   plan?: boolean
+  reservationNotificationType?: boolean
   isActive?: boolean
   status?: boolean
   nit?: boolean
@@ -2046,6 +2103,7 @@ export type TenantSelectScalar = {
   logoUrl?: boolean
   receiptTemplate?: boolean
   plan?: boolean
+  reservationNotificationType?: boolean
   isActive?: boolean
   status?: boolean
   nit?: boolean
@@ -2056,7 +2114,7 @@ export type TenantSelectScalar = {
   updatedAt?: boolean
 }
 
-export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "qpayproApiKey" | "qpayproApiSecret" | "isQpayproActive" | "recurrenteSecretKey" | "recurrenteTerminalId" | "isRecurrenteActive" | "logoUrl" | "receiptTemplate" | "plan" | "isActive" | "status" | "nit" | "responsibleName" | "email" | "phone" | "createdAt" | "updatedAt", ExtArgs["result"]["tenant"]>
+export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "qpayproApiKey" | "qpayproApiSecret" | "isQpayproActive" | "recurrenteSecretKey" | "recurrenteTerminalId" | "isRecurrenteActive" | "logoUrl" | "receiptTemplate" | "plan" | "reservationNotificationType" | "isActive" | "status" | "nit" | "responsibleName" | "email" | "phone" | "createdAt" | "updatedAt", ExtArgs["result"]["tenant"]>
 export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Tenant$usersArgs<ExtArgs>
   customers?: boolean | Prisma.Tenant$customersArgs<ExtArgs>
@@ -2095,6 +2153,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     logoUrl: string | null
     receiptTemplate: string
     plan: string
+    reservationNotificationType: string
     isActive: boolean
     status: string
     nit: string | null
@@ -2545,6 +2604,7 @@ export interface TenantFieldRefs {
   readonly logoUrl: Prisma.FieldRef<"Tenant", 'String'>
   readonly receiptTemplate: Prisma.FieldRef<"Tenant", 'String'>
   readonly plan: Prisma.FieldRef<"Tenant", 'String'>
+  readonly reservationNotificationType: Prisma.FieldRef<"Tenant", 'String'>
   readonly isActive: Prisma.FieldRef<"Tenant", 'Boolean'>
   readonly status: Prisma.FieldRef<"Tenant", 'String'>
   readonly nit: Prisma.FieldRef<"Tenant", 'String'>

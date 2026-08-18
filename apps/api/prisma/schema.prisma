@@ -22,6 +22,7 @@ model Tenant {
   logoUrl           String?
   receiptTemplate   String   @default("CLASSIC") // CLASSIC, TICKET
   plan              String   @default("PRO") // PRO, PREMIUM
+  reservationNotificationType String @default("EMAIL") // EMAIL, WHATSAPP, BOTH
   isActive          Boolean  @default(true)
   status            String   @default("PENDING_PAYMENT") // ACTIVE, PENDING_PAYMENT, SUSPENDED, CANCELLED
   nit               String?

@@ -20,6 +20,7 @@
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
     "@types/pg": "^8.20.3",
+    "axios": "^1.19.0",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
@@ -29,7 +30,8 @@
     "morgan": "^1.11.0",
     "multer": "^2.2.0",
     "pg": "^8.22.0",
-    "resend": "^6.18.1"
+    "resend": "^6.18.1",
+    "twilio": "^6.1.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",

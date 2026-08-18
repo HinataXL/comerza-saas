@@ -23,8 +23,8 @@ export const createPaymentLink = async (credentials: QPayProCredentials, payload
   const firstName = nameParts[0];
   const lastName = nameParts.slice(1).join(' ') || 'Final';
 
-  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-  const apiUrl = process.env.API_URL || 'http://localhost:3001/api';
+  const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
+  const apiUrl = (process.env.API_URL || 'http://localhost:3001/api').replace(/\/$/, '');
 
   // Estructura exacta solicitada por QPayPro
   const qpayproPayload = {
@@ -37,7 +37,7 @@ export const createPaymentLink = async (credentials: QPayProCredentials, payload
     x_phone: payload.customerPhone || '00000000',
     x_description: payload.description,
     x_reference: payload.reference,
-    x_url_cancel: `${frontendUrl}/dashboard/ventas`, // Fallback
+    x_url_cancel: `${frontendUrl}/pago/fallido`, // Fallback de cancelación
     x_company: 'C/F',
     x_address: 'Ciudad',
     x_city: 'Guatemala',

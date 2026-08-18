@@ -1442,6 +1442,7 @@ export const TenantScalarFieldEnum = {
   logoUrl: 'logoUrl',
   receiptTemplate: 'receiptTemplate',
   plan: 'plan',
+  reservationNotificationType: 'reservationNotificationType',
   isActive: 'isActive',
   status: 'status',
   nit: 'nit',

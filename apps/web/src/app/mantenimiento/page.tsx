@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const metadata = {
-  title: 'Mantenimiento - Comerza',
+  title: 'Mantenimiento',
   description: 'Estamos realizando mejoras en nuestra plataforma.',
 };
 
