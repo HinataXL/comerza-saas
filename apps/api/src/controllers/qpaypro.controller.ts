@@ -4,7 +4,7 @@ import { prisma } from '../lib/prisma';
 export const handleRelay = async (req: Request, res: Response): Promise<void> => {
   try {
     const { saleId } = req.params;
-    const x_response_status = req.query.x_response_status || req.body.x_response_status;
+    const x_response_status = req.query?.x_response_status || req.body?.x_response_status;
 
     console.log(`QPayPro Relay received for sale ${saleId}:`, { query: req.query, body: req.body });
 
