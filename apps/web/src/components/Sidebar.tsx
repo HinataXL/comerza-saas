@@ -14,7 +14,8 @@ import {
   Blocks, 
   Settings,
   Store,
-  LogOut
+  LogOut,
+  Calendar
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import './Sidebar.css';
@@ -27,6 +28,7 @@ const navItems = [
   { name: 'Recibos', href: '/dashboard/recibos', icon: FileText },
   { name: 'Catálogo', href: '/dashboard/products', icon: Package },
   { name: 'Clientes', href: '/dashboard/clientes', icon: Users },
+  { name: 'Reservaciones', href: '/dashboard/reservaciones', icon: Calendar },
   { name: 'Reportes', href: '/dashboard/reportes', icon: BarChart2 },
   { name: 'Integraciones', href: '/dashboard/integraciones', icon: Blocks },
   { name: 'Configuración', href: '/dashboard/configuracion', icon: Settings },
@@ -79,7 +81,7 @@ export default function Sidebar() {
 
   // Filtrar items según las features activas del plan
   const visibleNavItems = navItems.filter(item => {
-    if (item.name === 'Dashboard') return true; // Siempre visible
+    if (item.name === 'Dashboard' || item.name === 'Reservaciones') return true; // Siempre visible
     return allowedFeatures.includes(item.name);
   });
 

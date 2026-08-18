@@ -23,7 +23,8 @@ export const sendWelcomeEmail = async (params: WelcomeEmailParams) => {
 
   const htmlTemplate = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
-      <div style="background-color: #0f172a; padding: 24px; text-align: center;">
+      <div style="background-color: #1e3a8a; padding: 32px 24px; text-align: center;">
+        <img src="https://comerza.me/logo.png" alt="Comerza Logo" style="height: 40px; margin-bottom: 16px;" />
         <h1 style="color: #ffffff; margin: 0; font-size: 24px;">¡Bienvenido a Comerza!</h1>
       </div>
       <div style="padding: 32px; background-color: #ffffff; color: #334155;">
@@ -41,7 +42,7 @@ export const sendWelcomeEmail = async (params: WelcomeEmailParams) => {
         </p>
         
         <div style="text-align: center; margin-top: 32px;">
-          <a href="http://localhost:3000/" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
+          <a href="https://comerza.me/login" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
             Ingresar al Sistema
           </a>
         </div>
@@ -81,7 +82,8 @@ export const sendSuperAdminWelcomeEmail = async (params: { toEmail: string, admi
 
   const htmlTemplate = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
-      <div style="background-color: #0f172a; padding: 24px; text-align: center;">
+      <div style="background-color: #1e3a8a; padding: 32px 24px; text-align: center;">
+        <img src="https://comerza.me/logo.png" alt="Comerza Logo" style="height: 40px; margin-bottom: 16px;" />
         <h1 style="color: #ffffff; margin: 0; font-size: 24px;">¡Bienvenido al Panel Global de Comerza!</h1>
       </div>
       <div style="padding: 32px; background-color: #ffffff; color: #334155;">
@@ -99,7 +101,7 @@ export const sendSuperAdminWelcomeEmail = async (params: { toEmail: string, admi
         </p>
         
         <div style="text-align: center; margin-top: 32px;">
-          <a href="http://localhost:3000/" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
+          <a href="https://comerza.me/login" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
             Ingresar al Sistema
           </a>
         </div>
@@ -211,7 +213,7 @@ export const sendPasswordResetEmail = async (params: { toEmail: string, newPassw
         </p>
         
         <div style="text-align: center; margin-top: 32px;">
-          <a href="https://comerza.me/" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
+          <a href="https://comerza.me/login" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
             Ingresar al Sistema
           </a>
         </div>
@@ -233,6 +235,79 @@ export const sendPasswordResetEmail = async (params: { toEmail: string, newPassw
     return data;
   } catch (error) {
     console.error('Error al enviar el correo de recuperación:', error);
+    throw error;
+  }
+};
+
+export const sendReservationEmail = async (params: { 
+  toEmail: string, 
+  customerName: string, 
+  companyName: string, 
+  date: Date, 
+  title: string | null, 
+  token: string 
+}) => {
+  const { toEmail, customerName, companyName, date, title, token } = params;
+  const resendApiKey = process.env.RESEND_API_KEY || '';
+  
+  if (!resendApiKey) {
+    console.warn('RESEND_API_KEY no configurada. El email de reservación no se enviará.');
+    return;
+  }
+
+  const resend = new Resend(resendApiKey);
+  
+  const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
+  const confirmUrl = `${frontendUrl}/reserva/confirmar?token=${token}&action=CONFIRMED`;
+  const cancelUrl = `${frontendUrl}/reserva/confirmar?token=${token}&action=CANCELLED`;
+
+  const dateStr = date.toLocaleString('es-ES', { dateStyle: 'full', timeStyle: 'short' });
+
+  const htmlTemplate = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+      <div style="background-color: #1e3a8a; padding: 24px; text-align: center;">
+        <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Nueva Reservación en ${companyName}</h1>
+      </div>
+      <div style="padding: 32px; background-color: #ffffff; color: #334155;">
+        <p style="font-size: 16px;">Hola <strong>${customerName}</strong>,</p>
+        <p style="font-size: 16px; line-height: 1.5;">Se ha creado una nueva reservación a tu nombre.</p>
+        
+        <div style="background-color: #f8fafc; padding: 16px; border-radius: 8px; margin: 24px 0; border: 1px solid #e2e8f0;">
+          <h3 style="margin-top: 0; color: #0f172a;">Detalles de la Cita:</h3>
+          <p style="margin: 8px 0;"><strong>Fecha y Hora:</strong> ${dateStr}</p>
+          <p style="margin: 8px 0;"><strong>Motivo:</strong> ${title || 'Sin especificar'}</p>
+        </div>
+        
+        <p style="font-size: 14px; color: #64748b;">
+          Por favor, confirma tu asistencia o cancela la reservación haciendo clic en uno de los siguientes botones:
+        </p>
+        
+        <div style="display: flex; gap: 16px; justify-content: center; margin-top: 32px;">
+          <a href="${confirmUrl}" style="background-color: #10b981; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; text-align: center;">
+            Confirmar Asistencia
+          </a>
+          <a href="${cancelUrl}" style="background-color: #ef4444; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; text-align: center;">
+            Cancelar Cita
+          </a>
+        </div>
+      </div>
+      <div style="background-color: #f1f5f9; padding: 16px; text-align: center; color: #94a3b8; font-size: 12px;">
+        <p style="margin: 0;">Este es un correo automático. Si necesitas ayuda, por favor contacta al comercio directamente.</p>
+        <p style="margin: 4px 0 0 0;">&copy; ${new Date().getFullYear()} Comerza POS.</p>
+      </div>
+    </div>
+  `;
+
+  try {
+    const data = await resend.emails.send({
+      from: 'Comerza Reservaciones <reservaciones@comerza.me>',
+      to: [toEmail],
+      subject: `Confirmación de Reservación - ${companyName}`,
+      html: htmlTemplate,
+    });
+    return data;
+  } catch (error) {
+    console.error('Error al enviar el correo de reservación:', error);
     throw error;
   }
 };

@@ -301,6 +301,7 @@ export type TenantWhereInput = {
   saleItems?: Prisma.SaleItemListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
+  reservations?: Prisma.ReservationListRelationFilter
 }
 
 export type TenantOrderByWithRelationInput = {
@@ -330,6 +331,7 @@ export type TenantOrderByWithRelationInput = {
   saleItems?: Prisma.SaleItemOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
+  reservations?: Prisma.ReservationOrderByRelationAggregateInput
 }
 
 export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -362,6 +364,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   saleItems?: Prisma.SaleItemListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
+  reservations?: Prisma.ReservationListRelationFilter
 }, "id">
 
 export type TenantOrderByWithAggregationInput = {
@@ -441,6 +444,7 @@ export type TenantCreateInput = {
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutTenantInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateInput = {
@@ -470,6 +474,7 @@ export type TenantUncheckedCreateInput = {
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutTenantInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUpdateInput = {
@@ -499,6 +504,7 @@ export type TenantUpdateInput = {
   saleItems?: Prisma.SaleItemUpdateManyWithoutTenantNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateInput = {
@@ -528,6 +534,7 @@ export type TenantUncheckedUpdateInput = {
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutTenantNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateManyInput = {
@@ -788,6 +795,20 @@ export type TenantUpdateOneRequiredWithoutSubscriptionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.TenantUpdateWithoutSubscriptionsInput>, Prisma.TenantUncheckedUpdateWithoutSubscriptionsInput>
 }
 
+export type TenantCreateNestedOneWithoutReservationsInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutReservationsInput, Prisma.TenantUncheckedCreateWithoutReservationsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutReservationsInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutReservationsNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutReservationsInput, Prisma.TenantUncheckedCreateWithoutReservationsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutReservationsInput
+  upsert?: Prisma.TenantUpsertWithoutReservationsInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutReservationsInput, Prisma.TenantUpdateWithoutReservationsInput>, Prisma.TenantUncheckedUpdateWithoutReservationsInput>
+}
+
 export type TenantCreateWithoutUsersInput = {
   id?: string
   name: string
@@ -814,6 +835,7 @@ export type TenantCreateWithoutUsersInput = {
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutTenantInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutUsersInput = {
@@ -842,6 +864,7 @@ export type TenantUncheckedCreateWithoutUsersInput = {
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutTenantInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutUsersInput = {
@@ -886,6 +909,7 @@ export type TenantUpdateWithoutUsersInput = {
   saleItems?: Prisma.SaleItemUpdateManyWithoutTenantNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutUsersInput = {
@@ -914,6 +938,7 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutTenantNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutCustomersInput = {
@@ -942,6 +967,7 @@ export type TenantCreateWithoutCustomersInput = {
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutTenantInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCustomersInput = {
@@ -970,6 +996,7 @@ export type TenantUncheckedCreateWithoutCustomersInput = {
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutTenantInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCustomersInput = {
@@ -1014,6 +1041,7 @@ export type TenantUpdateWithoutCustomersInput = {
   saleItems?: Prisma.SaleItemUpdateManyWithoutTenantNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCustomersInput = {
@@ -1042,6 +1070,7 @@ export type TenantUncheckedUpdateWithoutCustomersInput = {
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutTenantNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutProductsInput = {
@@ -1070,6 +1099,7 @@ export type TenantCreateWithoutProductsInput = {
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutTenantInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutProductsInput = {
@@ -1098,6 +1128,7 @@ export type TenantUncheckedCreateWithoutProductsInput = {
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutTenantInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutProductsInput = {
@@ -1142,6 +1173,7 @@ export type TenantUpdateWithoutProductsInput = {
   saleItems?: Prisma.SaleItemUpdateManyWithoutTenantNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutProductsInput = {
@@ -1170,6 +1202,7 @@ export type TenantUncheckedUpdateWithoutProductsInput = {
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutTenantNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutSalesInput = {
@@ -1198,6 +1231,7 @@ export type TenantCreateWithoutSalesInput = {
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutTenantInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutSalesInput = {
@@ -1226,6 +1260,7 @@ export type TenantUncheckedCreateWithoutSalesInput = {
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutTenantInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutSalesInput = {
@@ -1270,6 +1305,7 @@ export type TenantUpdateWithoutSalesInput = {
   saleItems?: Prisma.SaleItemUpdateManyWithoutTenantNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutSalesInput = {
@@ -1298,6 +1334,7 @@ export type TenantUncheckedUpdateWithoutSalesInput = {
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutTenantNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutSaleItemsInput = {
@@ -1326,6 +1363,7 @@ export type TenantCreateWithoutSaleItemsInput = {
   sales?: Prisma.SaleCreateNestedManyWithoutTenantInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutSaleItemsInput = {
@@ -1354,6 +1392,7 @@ export type TenantUncheckedCreateWithoutSaleItemsInput = {
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutTenantInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutSaleItemsInput = {
@@ -1398,6 +1437,7 @@ export type TenantUpdateWithoutSaleItemsInput = {
   sales?: Prisma.SaleUpdateManyWithoutTenantNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutSaleItemsInput = {
@@ -1426,6 +1466,7 @@ export type TenantUncheckedUpdateWithoutSaleItemsInput = {
   sales?: Prisma.SaleUncheckedUpdateManyWithoutTenantNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutNotificationsInput = {
@@ -1454,6 +1495,7 @@ export type TenantCreateWithoutNotificationsInput = {
   sales?: Prisma.SaleCreateNestedManyWithoutTenantInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutNotificationsInput = {
@@ -1482,6 +1524,7 @@ export type TenantUncheckedCreateWithoutNotificationsInput = {
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutTenantInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutNotificationsInput = {
@@ -1526,6 +1569,7 @@ export type TenantUpdateWithoutNotificationsInput = {
   sales?: Prisma.SaleUpdateManyWithoutTenantNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutNotificationsInput = {
@@ -1554,6 +1598,7 @@ export type TenantUncheckedUpdateWithoutNotificationsInput = {
   sales?: Prisma.SaleUncheckedUpdateManyWithoutTenantNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutSubscriptionsInput = {
@@ -1582,6 +1627,7 @@ export type TenantCreateWithoutSubscriptionsInput = {
   sales?: Prisma.SaleCreateNestedManyWithoutTenantInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutTenantInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutSubscriptionsInput = {
@@ -1610,6 +1656,7 @@ export type TenantUncheckedCreateWithoutSubscriptionsInput = {
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutTenantInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutTenantInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTenantInput
+  reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutSubscriptionsInput = {
@@ -1654,6 +1701,7 @@ export type TenantUpdateWithoutSubscriptionsInput = {
   sales?: Prisma.SaleUpdateManyWithoutTenantNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutTenantNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutSubscriptionsInput = {
@@ -1682,6 +1730,139 @@ export type TenantUncheckedUpdateWithoutSubscriptionsInput = {
   sales?: Prisma.SaleUncheckedUpdateManyWithoutTenantNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutTenantNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTenantNestedInput
+  reservations?: Prisma.ReservationUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutReservationsInput = {
+  id?: string
+  name: string
+  qpayproApiKey?: string | null
+  qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
+  recurrenteSecretKey?: string | null
+  recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
+  logoUrl?: string | null
+  receiptTemplate?: string
+  plan?: string
+  isActive?: boolean
+  status?: string
+  nit?: string | null
+  responsibleName?: string | null
+  email?: string | null
+  phone?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductCreateNestedManyWithoutTenantInput
+  sales?: Prisma.SaleCreateNestedManyWithoutTenantInput
+  saleItems?: Prisma.SaleItemCreateNestedManyWithoutTenantInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutReservationsInput = {
+  id?: string
+  name: string
+  qpayproApiKey?: string | null
+  qpayproApiSecret?: string | null
+  isQpayproActive?: boolean
+  recurrenteSecretKey?: string | null
+  recurrenteTerminalId?: string | null
+  isRecurrenteActive?: boolean
+  logoUrl?: string | null
+  receiptTemplate?: string
+  plan?: string
+  isActive?: boolean
+  status?: string
+  nit?: string | null
+  responsibleName?: string | null
+  email?: string | null
+  phone?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutTenantInput
+  saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutTenantInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutReservationsInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutReservationsInput, Prisma.TenantUncheckedCreateWithoutReservationsInput>
+}
+
+export type TenantUpsertWithoutReservationsInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutReservationsInput, Prisma.TenantUncheckedUpdateWithoutReservationsInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutReservationsInput, Prisma.TenantUncheckedCreateWithoutReservationsInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutReservationsInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutReservationsInput, Prisma.TenantUncheckedUpdateWithoutReservationsInput>
+}
+
+export type TenantUpdateWithoutReservationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  responsibleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutTenantNestedInput
+  saleItems?: Prisma.SaleItemUpdateManyWithoutTenantNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutReservationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  qpayproApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qpayproApiSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isQpayproActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurrenteSecretKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurrenteTerminalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurrenteActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptTemplate?: Prisma.StringFieldUpdateOperationsInput | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  nit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  responsibleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutTenantNestedInput
+  saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutTenantNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 
@@ -1697,6 +1878,7 @@ export type TenantCountOutputType = {
   saleItems: number
   notifications: number
   subscriptions: number
+  reservations: number
 }
 
 export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1707,6 +1889,7 @@ export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   saleItems?: boolean | TenantCountOutputTypeCountSaleItemsArgs
   notifications?: boolean | TenantCountOutputTypeCountNotificationsArgs
   subscriptions?: boolean | TenantCountOutputTypeCountSubscriptionsArgs
+  reservations?: boolean | TenantCountOutputTypeCountReservationsArgs
 }
 
 /**
@@ -1768,6 +1951,13 @@ export type TenantCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime.
   where?: Prisma.SubscriptionWhereInput
 }
 
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountReservationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReservationWhereInput
+}
+
 
 export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1796,6 +1986,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   saleItems?: boolean | Prisma.Tenant$saleItemsArgs<ExtArgs>
   notifications?: boolean | Prisma.Tenant$notificationsArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Tenant$subscriptionsArgs<ExtArgs>
+  reservations?: boolean | Prisma.Tenant$reservationsArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tenant"]>
 
@@ -1874,6 +2065,7 @@ export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   saleItems?: boolean | Prisma.Tenant$saleItemsArgs<ExtArgs>
   notifications?: boolean | Prisma.Tenant$notificationsArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Tenant$subscriptionsArgs<ExtArgs>
+  reservations?: boolean | Prisma.Tenant$reservationsArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TenantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1889,6 +2081,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     saleItems: Prisma.$SaleItemPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
+    reservations: Prisma.$ReservationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2311,6 +2504,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   saleItems<T extends Prisma.Tenant$saleItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$saleItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SaleItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.Tenant$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscriptions<T extends Prisma.Tenant$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reservations<T extends Prisma.Tenant$reservationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$reservationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2917,6 +3111,30 @@ export type Tenant$subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.SubscriptionScalarFieldEnum | Prisma.SubscriptionScalarFieldEnum[]
+}
+
+/**
+ * Tenant.reservations
+ */
+export type Tenant$reservationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Reservation
+   */
+  select?: Prisma.ReservationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Reservation
+   */
+  omit?: Prisma.ReservationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReservationInclude<ExtArgs> | null
+  where?: Prisma.ReservationWhereInput
+  orderBy?: Prisma.ReservationOrderByWithRelationInput | Prisma.ReservationOrderByWithRelationInput[]
+  cursor?: Prisma.ReservationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReservationScalarFieldEnum | Prisma.ReservationScalarFieldEnum[]
 }
 
 /**

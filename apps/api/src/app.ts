@@ -18,7 +18,8 @@ import reportsRoutes from './routes/reports.routes';
 import uploadRoutes from './routes/upload.routes';
 import notificationsRoutes from './routes/notifications.routes';
 import subscriptionRoutes from './modules/subscriptions/subscription.routes';
-
+import reservationRoutes from './routes/reservation.routes';
+import publicRoutes from './routes/public.routes';
 const app = express();
 
 app.use(express.json());
@@ -45,5 +46,7 @@ app.use('/api/reports', reportsRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/notifications', notificationsRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/reservations', reservationRoutes);
+app.use('/api/public', publicRoutes);
 
 export default app;

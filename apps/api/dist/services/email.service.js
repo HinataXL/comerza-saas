@@ -12,7 +12,8 @@ const sendWelcomeEmail = async (params) => {
     const resend = new resend_1.Resend(resendApiKey);
     const htmlTemplate = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
-      <div style="background-color: #0f172a; padding: 24px; text-align: center;">
+      <div style="background-color: #1e3a8a; padding: 32px 24px; text-align: center;">
+        <img src="https://comerza.me/logo.png" alt="Comerza Logo" style="height: 40px; margin-bottom: 16px;" />
         <h1 style="color: #ffffff; margin: 0; font-size: 24px;">¡Bienvenido a Comerza!</h1>
       </div>
       <div style="padding: 32px; background-color: #ffffff; color: #334155;">
@@ -30,7 +31,7 @@ const sendWelcomeEmail = async (params) => {
         </p>
         
         <div style="text-align: center; margin-top: 32px;">
-          <a href="http://localhost:3000/" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
+          <a href="https://comerza.me/login" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
             Ingresar al Sistema
           </a>
         </div>
@@ -67,7 +68,8 @@ const sendSuperAdminWelcomeEmail = async (params) => {
     const resend = new resend_1.Resend(resendApiKey);
     const htmlTemplate = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
-      <div style="background-color: #0f172a; padding: 24px; text-align: center;">
+      <div style="background-color: #1e3a8a; padding: 32px 24px; text-align: center;">
+        <img src="https://comerza.me/logo.png" alt="Comerza Logo" style="height: 40px; margin-bottom: 16px;" />
         <h1 style="color: #ffffff; margin: 0; font-size: 24px;">¡Bienvenido al Panel Global de Comerza!</h1>
       </div>
       <div style="padding: 32px; background-color: #ffffff; color: #334155;">
@@ -85,7 +87,7 @@ const sendSuperAdminWelcomeEmail = async (params) => {
         </p>
         
         <div style="text-align: center; margin-top: 32px;">
-          <a href="http://localhost:3000/" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
+          <a href="https://comerza.me/login" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
             Ingresar al Sistema
           </a>
         </div>
@@ -191,7 +193,7 @@ const sendPasswordResetEmail = async (params) => {
         </p>
         
         <div style="text-align: center; margin-top: 32px;">
-          <a href="https://comerza.me/" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
+          <a href="https://comerza.me/login" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
             Ingresar al Sistema
           </a>
         </div>

@@ -77,3 +77,8 @@ export type Subscription = Prisma.SubscriptionModel
  * 
  */
 export type SubscriptionEvent = Prisma.SubscriptionEventModel
+/**
+ * Model Reservation
+ * 
+ */
+export type Reservation = Prisma.ReservationModel

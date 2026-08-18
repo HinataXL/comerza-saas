@@ -48,7 +48,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JsonNullValueFilter = exports.NullsOrder = exports.QueryMode = exports.JsonNullValueInput = exports.NullableJsonNullValueInput = exports.SortOrder = exports.SubscriptionEventScalarFieldEnum = exports.SubscriptionScalarFieldEnum = exports.PlanScalarFieldEnum = exports.NotificationScalarFieldEnum = exports.AuditLogScalarFieldEnum = exports.PlanConfigScalarFieldEnum = exports.SaleItemScalarFieldEnum = exports.SaleScalarFieldEnum = exports.ProductScalarFieldEnum = exports.CustomerScalarFieldEnum = exports.UserScalarFieldEnum = exports.TenantScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
+exports.JsonNullValueFilter = exports.NullsOrder = exports.QueryMode = exports.JsonNullValueInput = exports.NullableJsonNullValueInput = exports.SortOrder = exports.ReservationScalarFieldEnum = exports.SubscriptionEventScalarFieldEnum = exports.SubscriptionScalarFieldEnum = exports.PlanScalarFieldEnum = exports.NotificationScalarFieldEnum = exports.AuditLogScalarFieldEnum = exports.PlanConfigScalarFieldEnum = exports.SaleItemScalarFieldEnum = exports.SaleScalarFieldEnum = exports.ProductScalarFieldEnum = exports.CustomerScalarFieldEnum = exports.UserScalarFieldEnum = exports.TenantScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/index-browser"));
 exports.Decimal = runtime.Decimal;
 exports.NullTypes = {
@@ -86,7 +86,8 @@ exports.ModelName = {
     Notification: 'Notification',
     Plan: 'Plan',
     Subscription: 'Subscription',
-    SubscriptionEvent: 'SubscriptionEvent'
+    SubscriptionEvent: 'SubscriptionEvent',
+    Reservation: 'Reservation'
 };
 /*
  * Enums
@@ -238,6 +239,18 @@ exports.SubscriptionEventScalarFieldEnum = {
     payload: 'payload',
     processedAt: 'processedAt',
     createdAt: 'createdAt'
+};
+exports.ReservationScalarFieldEnum = {
+    id: 'id',
+    tenantId: 'tenantId',
+    customerId: 'customerId',
+    title: 'title',
+    startTime: 'startTime',
+    endTime: 'endTime',
+    status: 'status',
+    notes: 'notes',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
 };
 exports.SortOrder = {
     asc: 'asc',
