@@ -2,11 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleRecurrenteWebhook = void 0;
 const prisma_1 = require("../lib/prisma");
+const logger_service_1 = require("../services/logger.service");
 const handleRecurrenteWebhook = async (req, res) => {
     try {
         const { event_type, data } = req.body;
-        console.log("=== WEBHOOK RECIBIDO ===");
-        console.log(JSON.stringify(req.body, null, 2));
+        logger_service_1.logger.info("=== WEBHOOK RECIBIDO ===");
+        logger_service_1.logger.info(JSON.stringify(req.body, null, 2));
         // Recurrente Webhook sends event_type
         if (event_type === 'payment_intent.succeeded' || event_type === 'cash_intent.succeeded') {
             // El external_id viene dentro de checkout.metadata en la versión actual de Recurrente
@@ -20,7 +21,7 @@ const handleRecurrenteWebhook = async (req, res) => {
                         where: { id: externalId },
                         data: { status: 'COMPLETED' }
                     });
-                    console.log(`Sale ${externalId} marked as COMPLETED via Recurrente webhook.`);
+                    logger_service_1.logger.info(`Sale ${externalId} marked as COMPLETED via Recurrente webhook.`);
                 }
             }
         }
@@ -56,7 +57,7 @@ const handleRecurrenteWebhook = async (req, res) => {
                                 data: { status: 'ACTIVE' }
                             });
                         }
-                        console.log(`Subscription ${subscriptionId} and Tenant ${tenantId} activated.`);
+                        logger_service_1.logger.info(`Subscription ${subscriptionId} and Tenant ${tenantId} activated.`);
                     }
                     else if (event_type === 'subscription.payment_failed') {
                         await prisma_1.prisma.subscription.update({
@@ -94,7 +95,7 @@ const handleRecurrenteWebhook = async (req, res) => {
                 }
                 catch (e) {
                     if (e.code === 'P2002') {
-                        console.log(`Webhook event ${providerEventId} ya fue procesado.`);
+                        logger_service_1.logger.info(`Webhook event ${providerEventId} ya fue procesado.`);
                     }
                     else {
                         throw e;
@@ -106,7 +107,7 @@ const handleRecurrenteWebhook = async (req, res) => {
         res.status(200).send('Webhook received');
     }
     catch (error) {
-        console.error('Error handling Recurrente webhook:', error);
+        logger_service_1.logger.error('Error handling Recurrente webhook:', error);
         res.status(500).send('Webhook error');
     }
 };

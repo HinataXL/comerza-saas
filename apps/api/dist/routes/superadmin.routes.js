@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const superadmin_controller_1 = require("../controllers/superadmin.controller");
+const logs_controller_1 = require("../controllers/logs.controller");
 const auth_middleware_1 = require("../middlewares/auth.middleware");
 const router = (0, express_1.Router)();
 router.get('/metrics', auth_middleware_1.authenticate, superadmin_controller_1.getGlobalMetrics);
@@ -20,4 +21,5 @@ router.get('/users', auth_middleware_1.authenticate, superadmin_controller_1.get
 router.post('/users/superadmin', auth_middleware_1.authenticate, superadmin_controller_1.createSuperadmin);
 router.delete('/users/:id', auth_middleware_1.authenticate, superadmin_controller_1.deleteUser);
 router.post('/notifications', auth_middleware_1.authenticate, superadmin_controller_1.createGlobalNotification);
+router.get('/logs', auth_middleware_1.authenticate, logs_controller_1.getSystemLogs);
 exports.default = router;

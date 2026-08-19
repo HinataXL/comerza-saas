@@ -104,3 +104,8 @@ export type SubscriptionEvent = Prisma.SubscriptionEventModel
  * 
  */
 export type Reservation = Prisma.ReservationModel
+/**
+ * Model SystemLog
+ * 
+ */
+export type SystemLog = Prisma.SystemLogModel

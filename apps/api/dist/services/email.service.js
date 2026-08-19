@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendReservationEmail = exports.sendPasswordResetEmail = exports.sendSuspensionEmail = exports.sendSuperAdminWelcomeEmail = exports.sendWelcomeEmail = void 0;
 const resend_1 = require("resend");
+const logger_service_1 = require("./logger.service");
 const sendWelcomeEmail = async (params) => {
     const { toEmail, adminName, companyName, password } = params;
     const resendApiKey = process.env.RESEND_API_KEY || '';
@@ -49,11 +50,11 @@ const sendWelcomeEmail = async (params) => {
             subject: `¡Bienvenido a Comerza! Credenciales de acceso para ${companyName}`,
             html: htmlTemplate,
         });
-        console.log('Correo de bienvenida enviado:', data);
+        logger_service_1.logger.info('Correo de bienvenida enviado:', data);
         return data;
     }
     catch (error) {
-        console.error('Error al enviar el correo con Resend:', error);
+        logger_service_1.logger.error('Error al enviar el correo con Resend:', error);
         throw error;
     }
 };
@@ -108,7 +109,7 @@ const sendSuperAdminWelcomeEmail = async (params) => {
         return data;
     }
     catch (error) {
-        console.error('Error al enviar el correo con Resend:', error);
+        logger_service_1.logger.error('Error al enviar el correo con Resend:', error);
         throw error;
     }
 };
@@ -160,7 +161,7 @@ const sendSuspensionEmail = async (params) => {
         return data;
     }
     catch (error) {
-        console.error('Error al enviar el correo de suspensión:', error);
+        logger_service_1.logger.error('Error al enviar el correo de suspensión:', error);
         throw error;
     }
 };
@@ -214,7 +215,7 @@ const sendPasswordResetEmail = async (params) => {
         return data;
     }
     catch (error) {
-        console.error('Error al enviar el correo de recuperación:', error);
+        logger_service_1.logger.error('Error al enviar el correo de recuperación:', error);
         throw error;
     }
 };
@@ -227,10 +228,7 @@ const sendReservationEmail = async (params) => {
         return;
     }
     const resend = new resend_1.Resend(resendApiKey);
-    let frontendUrl = (process.env.FRONTEND_URL || 'https://comerza.me').replace(/\/$/, '');
-    if (frontendUrl.includes('ngrok')) {
-        frontendUrl = 'https://comerza.me';
-    }
+    const frontendUrl = (process.env.FRONTEND_URL || 'https://comerza.me').replace(/\/$/, '');
     const confirmUrl = `${frontendUrl}/reserva/confirmar?token=${token}&action=CONFIRMED`;
     const cancelUrl = `${frontendUrl}/reserva/confirmar?token=${token}&action=CANCELLED`;
     const dateStr = date.toLocaleString('es-ES', { dateStyle: 'full', timeStyle: 'short' });
@@ -278,7 +276,7 @@ const sendReservationEmail = async (params) => {
         return data;
     }
     catch (error) {
-        console.error('Error al enviar el correo de reservación:', error);
+        logger_service_1.logger.error('Error al enviar el correo de reservación:', error);
         throw error;
     }
 };

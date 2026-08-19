@@ -1,4 +1,4 @@
-import { logger } from '.././logger.service';
+import { logger } from './logger.service';
 interface QPayProCredentials {
   apiKey: string; // x_api_key
   apiSecret: string; // x_login

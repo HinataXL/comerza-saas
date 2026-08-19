@@ -48,7 +48,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.defineExtension = exports.JsonNullValueFilter = exports.NullsOrder = exports.QueryMode = exports.JsonNullValueInput = exports.NullableJsonNullValueInput = exports.SortOrder = exports.ReservationScalarFieldEnum = exports.SubscriptionEventScalarFieldEnum = exports.SubscriptionScalarFieldEnum = exports.PlanScalarFieldEnum = exports.NotificationScalarFieldEnum = exports.AuditLogScalarFieldEnum = exports.PlanConfigScalarFieldEnum = exports.SaleItemScalarFieldEnum = exports.SaleScalarFieldEnum = exports.ProductScalarFieldEnum = exports.CustomerScalarFieldEnum = exports.UserScalarFieldEnum = exports.TenantScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.prismaVersion = exports.getExtensionContext = exports.Decimal = exports.Sql = exports.raw = exports.join = exports.empty = exports.sql = exports.PrismaClientValidationError = exports.PrismaClientInitializationError = exports.PrismaClientRustPanicError = exports.PrismaClientUnknownRequestError = exports.PrismaClientKnownRequestError = void 0;
+exports.defineExtension = exports.JsonNullValueFilter = exports.NullsOrder = exports.QueryMode = exports.JsonNullValueInput = exports.NullableJsonNullValueInput = exports.SortOrder = exports.SystemLogScalarFieldEnum = exports.ReservationScalarFieldEnum = exports.SubscriptionEventScalarFieldEnum = exports.SubscriptionScalarFieldEnum = exports.PlanScalarFieldEnum = exports.NotificationScalarFieldEnum = exports.AuditLogScalarFieldEnum = exports.PlanConfigScalarFieldEnum = exports.SaleItemScalarFieldEnum = exports.SaleScalarFieldEnum = exports.ProductScalarFieldEnum = exports.CustomerScalarFieldEnum = exports.UserScalarFieldEnum = exports.TenantScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.prismaVersion = exports.getExtensionContext = exports.Decimal = exports.Sql = exports.raw = exports.join = exports.empty = exports.sql = exports.PrismaClientValidationError = exports.PrismaClientInitializationError = exports.PrismaClientRustPanicError = exports.PrismaClientUnknownRequestError = exports.PrismaClientKnownRequestError = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/client"));
 /**
  * Prisma Errors
@@ -115,7 +115,8 @@ exports.ModelName = {
     Plan: 'Plan',
     Subscription: 'Subscription',
     SubscriptionEvent: 'SubscriptionEvent',
-    Reservation: 'Reservation'
+    Reservation: 'Reservation',
+    SystemLog: 'SystemLog'
 };
 /**
  * Enums
@@ -138,6 +139,7 @@ exports.TenantScalarFieldEnum = {
     logoUrl: 'logoUrl',
     receiptTemplate: 'receiptTemplate',
     plan: 'plan',
+    reservationNotificationType: 'reservationNotificationType',
     isActive: 'isActive',
     status: 'status',
     nit: 'nit',
@@ -279,6 +281,17 @@ exports.ReservationScalarFieldEnum = {
     notes: 'notes',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
+};
+exports.SystemLogScalarFieldEnum = {
+    id: 'id',
+    level: 'level',
+    message: 'message',
+    context: 'context',
+    user: 'user',
+    ip: 'ip',
+    path: 'path',
+    origin: 'origin',
+    createdAt: 'createdAt'
 };
 exports.SortOrder = {
     asc: 'asc',

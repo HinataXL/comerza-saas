@@ -5,6 +5,7 @@ const prisma_1 = require("../lib/prisma");
 const zod_1 = require("zod");
 const jwt_1 = require("../utils/jwt");
 const email_service_1 = require("../services/email.service");
+const whatsapp_service_1 = require("../services/whatsapp.service");
 const createReservationSchema = zod_1.z.object({
     customerId: zod_1.z.string().uuid(),
     title: zod_1.z.string().optional(),
@@ -73,8 +74,10 @@ const createReservation = async (req, res) => {
                 tenant: true
             },
         });
-        if (reservation.customer.email) {
-            const token = (0, jwt_1.generateToken)({ reservationId: reservation.id }, '7d');
+        const notificationType = reservation.tenant.reservationNotificationType || 'EMAIL';
+        const token = (0, jwt_1.generateToken)({ reservationId: reservation.id }, '7d');
+        // Send Email
+        if ((notificationType === 'EMAIL' || notificationType === 'BOTH') && reservation.customer.email) {
             (0, email_service_1.sendReservationEmail)({
                 toEmail: reservation.customer.email,
                 customerName: reservation.customer.name,
@@ -83,6 +86,17 @@ const createReservation = async (req, res) => {
                 title: reservation.title,
                 token
             }).catch(err => console.error('Error enviando email de reservación:', err));
+        }
+        // Send WhatsApp
+        if ((notificationType === 'WHATSAPP' || notificationType === 'BOTH') && reservation.customer.phone) {
+            (0, whatsapp_service_1.sendReservationWhatsApp)({
+                toPhone: reservation.customer.phone,
+                customerName: reservation.customer.name,
+                companyName: reservation.tenant.name,
+                date: reservation.startTime,
+                title: reservation.title,
+                token
+            }).catch(err => console.error('Error enviando whatsapp de reservación:', err));
         }
         res.status(201).json(reservation);
     }

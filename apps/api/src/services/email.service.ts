@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { logger } from '.././logger.service';
+import { logger } from './logger.service';
 
 // Inicializamos resend. 
 // Obtenemos la llave dinámicamente para asegurar que .env haya cargado

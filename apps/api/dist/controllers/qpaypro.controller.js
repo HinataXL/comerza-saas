@@ -2,44 +2,54 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleRelay = void 0;
 const prisma_1 = require("../lib/prisma");
+const logger_service_1 = require("../services/logger.service");
 const handleRelay = async (req, res) => {
     try {
         const { saleId } = req.params;
-        const { x_response_status } = req.query;
-        console.log(`QPayPro Relay received for sale ${saleId}:`, req.query);
-        // Si la transacción fue exitosa (x_response_status = 1)
-        if (x_response_status === '1' && saleId) {
-            const sale = await prisma_1.prisma.sale.findUnique({
-                where: { id: saleId }
-            });
-            if (sale && sale.status === 'PENDING') {
-                // Actualizar estado de la venta
-                await prisma_1.prisma.sale.update({
-                    where: { id: sale.id },
-                    data: { status: 'COMPLETED' }
-                });
-                console.log(`Sale ${sale.id} automatically marked as COMPLETED via QPayPro Relay`);
+        const x_response_status = req.query?.x_response_status || req.body?.x_response_status;
+        logger_service_1.logger.info(`QPayPro Relay received for sale ${saleId}:`, { query: req.query, body: req.body });
+        let sale = await prisma_1.prisma.sale.findUnique({
+            where: { id: saleId }
+        });
+        if (sale) {
+            if (x_response_status === '1') {
+                if (sale.status === 'PENDING') {
+                    // Actualizar estado de la venta
+                    sale = await prisma_1.prisma.sale.update({
+                        where: { id: sale.id },
+                        data: { status: 'COMPLETED' }
+                    });
+                    logger_service_1.logger.info(`Sale ${sale.id} automatically marked as COMPLETED via QPayPro Relay`);
+                }
+            }
+            else if (x_response_status) {
+                if (sale.status === 'PENDING') {
+                    sale = await prisma_1.prisma.sale.update({
+                        where: { id: sale.id },
+                        data: { status: 'FAILED' }
+                    });
+                    logger_service_1.logger.info(`Sale ${sale.id} automatically marked as FAILED via QPayPro Relay`);
+                }
             }
         }
-        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-        // Redirigir según el estado
-        if (x_response_status === '1') {
-            res.redirect(`${frontendUrl}/dashboard/cobros?payment=success`);
+        const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
+        // Redirigir según el estado actual de la venta (leído de la BD)
+        if (sale?.status === 'COMPLETED') {
+            res.redirect(`${frontendUrl}/pago/exitoso?saleId=${saleId || ''}`);
         }
-        else if (x_response_status) {
-            // Si hay un status pero no es 1, es que falló
-            res.redirect(`${frontendUrl}/dashboard/cobros?payment=failed`);
+        else if (sale?.status === 'FAILED' || (x_response_status && x_response_status !== '1')) {
+            res.redirect(`${frontendUrl}/pago/fallido?saleId=${saleId || ''}`);
         }
         else {
-            // Si llega vacío (webhook en segundo plano o recarga de página)
-            res.redirect(`${frontendUrl}/dashboard/cobros`);
+            // Si sigue PENDING, no hay status
+            res.redirect(`${frontendUrl}`);
         }
     }
     catch (error) {
-        console.error('Error handling QPayPro relay:', error);
-        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+        logger_service_1.logger.error('Error handling QPayPro relay:', error);
+        const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
         // Redirigir al frontend incluso si hubo un error en nuestro lado
-        res.redirect(`${frontendUrl}/dashboard/cobros?payment=error`);
+        res.redirect(`${frontendUrl}/pago/fallido?error=server`);
     }
 };
 exports.handleRelay = handleRelay;

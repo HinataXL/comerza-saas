@@ -65,19 +65,31 @@ export const logger = {
     }
   },
 
-  info(data: LogData | string) {
+  info(data: LogData | string, context?: any) {
+    if (typeof data === 'string') {
+      return this.log('INFO', { message: data, context });
+    }
     return this.log('INFO', data);
   },
 
-  warn(data: LogData | string) {
+  warn(data: LogData | string, context?: any) {
+    if (typeof data === 'string') {
+      return this.log('WARN', { message: data, context });
+    }
     return this.log('WARN', data);
   },
 
-  error(data: LogData | string) {
+  error(data: LogData | string, context?: any) {
+    if (typeof data === 'string') {
+      return this.log('ERROR', { message: data, context });
+    }
     return this.log('ERROR', data);
   },
 
-  serverError(data: LogData | string) {
+  serverError(data: LogData | string, context?: any) {
+    if (typeof data === 'string') {
+      return this.log('SERVER_ERROR', { message: data, context });
+    }
     return this.log('SERVER_ERROR', data);
   }
 };

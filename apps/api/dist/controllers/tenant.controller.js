@@ -91,7 +91,8 @@ const getTenantSettings = async (req, res) => {
             select: {
                 name: true,
                 logoUrl: true,
-                receiptTemplate: true
+                receiptTemplate: true,
+                reservationNotificationType: true
             }
         });
         if (!tenant) {
@@ -113,17 +114,19 @@ const updateTenantSettings = async (req, res) => {
             res.status(401).json({ message: 'Unauthorized' });
             return;
         }
-        const { name, receiptTemplate } = req.body;
+        const { name, receiptTemplate, reservationNotificationType } = req.body;
         const tenant = await prisma_1.prisma.tenant.update({
             where: { id: tenantId },
             data: {
                 name: name !== undefined ? name : undefined,
-                receiptTemplate: receiptTemplate !== undefined ? receiptTemplate : undefined
+                receiptTemplate: receiptTemplate !== undefined ? receiptTemplate : undefined,
+                reservationNotificationType: reservationNotificationType !== undefined ? reservationNotificationType : undefined
             },
             select: {
                 name: true,
                 logoUrl: true,
-                receiptTemplate: true
+                receiptTemplate: true,
+                reservationNotificationType: true
             }
         });
         res.json(tenant);

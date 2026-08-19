@@ -1,5 +1,5 @@
 import twilio from 'twilio';
-import { logger } from '.././logger.service';
+import { logger } from './logger.service';
 
 interface WhatsAppParams {
   toPhone: string;

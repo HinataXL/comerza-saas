@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createPaymentLink = void 0;
+const logger_service_1 = require("./logger.service");
 const createPaymentLink = async (credentials, payload) => {
     if (!credentials.apiKey || !credentials.apiSecret) {
         throw new Error('Las llaves de QPayPro no están configuradas completamente para este comercio.');
@@ -9,8 +10,8 @@ const createPaymentLink = async (credentials, payload) => {
     const nameParts = (payload.customerName || 'Consumidor Final').split(' ');
     const firstName = nameParts[0];
     const lastName = nameParts.slice(1).join(' ') || 'Final';
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-    const apiUrl = process.env.API_URL || 'http://localhost:3001/api';
+    const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
+    const apiUrl = (process.env.API_URL || 'http://localhost:3001/api').replace(/\/$/, '');
     // Estructura exacta solicitada por QPayPro
     const qpayproPayload = {
         x_login: credentials.apiKey, // Public Key / API Login ID
@@ -22,7 +23,7 @@ const createPaymentLink = async (credentials, payload) => {
         x_phone: payload.customerPhone || '00000000',
         x_description: payload.description,
         x_reference: payload.reference,
-        x_url_cancel: `${frontendUrl}/dashboard/ventas`, // Fallback
+        x_url_cancel: `${frontendUrl}/pago/fallido`, // Fallback de cancelación
         x_company: 'C/F',
         x_address: 'Ciudad',
         x_city: 'Guatemala',
@@ -50,7 +51,7 @@ const createPaymentLink = async (credentials, payload) => {
         origen: 'comerza-app',
         store_type: 'COMERZA'
     };
-    console.log('Sending payload to QPayPro para generar Token...');
+    logger_service_1.logger.info('Sending payload to QPayPro para generar Token...');
     try {
         // Aquí hacemos la petición real a QPayPro para obtener el Token.
         // Nota: Reemplaza esta URL si QPayPro utiliza una diferente para generar el token.
@@ -63,13 +64,13 @@ const createPaymentLink = async (credentials, payload) => {
         });
         if (!res.ok) {
             const errorText = await res.text();
-            console.error('QPayPro API Error:', errorText);
+            logger_service_1.logger.error('QPayPro API Error:', errorText);
             throw new Error(`Error de QPayPro (${res.status}): ${errorText}`);
         }
         const responseBody = await res.json();
         // QPayPro puede devolver "status" o "estado" para indicar error
         if (responseBody.status === 'error' || responseBody.estado === 'error') {
-            console.error('QPayPro Error Response:', responseBody);
+            logger_service_1.logger.error('QPayPro Error Response:', responseBody);
             throw new Error(`QPayPro reportó un error: ${JSON.stringify(responseBody.message || responseBody)}`);
         }
         // El token viene anidado dentro de la propiedad "data" del JSON de respuesta: { estado: 'success', data: { token: '...' } }
@@ -81,7 +82,7 @@ const createPaymentLink = async (credentials, payload) => {
         return `https://payments.qpaypro.com/checkout/store?token=${token}`;
     }
     catch (error) {
-        console.error('Error generando link de pago:', error);
+        logger_service_1.logger.error('Error generando link de pago:', error);
         // Lanzamos el error real en lugar de usar un token simulado para que puedas ver por qué falla
         throw error;
     }

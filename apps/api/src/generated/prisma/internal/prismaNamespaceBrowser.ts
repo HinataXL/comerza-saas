@@ -63,7 +63,8 @@ export const ModelName = {
   Plan: 'Plan',
   Subscription: 'Subscription',
   SubscriptionEvent: 'SubscriptionEvent',
-  Reservation: 'Reservation'
+  Reservation: 'Reservation',
+  SystemLog: 'SystemLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -287,6 +288,21 @@ export const ReservationScalarFieldEnum = {
 } as const
 
 export type ReservationScalarFieldEnum = (typeof ReservationScalarFieldEnum)[keyof typeof ReservationScalarFieldEnum]
+
+
+export const SystemLogScalarFieldEnum = {
+  id: 'id',
+  level: 'level',
+  message: 'message',
+  context: 'context',
+  user: 'user',
+  ip: 'ip',
+  path: 'path',
+  origin: 'origin',
+  createdAt: 'createdAt'
+} as const
+
+export type SystemLogScalarFieldEnum = (typeof SystemLogScalarFieldEnum)[keyof typeof SystemLogScalarFieldEnum]
 
 
 export const SortOrder = {
