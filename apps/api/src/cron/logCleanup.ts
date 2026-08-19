@@ -1,6 +1,7 @@
 import cron from 'node-cron';
 import { prisma } from '../lib/prisma';
 import { logger } from '../services/logger.service';
+import { sendCronExecutionEmail } from '../services/email.service';
 
 // Ejecutar todos los días a las 3:00 AM
 export const startLogCleanupCron = () => {
@@ -19,13 +20,19 @@ export const startLogCleanupCron = () => {
         }
       });
 
-      logger.info(`Limpieza completada. Se eliminaron ${result.count} logs antiguos (más de 30 días).`);
-    } catch (error) {
-      logger.serverError({
-        message: 'Error al ejecutar la limpieza de logs',
-        context: error,
-        origin: 'logCleanup.ts'
+      const message = `Limpieza completada. Se eliminaron ${result.count} logs antiguos (más de 30 días).`;
+      logger.info(message);
+
+      // Enviar correo de confirmación al administrador
+      await sendCronExecutionEmail({
+        toEmail: 'erick.pedroza@fixss.com',
+        subject: `[Cron] Limpieza de System Logs (${result.count} eliminados)`,
+        message: message,
+        deletedCount: result.count
       });
+
+    } catch (error) {
+      logger.serverError('Error al ejecutar la limpieza de logs', error);
     }
   });
   

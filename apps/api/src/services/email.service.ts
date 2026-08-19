@@ -313,3 +313,53 @@ export const sendReservationEmail = async (params: {
   }
 };
 
+export const sendCronExecutionEmail = async (params: { 
+  toEmail: string, 
+  subject: string,
+  message: string,
+  deletedCount: number
+}) => {
+  const { toEmail, subject, message, deletedCount } = params;
+  const resendApiKey = process.env.RESEND_API_KEY || '';
+  
+  if (!resendApiKey) {
+    logger.warn('RESEND_API_KEY no configurada. El email de cron no se enviará.');
+    return;
+  }
+
+  const resend = new Resend(resendApiKey);
+
+  const htmlTemplate = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+      <div style="background-color: #0f172a; padding: 24px; text-align: center;">
+        <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Reporte de Sistema: Tarea Programada</h1>
+      </div>
+      <div style="padding: 32px; background-color: #ffffff; color: #334155;">
+        <p style="font-size: 16px;">Hola,</p>
+        <p style="font-size: 16px; line-height: 1.5;">El <strong>Cron Job</strong> se ha ejecutado satisfactoriamente.</p>
+        
+        <div style="background-color: #f8fafc; padding: 16px; border-radius: 8px; margin: 24px 0; border: 1px solid #e2e8f0;">
+          <h3 style="margin-top: 0; color: #0f172a;">Detalles de la ejecución:</h3>
+          <p style="margin: 8px 0;"><strong>Mensaje:</strong> ${message}</p>
+          <p style="margin: 8px 0;"><strong>Registros eliminados:</strong> <span style="color: #ef4444; font-weight: bold;">${deletedCount}</span></p>
+          <p style="margin: 8px 0;"><strong>Fecha de ejecución:</strong> ${new Date().toLocaleString('es-ES')}</p>
+        </div>
+      </div>
+      <div style="background-color: #f1f5f9; padding: 16px; text-align: center; color: #94a3b8; font-size: 12px;">
+        <p style="margin: 0;">Reporte automático del Sistema Comerza SaaS.</p>
+      </div>
+    </div>
+  `;
+
+  try {
+    const data = await resend.emails.send({
+      from: 'Comerza Dev <desarrollo@comerza.me>',
+      to: [toEmail],
+      subject: subject,
+      html: htmlTemplate,
+    });
+    return data;
+  } catch (error) {
+    logger.error('Error al enviar el correo de cron:', error);
+  }
+};
