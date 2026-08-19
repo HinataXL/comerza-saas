@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { prisma } from '../lib/prisma';
+import { logger } from '../services/logger.service';
 
 // Ya no necesitamos validación GET compleja para Twilio en la ruta, Twilio puede verificar firmas pero para desarrollo/SaaS se puede omitir o implementar middleware de Twilio.
 export const verifyWhatsAppWebhook = (req: Request, res: Response) => {
@@ -75,7 +76,7 @@ export const handleWhatsAppWebhook = async (req: Request, res: Response) => {
       }
     });
 
-    console.log(`Reservación ${recentReservation.id} actualizada a ${actionStr} exitosamente vía Twilio.`);
+    logger.info(`Reservación ${recentReservation.id} actualizada a ${actionStr} exitosamente vía Twilio.`);
 
     // Responder a Twilio (Opcional: podemos enviarle un mensaje de vuelta al cliente)
     const replyMessage = actionStr === 'CONFIRMED'
@@ -90,7 +91,7 @@ export const handleWhatsAppWebhook = async (req: Request, res: Response) => {
     `);
 
   } catch (error) {
-    console.error('Error handling Twilio WhatsApp webhook:', error);
+    logger.error('Error handling Twilio WhatsApp webhook:', error);
     // Para Twilio debemos regresar 200 con o sin error para evitar que siga reintentando infinitamente,
     // aunque un 500 ayuda a depurar en la consola de Twilio.
     res.status(500).send('<Response></Response>'); 

@@ -10,7 +10,8 @@ import {
   ShieldCheck,
   Layers,
   ShieldAlert,
-  BellRing
+  BellRing,
+  Bug
 } from 'lucide-react';
 import '../../components/Sidebar.css';
 
@@ -20,6 +21,7 @@ const adminNavItems = [
   { name: 'Planes', href: '/superadmin/planes', icon: Layers },
   { name: 'Usuarios', href: '/superadmin/users', icon: Users },
   { name: 'Auditoría', href: '/superadmin/audit', icon: ShieldAlert },
+  { name: 'Errores (Logs)', href: '/superadmin/logs', icon: Bug },
   { name: 'Notificaciones', href: '/superadmin/notificaciones', icon: BellRing },
   { name: 'Ajustes Plataforma', href: '/superadmin/settings', icon: Settings },
 ];

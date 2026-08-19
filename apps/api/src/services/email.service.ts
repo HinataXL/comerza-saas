@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import { logger } from '.././logger.service';
 
 // Inicializamos resend. 
 // Obtenemos la llave dinámicamente para asegurar que .env haya cargado
@@ -61,10 +62,10 @@ export const sendWelcomeEmail = async (params: WelcomeEmailParams) => {
       subject: `¡Bienvenido a Comerza! Credenciales de acceso para ${companyName}`,
       html: htmlTemplate,
     });
-    console.log('Correo de bienvenida enviado:', data);
+    logger.info('Correo de bienvenida enviado:', data);
     return data;
   } catch (error) {
-    console.error('Error al enviar el correo con Resend:', error);
+    logger.error('Error al enviar el correo con Resend:', error);
     throw error;
   }
 };
@@ -122,7 +123,7 @@ export const sendSuperAdminWelcomeEmail = async (params: { toEmail: string, admi
     });
     return data;
   } catch (error) {
-    console.error('Error al enviar el correo con Resend:', error);
+    logger.error('Error al enviar el correo con Resend:', error);
     throw error;
   }
 };
@@ -177,7 +178,7 @@ export const sendSuspensionEmail = async (params: { toEmail: string, companyName
     });
     return data;
   } catch (error) {
-    console.error('Error al enviar el correo de suspensión:', error);
+    logger.error('Error al enviar el correo de suspensión:', error);
     throw error;
   }
 };
@@ -234,7 +235,7 @@ export const sendPasswordResetEmail = async (params: { toEmail: string, newPassw
     });
     return data;
   } catch (error) {
-    console.error('Error al enviar el correo de recuperación:', error);
+    logger.error('Error al enviar el correo de recuperación:', error);
     throw error;
   }
 };
@@ -307,7 +308,7 @@ export const sendReservationEmail = async (params: {
     });
     return data;
   } catch (error) {
-    console.error('Error al enviar el correo de reservación:', error);
+    logger.error('Error al enviar el correo de reservación:', error);
     throw error;
   }
 };

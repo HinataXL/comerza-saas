@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getGlobalMetrics, getTenants, createTenant, toggleTenantStatus, impersonateTenant, changeTenantPlan, getPlans, updatePlan, getHealth, getAuditLogs, getGatewaysStatus, getAllUsers, createSuperadmin, deleteTenant, deleteUser, createGlobalNotification } from '../controllers/superadmin.controller';
+import { getSystemLogs } from '../controllers/logs.controller';
 import { authenticate } from '../middlewares/auth.middleware';
 
 const router = Router();
@@ -20,5 +21,6 @@ router.get('/users', authenticate, getAllUsers);
 router.post('/users/superadmin', authenticate, createSuperadmin);
 router.delete('/users/:id', authenticate, deleteUser);
 router.post('/notifications', authenticate, createGlobalNotification);
+router.get('/logs', authenticate, getSystemLogs);
 
 export default router;

@@ -1,3 +1,4 @@
+import { logger } from '.././logger.service';
 interface QPayProCredentials {
   apiKey: string; // x_api_key
   apiSecret: string; // x_login
@@ -66,7 +67,7 @@ export const createPaymentLink = async (credentials: QPayProCredentials, payload
     store_type: 'COMERZA'
   };
 
-  console.log('Sending payload to QPayPro para generar Token...');
+  logger.info('Sending payload to QPayPro para generar Token...');
 
   try {
     // Aquí hacemos la petición real a QPayPro para obtener el Token.
@@ -81,7 +82,7 @@ export const createPaymentLink = async (credentials: QPayProCredentials, payload
 
     if (!res.ok) {
       const errorText = await res.text();
-      console.error('QPayPro API Error:', errorText);
+      logger.error('QPayPro API Error:', errorText);
       throw new Error(`Error de QPayPro (${res.status}): ${errorText}`);
     }
 
@@ -89,7 +90,7 @@ export const createPaymentLink = async (credentials: QPayProCredentials, payload
 
     // QPayPro puede devolver "status" o "estado" para indicar error
     if (responseBody.status === 'error' || responseBody.estado === 'error') {
-      console.error('QPayPro Error Response:', responseBody);
+      logger.error('QPayPro Error Response:', responseBody);
       throw new Error(`QPayPro reportó un error: ${JSON.stringify(responseBody.message || responseBody)}`);
     }
 
@@ -104,7 +105,7 @@ export const createPaymentLink = async (credentials: QPayProCredentials, payload
     return `https://payments.qpaypro.com/checkout/store?token=${token}`;
 
   } catch (error: any) {
-    console.error('Error generando link de pago:', error);
+    logger.error('Error generando link de pago:', error);
 
     // Lanzamos el error real en lugar de usar un token simulado para que puedas ver por qué falla
     throw error;

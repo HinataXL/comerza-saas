@@ -1,4 +1,5 @@
 import twilio from 'twilio';
+import { logger } from '.././logger.service';
 
 interface WhatsAppParams {
   toPhone: string;
@@ -44,10 +45,10 @@ Para cancelar tu reservación, responde con *CANCELAR*.`;
       to: `whatsapp:+${formattedPhone}`
     });
 
-    console.log('Mensaje de WhatsApp enviado vía Twilio con SID:', response.sid);
+    logger.info('Mensaje de WhatsApp enviado vía Twilio con SID:', response.sid);
     return response;
   } catch (error: any) {
-    console.error('Error al enviar WhatsApp con Twilio:', error.message);
+    logger.error('Error al enviar WhatsApp con Twilio:', error.message);
     throw error;
   }
 };

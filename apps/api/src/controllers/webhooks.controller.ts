@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import { prisma } from '../lib/prisma';
+import { logger } from '../services/logger.service';
 
 export const handleRecurrenteWebhook = async (req: Request, res: Response): Promise<void> => {
   try {
     const { event_type, data } = req.body;
-    console.log("=== WEBHOOK RECIBIDO ===");
-    console.log(JSON.stringify(req.body, null, 2));
+    logger.info("=== WEBHOOK RECIBIDO ===");
+    logger.info(JSON.stringify(req.body, null, 2));
 
     // Recurrente Webhook sends event_type
     if (event_type === 'payment_intent.succeeded' || event_type === 'cash_intent.succeeded') {
@@ -22,7 +23,7 @@ export const handleRecurrenteWebhook = async (req: Request, res: Response): Prom
             where: { id: externalId },
             data: { status: 'COMPLETED' }
           });
-          console.log(`Sale ${externalId} marked as COMPLETED via Recurrente webhook.`);
+          logger.info(`Sale ${externalId} marked as COMPLETED via Recurrente webhook.`);
         }
       }
     }
@@ -62,7 +63,7 @@ export const handleRecurrenteWebhook = async (req: Request, res: Response): Prom
                 data: { status: 'ACTIVE' }
               });
             }
-            console.log(`Subscription ${subscriptionId} and Tenant ${tenantId} activated.`);
+            logger.info(`Subscription ${subscriptionId} and Tenant ${tenantId} activated.`);
           } else if (event_type === 'subscription.payment_failed') {
             await prisma.subscription.update({
               where: { id: subscriptionId },
@@ -96,7 +97,7 @@ export const handleRecurrenteWebhook = async (req: Request, res: Response): Prom
           }
         } catch (e: any) {
           if (e.code === 'P2002') {
-            console.log(`Webhook event ${providerEventId} ya fue procesado.`);
+            logger.info(`Webhook event ${providerEventId} ya fue procesado.`);
           } else {
             throw e;
           }
@@ -107,7 +108,7 @@ export const handleRecurrenteWebhook = async (req: Request, res: Response): Prom
     // Siempre respondemos 200 OK para que Recurrente sepa que recibimos el webhook
     res.status(200).send('Webhook received');
   } catch (error) {
-    console.error('Error handling Recurrente webhook:', error);
+    logger.error('Error handling Recurrente webhook:', error);
     res.status(500).send('Webhook error');
   }
 };
